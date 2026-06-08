@@ -44,6 +44,7 @@ export default async function ServicesPage({ params }: PageProps) {
   return (
     <>
       <Hero
+        locale={locale}
         eyebrow={content.services.eyebrow}
         title={content.services.title}
         intro={content.services.intro}
@@ -67,8 +68,8 @@ export default async function ServicesPage({ params }: PageProps) {
           title={content.services.liveServices.title}
           description={`${content.services.liveServices.description} ${
             locale === "nl"
-              ? "De hoofdroutes staan eerst; de ondersteunende trust- en groeiroutes volgen daarna."
-              : "تظهر المسارات الأساسية أولاً ثم تتبعها مسارات الثقة والتوسع."
+              ? "Kies de route die het beste aansluit op uw situatie."
+              : "اختاروا المسار الأنسب لحالتكم."
           }`}
           align="left"
         />
@@ -100,7 +101,7 @@ export default async function ServicesPage({ params }: PageProps) {
             description={phaseTwo.sworn.hero.intro}
             href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
             label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
-            status={locale === "nl" ? "Nieuw in fase 2" : "جديد في المرحلة الثانية"}
+            status={locale === "nl" ? "Formele inzet" : "استخدام رسمي"}
           />
           <ServiceCard
             title={
@@ -111,7 +112,7 @@ export default async function ServicesPage({ params }: PageProps) {
             description={phaseTwo.urgent.hero.intro}
             href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}
             label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
-            status={locale === "nl" ? "Nieuw in fase 2" : "جديد في المرحلة الثانية"}
+            status={locale === "nl" ? "Afhankelijk van beschikbaarheid" : "بحسب التوافر"}
           />
         </div>
         </div>
@@ -168,23 +169,23 @@ export default async function ServicesPage({ params }: PageProps) {
             title={locale === "nl" ? "FAQ" : "الأسئلة الشائعة"}
             description={
               locale === "nl"
-                ? "Echte antwoordpagina met compacte, citeerbare antwoorden over boeken, spoed, verificatie en inzet."
-                : "صفحة إجابات فعلية بأسلوب موجز وقابل للاقتباس حول الحجز والطوارئ والتحقق والاستخدام."
+                ? "Praktische antwoorden over aanvragen, spoed, kwalificatie, kosten en inzet."
+                : "إجابات عملية حول الطلب والطوارئ والتأهيل والتكلفة والاستخدام."
             }
             href={localizedPath(locale, "faq")}
             label={locale === "nl" ? "Open FAQ" : "افتح الصفحة"}
-            status={locale === "nl" ? "Nieuw in fase 2" : "جديد في المرحلة الثانية"}
+            status={locale === "nl" ? "Praktische informatie" : "معلومات عملية"}
           />
           <ServiceCard
             title={locale === "nl" ? "Team en verificatie" : "الفريق والتحقق"}
             description={
               locale === "nl"
-                ? "Overzicht van profielen, specialisaties, verificatievelden en voorbereide trust-informatie."
-                : "عرض للملفات المهنية والتخصصات وحقول التحقق وعناصر الثقة القابلة للتوسع."
+                ? "Overzicht van expertisegebieden, inzetvormen en de afstemming van formele of urgente aanvragen."
+                : "عرض لمجالات الخبرة وأشكال الخدمة وتنسيق المهام الرسمية أو العاجلة."
             }
             href={localizedPath(locale, "team")}
             label={locale === "nl" ? "Open team" : "افتح الصفحة"}
-            status={locale === "nl" ? "Nieuw in fase 2" : "جديد في المرحلة الثانية"}
+            status={locale === "nl" ? "Collectief en werkwijze" : "المجموعة وطريقة العمل"}
           />
         </div>
         </div>

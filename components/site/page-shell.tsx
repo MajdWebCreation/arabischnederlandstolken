@@ -20,11 +20,33 @@ export function PageShell({ children, locale }: PageShellProps) {
     faq: locale === "nl" ? "FAQ" : "الأسئلة الشائعة",
     team: locale === "nl" ? "Team" : "الفريق",
   };
+  const navItems = [
+    {
+      href: localizedPath(locale, ""),
+      label: content.navigation.home,
+    },
+    {
+      href: localizedPath(locale, "diensten"),
+      label: content.navigation.services,
+    },
+    {
+      href: localizedPath(locale, "contact"),
+      label: content.navigation.contact,
+    },
+    {
+      href: localizedPath(locale, "faq"),
+      label: navLabels.faq,
+    },
+    {
+      href: localizedPath(locale, "team"),
+      label: navLabels.team,
+    },
+  ];
 
   return (
     <div className={`page-shell min-h-screen ${isArabic ? "font-arabic" : ""}`}>
       <header className="sticky top-0 z-40 border-b border-line/70 bg-background/92 backdrop-blur">
-        <div className="content-shell flex items-center justify-between gap-6 py-4">
+        <div className="content-shell flex items-center justify-between gap-3 py-4 sm:gap-6">
           <div className="min-w-0">
             <a href={localizedPath(locale, "")} className="block">
               <p className="eyebrow eyebrow-muted">
@@ -36,47 +58,56 @@ export function PageShell({ children, locale }: PageShellProps) {
             </a>
           </div>
 
-          <nav className="hidden items-center gap-6 lg:flex">
-            <a
-              href={localizedPath(locale, "")}
-              className="text-sm font-medium text-muted-strong transition hover:text-brand"
-            >
-              {content.navigation.home}
-            </a>
-            <a
-              href={localizedPath(locale, "diensten")}
-              className="text-sm font-medium text-muted-strong transition hover:text-brand"
-            >
-              {content.navigation.services}
-            </a>
-            <a
-              href={localizedPath(locale, "contact")}
-              className="text-sm font-medium text-muted-strong transition hover:text-brand"
-            >
-              {content.navigation.contact}
-            </a>
-            <a
-              href={localizedPath(locale, "faq")}
-              className="text-sm font-medium text-muted-strong transition hover:text-brand"
-            >
-              {navLabels.faq}
-            </a>
-            <a
-              href={localizedPath(locale, "team")}
-              className="text-sm font-medium text-muted-strong transition hover:text-brand"
-            >
-              {navLabels.team}
-            </a>
+          <nav
+            aria-label={locale === "nl" ? "Hoofdnavigatie" : "التنقل الرئيسي"}
+            className="hidden items-center gap-6 lg:flex"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-muted-strong transition hover:text-brand focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           <div className="flex items-center gap-3">
             <LocaleSwitcher locale={locale} />
-            <a
-              href={localizedPath(locale, "contact")}
-              className="button-primary hidden px-5 py-2.5 sm:inline-flex"
-            >
-              {content.actions.bookNow}
-            </a>
+            <details className="group relative lg:hidden">
+              <summary className="inline-flex min-h-11 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-surface px-4 text-sm font-semibold text-foreground shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand [&::-webkit-details-marker]:hidden">
+                {locale === "nl" ? "Menu" : "القائمة"}
+              </summary>
+              <nav
+                aria-label={locale === "nl" ? "Mobiele navigatie" : "التنقل على الهاتف"}
+                className="absolute end-0 top-[calc(100%+0.75rem)] z-50 flex min-w-56 flex-col gap-1 rounded-2xl border border-line bg-surface p-2 shadow-[0_20px_60px_rgba(17,36,67,0.16)]"
+              >
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-xl px-4 py-3 text-sm font-medium text-muted-strong transition hover:bg-brand-soft hover:text-brand-strong focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-brand"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href={localizedPath(locale, "contact")}
+                  className="mt-1 rounded-xl bg-brand-strong px-4 py-3 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  {content.actions.bookNow}
+                </a>
+              </nav>
+            </details>
+            <div className="hidden sm:block">
+              <a
+                href={localizedPath(locale, "contact")}
+                className="button-primary px-5 py-2.5"
+              >
+                {content.actions.bookNow}
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -129,11 +160,6 @@ export function PageShell({ children, locale }: PageShellProps) {
                 <a href={actions.urgent.href}>{actions.urgent.label}</a>
                 <p>{content.footer.contactNote}</p>
                 <p>{content.footer.complianceNote}</p>
-                <p>
-                  {locale === "nl"
-                    ? organizationContact.officeHoursNl
-                    : organizationContact.officeHoursAr}
-                </p>
               </div>
             </div>
           </div>

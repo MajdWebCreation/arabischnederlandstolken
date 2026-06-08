@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ContactForm } from "@/components/site/contact-form";
 import { CtaBand } from "@/components/site/cta-band";
 import { Hero } from "@/components/site/hero";
 import { JsonLd } from "@/components/site/json-ld";
@@ -61,12 +62,13 @@ export default async function ContactPage({ params }: PageProps) {
     <>
       <JsonLd data={contactJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.contact.eyebrow}
         title={content.contact.title}
         intro={content.contact.intro}
         primaryAction={{
           label: content.contact.primaryAction,
-          href: buildMailtoHref(content.contact.directSubject),
+          href: "#contactformulier",
         }}
         secondaryAction={{
           label: content.contact.secondaryAction,
@@ -76,6 +78,27 @@ export default async function ContactPage({ params }: PageProps) {
         compact
         variant="contact"
       />
+
+      <section
+        id="contactformulier"
+        className="section-space-tight scroll-mt-28 border-y border-line bg-white/75"
+      >
+        <div className="content-shell">
+          <SectionHeading
+            eyebrow={content.contact.form.eyebrow}
+            title={content.contact.form.title}
+            description={content.contact.form.description}
+            align="left"
+          />
+          <div className="mt-10 max-w-5xl">
+            <ContactForm
+              locale={locale}
+              content={content.contact.form}
+              fallbackHref={buildMailtoHref(content.contact.directSubject)}
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="section-space-tight">
         <div className="content-shell">
@@ -231,11 +254,11 @@ export default async function ContactPage({ params }: PageProps) {
         description={content.contact.cta.description}
         primaryAction={{
           label: content.contact.primaryAction,
-          href: buildMailtoHref(content.contact.directSubject),
+          href: "#contactformulier",
         }}
         secondaryAction={{
           label: content.contact.secondaryAction,
-          href: buildMailtoHref(content.contact.whatsAppSubject),
+          href: buildMailtoHref(content.contact.followUpSubject),
         }}
       />
     </>

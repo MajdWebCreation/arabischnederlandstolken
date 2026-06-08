@@ -43,7 +43,6 @@ export default async function SwornServicePage({ params }: PageProps) {
       "@type": "Organization",
       name: organizationName,
     },
-    areaServed: "NL",
     serviceType:
       locale === "nl"
         ? "Beëdigde of formeel verifieerbare tolkdienst"
@@ -55,6 +54,7 @@ export default async function SwornServicePage({ params }: PageProps) {
     <>
       <JsonLd data={serviceJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.hero.eyebrow}
         title={content.hero.title}
         intro={content.hero.intro}

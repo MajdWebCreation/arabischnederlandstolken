@@ -1,284 +1,182 @@
 import type { Locale } from "@/lib/site";
 
-export type TeamProfile = {
-  slug: string;
-  name: string;
+export type TeamCapability = {
+  id: string;
   title: Record<Locale, string>;
   overview: Record<Locale, string>;
-  languages: Record<Locale, string[]>;
-  specializations: Record<Locale, string[]>;
-  serviceAreas: Record<Locale, string[]>;
-  quality: Record<Locale, string[]>;
-  swornStatus: Record<Locale, string>;
-  verification: {
-    wbtvStatus: Record<Locale, string>;
-    rbtvStatus: Record<Locale, string>;
-    confidentiality: Record<Locale, string>;
-    qualityLevel: Record<Locale, string>;
-  };
+  contexts: Record<Locale, string[]>;
+  modes: Record<Locale, string[]>;
+  safeguards: Record<Locale, string[]>;
 };
 
-export const teamProfiles: TeamProfile[] = [
+export const teamCapabilities: TeamCapability[] = [
   {
-    slug: "arabisch-nederlands-juridisch-zorg",
-    name: "Profiel Arabisch-Nederlands Juridisch/Zorg",
+    id: "legal-healthcare",
     title: {
-      nl: "Arabisch ↔ Nederlands tolk voor juridische en zorgcontext",
-      ar: "مترجم شفهي عربي ↔ هولندي للسياقات القانونية والطبية",
+      nl: "Juridische en zorggesprekken",
+      ar: "المحادثات القانونية والطبية",
     },
     overview: {
-      nl: "Profiel ingericht voor gesprekken waarbij juridische nauwkeurigheid, zorgvuldige uitleg en vertrouwelijke omgang met informatie samenkomen.",
-      ar: "ملف مهني مهيأ للمحادثات التي تتطلب دقة قانونية وشرحاً واضحاً وتعاملًا سرياً مع المعلومات.",
+      nl: "Tolkondersteuning voor gesprekken waarin nauwkeurigheid, neutraliteit en zorgvuldige omgang met gevoelige informatie belangrijk zijn.",
+      ar: "دعم للحوارات التي تتطلب دقة وحياداً وتعاملاً مهنياً مع المعلومات الحساسة.",
     },
-    languages: {
-      nl: ["Arabisch", "Nederlands"],
-      ar: ["العربية", "الهولندية"],
+    contexts: {
+      nl: ["Advocatuur en rechtbank", "Huisarts, ziekenhuis en GGZ", "Dossier- en intakegesprekken"],
+      ar: ["المحاماة والمحاكم", "الطبيب والمستشفى والصحة النفسية", "مناقشة الملفات والاستقبال"],
     },
-    specializations: {
-      nl: ["Advocatuur", "Rechtbankcontext", "Zorg en intakegesprekken"],
-      ar: ["المحاماة", "سياق المحاكم", "الرعاية الصحية وجلسات الاستقبال"],
+    modes: {
+      nl: ["Telefonisch", "Via video", "Op locatie, na afstemming"],
+      ar: ["هاتفياً", "عبر الفيديو", "حضورياً بعد التنسيق"],
     },
-    serviceAreas: {
-      nl: ["Telefonisch", "Video", "Op locatie in Nederland"],
-      ar: ["هاتفياً", "عبر الفيديو", "حضورياً داخل هولندا"],
-    },
-    quality: {
-      nl: [
-        "Neutrale overdracht van inhoud",
-        "Voorbereid op vertrouwelijke dossiers",
-        "Geschikt voor high-stakes gesprekken",
-      ],
-      ar: [
-        "نقل محايد للمحتوى",
-        "جاهزية للتعامل مع ملفات حساسة",
-        "مناسب للمحادثات عالية الأهمية",
-      ],
-    },
-    swornStatus: {
-      nl: "Beëdigde of formeel verifieerbare inzet bespreekbaar per opdracht",
-      ar: "تُراجع الصفة المحلّفة أو القابلة للتحقق الرسمي حسب طبيعة المهمة",
-    },
-    verification: {
-      wbtvStatus: {
-        nl: "Wbtv-verificatieveld voorbereid",
-        ar: "حقل التحقق من Wbtv مُعدّ",
-      },
-      rbtvStatus: {
-        nl: "Rbtv-/registerstatus voorbereid",
-        ar: "حالة السجل أو Rbtv مُعدة",
-      },
-      confidentiality: {
-        nl: "Geheimhouding en professionele omgang expliciet meegenomen",
-        ar: "السرية والتعامل المهني عنصران أساسيان في هذا الملف",
-      },
-      qualityLevel: {
-        nl: "Kwaliteits- en contextcheck per opdracht",
-        ar: "تقييم الجودة والسياق يتم لكل مهمة على حدة",
-      },
+    safeguards: {
+      nl: ["Neutrale taaloverdracht", "Context vooraf afstemmen", "Terughoudend omgaan met gevoelige gegevens"],
+      ar: ["نقل محايد للمعنى", "تنسيق السياق مسبقاً", "التعامل الحذر مع البيانات الحساسة"],
     },
   },
   {
-    slug: "arabisch-nederlands-gemeente-migratie",
-    name: "Profiel Arabisch-Nederlands Gemeente/Migratie",
+    id: "government-migration",
     title: {
-      nl: "Arabisch ↔ Nederlands tolk voor gemeente, IND en migratie",
-      ar: "مترجم شفهي عربي ↔ هولندي للبلديات والهجرة وIND",
+      nl: "Gemeente, overheid en migratie",
+      ar: "البلديات والجهات الرسمية والهجرة",
     },
     overview: {
-      nl: "Profiel voor gesprekken met bestuurlijke of procedurele impact, waarbij duidelijke uitleg, rust en consistentie van belang zijn.",
-      ar: "ملف مخصص للمحادثات الإدارية أو الإجرائية التي تحتاج إلى شرح واضح وهدوء واتساق في نقل المعنى.",
+      nl: "Ondersteuning bij bestuurlijke en procedurele gesprekken waarbij duidelijke uitleg en consistente terminologie nodig zijn.",
+      ar: "دعم للمحادثات الإدارية والإجرائية التي تحتاج إلى شرح واضح ومصطلحات متسقة.",
     },
-    languages: {
-      nl: ["Arabisch", "Nederlands"],
-      ar: ["العربية", "الهولندية"],
+    contexts: {
+      nl: ["Gemeente en sociaal domein", "IND en migratie", "Formele intake en vervolgafspraken"],
+      ar: ["البلديات والمجال الاجتماعي", "الهجرة وIND", "الاستقبال والمتابعة الرسمية"],
     },
-    specializations: {
-      nl: ["Gemeentezaken", "IND en migratie", "Maatschappelijke begeleiding"],
-      ar: ["شؤون البلديات", "الهجرة وIND", "المرافقة المجتمعية"],
+    modes: {
+      nl: ["Telefonisch", "Via video", "Op locatie, na afstemming"],
+      ar: ["هاتفياً", "عبر الفيديو", "حضورياً بعد التنسيق"],
     },
-    serviceAreas: {
-      nl: ["Telefonisch", "Video", "Afspraak op locatie"],
-      ar: ["هاتفياً", "عبر الفيديو", "موعد حضوري"],
-    },
-    quality: {
-      nl: [
-        "Heldere uitleg in procedurecontext",
-        "Geschikt voor formele intake en vervolgafspraken",
-        "Controle op context en rol van de tolk vooraf",
-      ],
-      ar: [
-        "شرح واضح في السياقات الإجرائية",
-        "مناسب لجلسات الاستقبال والمتابعة الرسمية",
-        "مراجعة الدور والسياق قبل بدء المهمة",
-      ],
-    },
-    swornStatus: {
-      nl: "Formele of beëdigde inzet kan per procedure worden afgestemd",
-      ar: "يمكن تنسيق الحاجة إلى مترجم محلّف أو رسمي بحسب الإجراء",
-    },
-    verification: {
-      wbtvStatus: {
-        nl: "Verificatieveld voor officiële inzet voorbereid",
-        ar: "حقل التحقق للاستخدام الرسمي مُعدّ",
-      },
-      rbtvStatus: {
-        nl: "Registerstatus als controlepunt voorbereid",
-        ar: "حالة السجل مهيأة كنقطة تحقق",
-      },
-      confidentiality: {
-        nl: "Zorgvuldige omgang met cliënt- en dossierinformatie",
-        ar: "تعامل حذر مع معلومات العميل أو الملف",
-      },
-      qualityLevel: {
-        nl: "Afstemming op procedure, terminologie en context",
-        ar: "مواءمة مع الإجراء والمصطلحات والسياق",
-      },
+    safeguards: {
+      nl: ["Rol van de tolk vooraf verduidelijken", "Procedure en terminologie afstemmen", "Vereiste kwalificatie vooraf controleren"],
+      ar: ["توضيح دور المترجم مسبقاً", "تنسيق الإجراء والمصطلحات", "التحقق من التأهيل المطلوب"],
     },
   },
   {
-    slug: "arabisch-nederlands-spoed-telefonisch",
-    name: "Profiel Arabisch-Nederlands Spoed/Telefonisch",
+    id: "urgent-formal",
     title: {
-      nl: "Arabisch ↔ Nederlands tolk voor spoed en telefonische inzet",
-      ar: "مترجم شفهي عربي ↔ هولندي للطوارئ والاستخدام الهاتفي",
+      nl: "Spoed en formele inzet",
+      ar: "الطوارئ والمهام الرسمية",
     },
     overview: {
-      nl: "Profiel dat laat zien hoe snelheid, bereikbaarheid en zorgvuldigheid samenkomen bij urgente of tijdkritische gesprekken.",
-      ar: "ملف يوضح كيف يمكن الجمع بين السرعة والتوافر والعناية المهنية في الحالات العاجلة أو الحساسة زمنياً.",
+      nl: "Voor tijdkritische of formele afspraken wordt vooraf beoordeeld welke beschikbaarheid, inzetvorm en kwalificatie nodig zijn.",
+      ar: "في المواعيد العاجلة أو الرسمية يتم مسبقاً تقييم التوافر وشكل الجلسة والتأهيل المطلوب.",
     },
-    languages: {
-      nl: ["Arabisch", "Nederlands"],
-      ar: ["العربية", "الهولندية"],
+    contexts: {
+      nl: ["Dezelfde dag of op korte termijn", "Beëdigde inzet wanneer vereist", "Juridische of officiële afspraken"],
+      ar: ["في اليوم نفسه أو خلال وقت قصير", "مترجم محلّف عند الحاجة", "مواعيد قانونية أو رسمية"],
     },
-    specializations: {
-      nl: ["Spoedoverleg", "Telefonische triage", "Korte proceduregesprekken"],
-      ar: ["التنسيق العاجل", "الفرز أو المتابعة الهاتفية", "المحادثات الإجرائية القصيرة"],
+    modes: {
+      nl: ["Telefonisch waar passend", "Video bij korte termijn", "Fysiek als context en planning dat toelaten"],
+      ar: ["هاتفياً عند الملاءمة", "عبر الفيديو للوقت القصير", "حضورياً إذا سمح السياق والجدول"],
     },
-    serviceAreas: {
-      nl: ["Telefonisch", "Video bij korte termijn", "Snel inzetbare afspraken"],
-      ar: ["هاتفياً", "عبر الفيديو عند الحاجة السريعة", "مواعيد قابلة للتنسيق السريع"],
-    },
-    quality: {
-      nl: [
-        "Snelheid zonder onduidelijke beloftes",
-        "Duidelijke intake voor urgente context",
-        "Professionele afbakening van wat haalbaar is",
-      ],
-      ar: [
-        "سرعة دون وعود غير واقعية",
-        "استقبال واضح للطلبات العاجلة",
-        "تحديد مهني لما هو ممكن فعلاً",
-      ],
-    },
-    swornStatus: {
-      nl: "Spoedinzet en beëdigde inzet worden apart tegen de context afgezet",
-      ar: "تُقيّم الحاجة إلى الطوارئ والصفة المحلّفة كلٌّ بحسب السياق",
-    },
-    verification: {
-      wbtvStatus: {
-        nl: "Verificatiepunt voor formele spoedcontext voorbereid",
-        ar: "نقطة التحقق للسياقات العاجلة الرسمية مُعدة",
-      },
-      rbtvStatus: {
-        nl: "Registercontrole kan deel uitmaken van de intake",
-        ar: "يمكن أن تكون مراجعة السجل جزءاً من الاستقبال الأولي",
-      },
-      confidentiality: {
-        nl: "Geheimhouding blijft relevant, ook bij tijdsdruk",
-        ar: "السرية تبقى أساسية حتى في حالات ضغط الوقت",
-      },
-      qualityLevel: {
-        nl: "Geschiktheidscheck vóór bevestiging van urgente inzet",
-        ar: "فحص الملاءمة قبل تأكيد أي مهمة عاجلة",
-      },
+    safeguards: {
+      nl: ["Geen beschikbaarheidsgarantie vooraf", "Exacte tijd en context nodig", "Registerinschrijving controleren bij formele inzet"],
+      ar: ["لا يوجد ضمان مسبق للتوافر", "يلزم تحديد الوقت والسياق", "التحقق من التسجيل في المهام الرسمية"],
     },
   },
 ];
 
 const teamPageContent = {
   nl: {
-    metaTitle: "Team en verificatie | Arabisch ↔ Nederlands tolkencollectief",
+    metaTitle: "Collectief en werkwijze | Arabisch ↔ Nederlands tolken",
     metaDescription:
-      "Teamoverzicht en verificatiearchitectuur voor Arabisch-Nederlandse tolken met specialisaties, inzetgebieden en voorbereidbare registratiestatus.",
+      "Lees hoe het Arabisch-Nederlandse tolkencollectief opdrachten afstemt op context, inzetvorm, beschikbaarheid en vereiste kwalificatie.",
     hero: {
-      eyebrow: "Team en verificatie",
-      title: "Een teamstructuur die uitlegbaar, controleerbaar en schaalbaar is.",
+      eyebrow: "Collectief en werkwijze",
+      title: "Arabisch-Nederlandse tolken voor uiteenlopende professionele gesprekken.",
       intro:
-        "Deze pagina laat zien hoe het collectief de trust-laag opbouwt: niet als losse claim, maar als profielarchitectuur met taalrichting, specialisaties, inzetgebieden, verificatievelden en professionele kwaliteitsnotities.",
+        "Het collectief brengt aanvragen in kaart op basis van taalrichting, gesprekstype, gewenste inzetvorm, beschikbaarheid en eventuele formele eisen. Binnen het collectief zijn ook beëdigde tolken beschikbaar die in een nationaal register zijn ingeschreven.",
       highlights: [
-        "Teamopzet voorbereid op individuele profielpagina’s.",
-        "Verificatievelden voor Wbtv/Rbtv en formele inzetcontext.",
-        "Geschreven voor opdrachtgevers die bewijs en geschiktheid willen toetsen.",
+        "Inzet voor zorg, overheid, recht en migratie.",
+        "Telefonisch, via video of op locatie, afhankelijk van de opdracht.",
+        "Beëdigde en urgente inzet wordt per aanvraag afgestemd.",
       ],
     },
     sections: {
       overview: {
-        eyebrow: "Waarom deze pagina bestaat",
-        title: "High-trust dienstverlening vraagt om zichtbare profielstructuur.",
+        eyebrow: "Passende inzet",
+        title: "Niet iedere opdracht vraagt om dezelfde ervaring of formele status.",
         description:
-          "Niet elke opdrachtgever wil alleen weten dát er een tolk beschikbaar is. In formele contexten wil men ook kunnen beoordelen of de inzet passend, controleerbaar en professioneel georganiseerd is.",
+          "Daarom wordt vooraf gekeken naar de inhoud van het gesprek, de setting, de gewenste vorm en de vraag of een beëdigde of geregistreerde tolk nodig is.",
       },
       verification: {
-        eyebrow: "Verificatie-architectuur",
-        title: "Wat deze teamlaag zichtbaar maakt",
+        eyebrow: "Vooraf afstemmen",
+        title: "Welke punten worden vóór bevestiging beoordeeld?",
         description:
-          "De huidige teamkaarten zijn bewust opgezet als groeibasis voor latere profielpagina’s en sectorspecifieke matches.",
+          "De beschikbare informatie wordt gebruikt om een passende en haalbare inzet te beoordelen.",
         items: [
-          "Naam en duidelijke taalrichting",
-          "Specialisaties en inzetgebieden",
-          "Aparte velden voor beëdigd/gecertificeerd of formeel verifieerbare inzet",
-          "Voorbereide controlepunten voor Wbtv/Rbtv-context",
-          "Kwaliteit, geheimhouding en geschiktheidsnotities per profiel",
+          "Taalrichting en relevante terminologie",
+          "Sector en gevoeligheid van het gesprek",
+          "Telefonische, video- of fysieke inzet",
+          "Beëdigde of geregistreerde status wanneer vereist",
+          "Datum, tijd, duur en actuele beschikbaarheid",
         ],
       },
-      growth: {
-        eyebrow: "Voor latere groei",
-        title: "Deze architectuur is klaar voor individuele profielpagina’s en sectorspecifieke landingspagina’s.",
+      expertise: {
+        eyebrow: "Expertisegebieden",
+        title: "Het collectief ondersteunt verschillende professionele contexten.",
         description:
-          "De datastructuur is zo opgezet dat later profiel-URL’s, locaties, sectorspecialisaties en expliciete verificatiedetails kunnen worden toegevoegd zonder de teamlaag te vervangen.",
+          "De onderstaande gebieden beschrijven de typen opdrachten die kunnen worden afgestemd. Een concrete match blijft afhankelijk van beschikbaarheid en vereiste kwalificatie.",
+      },
+      assignment: {
+        eyebrow: "Van aanvraag naar inzet",
+        title: "Een gerichte aanvraag maakt een zorgvuldige match mogelijk.",
+        description:
+          "Stuur alleen de gegevens die nodig zijn om de opdracht te beoordelen. Gevoelige dossierinformatie kan later via een passend kanaal worden afgestemd.",
       },
     },
   },
   ar: {
-    metaTitle: "الفريق والتحقق | مجموعة الترجمة الشفهية العربية الهولندية",
+    metaTitle: "المجموعة وطريقة العمل | مترجمون عرب وهولنديون",
     metaDescription:
-      "عرض الفريق وبنية التحقق لخدمات الترجمة الشفهية العربية الهولندية مع التخصصات ومجالات الاستخدام وحقول التحقق المهني.",
+      "تعرفوا على كيفية تنسيق مجموعة المترجمين الشفهيين للمهام بحسب السياق وشكل الجلسة والتوافر والتأهيل المطلوب.",
     hero: {
-      eyebrow: "الفريق والتحقق",
-      title: "بنية فريق قابلة للشرح والتحقق والتوسع.",
+      eyebrow: "المجموعة وطريقة العمل",
+      title: "مترجمون شفهيون بالعربية والهولندية لمحادثات مهنية متنوعة.",
       intro:
-        "توضح هذه الصفحة كيف تُبنى طبقة الثقة داخل الموقع: عبر ملفات مهنية واضحة تشمل اتجاه اللغة والتخصصات ومجالات الاستخدام وحقول التحقق والملاحظات المرتبطة بالجودة والمهنية.",
+        "يتم تقييم الطلب بحسب اتجاه اللغة ونوع المحادثة وشكل الجلسة والتوافر وأي متطلبات رسمية. تضم المجموعة أيضاً مترجمين محلّفين مسجلين في سجل وطني.",
       highlights: [
-        "الهيكل مهيأ للتوسع إلى صفحات ملفات فردية لاحقاً.",
-        "حقول تحقق للسياقات الرسمية وWbtv/Rbtv.",
-        "موجّه للجهات التي تريد فهماً أوضح لملاءمة المترجم المهني.",
+        "للرعاية والجهات الرسمية والقانون والهجرة.",
+        "هاتفياً أو عبر الفيديو أو حضورياً بحسب المهمة.",
+        "يتم تنسيق المهام المحلّفة والعاجلة لكل طلب على حدة.",
       ],
     },
     sections: {
       overview: {
-        eyebrow: "لماذا هذه الصفحة",
-        title: "الخدمات عالية الثقة تحتاج إلى بنية ملفات مهنية ظاهرة.",
+        eyebrow: "المهمة المناسبة",
+        title: "ليست كل مهمة بحاجة إلى الخبرة أو الصفة الرسمية نفسها.",
         description:
-          "في السياقات الرسمية لا يكفي معرفة أن مترجماً ما متاح، بل يجب أن تكون الملاءمة المهنية وقابلية التحقق مفهومة بشكل واضح.",
+          "لذلك يتم مسبقاً تقييم مضمون المحادثة وشكلها وما إذا كانت هناك حاجة إلى مترجم محلّف أو مسجل.",
       },
       verification: {
-        eyebrow: "بنية التحقق",
-        title: "ما الذي تكشفه هذه الطبقة من الفريق",
+        eyebrow: "التنسيق المسبق",
+        title: "ما النقاط التي تُراجع قبل تأكيد المهمة؟",
         description:
-          "تم إعداد البطاقات الحالية كأساس قابل للنمو نحو ملفات فردية وتخصيصات قطاعية أكثر تفصيلاً.",
+          "تُستخدم المعلومات المتاحة لتقييم مدى الملاءمة والإمكانية بشكل مهني.",
         items: [
-          "الاسم واتجاه اللغة بشكل واضح",
-          "التخصصات ومجالات الاستخدام",
-          "حقول مستقلة للصفة المحلّفة أو القابلة للتحقق الرسمي",
-          "نقاط تحقق مهيأة لسياقات Wbtv/Rbtv",
-          "ملاحظات حول الجودة والسرية والملاءمة المهنية",
+          "اتجاه اللغة والمصطلحات ذات الصلة",
+          "القطاع وحساسية المحادثة",
+          "الهاتف أو الفيديو أو الحضور",
+          "الصفة المحلّفة أو المسجلة عند الحاجة",
+          "التاريخ والوقت والمدة والتوافر الفعلي",
         ],
       },
-      growth: {
-        eyebrow: "جاهز للتوسع",
-        title: "هذه البنية جاهزة لاحقاً لصفحات ملفات فردية وصفحات قطاعية ومحلية.",
+      expertise: {
+        eyebrow: "مجالات الخبرة",
+        title: "تدعم المجموعة سياقات مهنية متنوعة.",
         description:
-          "تم تصميم البيانات بحيث يمكن إضافة عناوين ملفات ومناطق وتخصصات وتفاصيل تحقق لاحقاً دون إعادة بناء القسم كله.",
+          "توضح المجالات التالية أنواع المهام الممكنة. تبقى الملاءمة النهائية مرتبطة بالتوافر والتأهيل المطلوب.",
+      },
+      assignment: {
+        eyebrow: "من الطلب إلى المهمة",
+        title: "الطلب الدقيق يساعد على اختيار المترجم المناسب.",
+        description:
+          "أرسلوا فقط المعلومات الضرورية لتقييم المهمة. يمكن تنسيق بيانات الملفات الحساسة لاحقاً عبر قناة مناسبة.",
       },
     },
   },

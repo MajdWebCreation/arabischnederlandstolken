@@ -1,9 +1,12 @@
+import type { Locale } from "@/lib/site";
+
 type Action = {
   label: string;
   href: string;
 };
 
 type HeroProps = {
+  locale: Locale;
   eyebrow: string;
   title: string;
   intro: string;
@@ -15,6 +18,7 @@ type HeroProps = {
 };
 
 export function Hero({
+  locale,
   eyebrow,
   title,
   intro,
@@ -24,6 +28,19 @@ export function Hero({
   compact = false,
   variant = "default",
 }: HeroProps) {
+  const labels =
+    locale === "nl"
+      ? {
+          trust: "Zorgvuldige afstemming",
+          contact: "Formulier en e-mail",
+          available: "Inzet en beschikbaarheid",
+        }
+      : {
+          trust: "تنسيق مهني",
+          contact: "النموذج والبريد الإلكتروني",
+          available: "الخدمة والتوافر",
+        };
+
   if (variant === "editorial") {
     return (
       <section className="section-space-tight">
@@ -89,7 +106,7 @@ export function Hero({
             </div>
             <aside className="panel-soft p-6 lg:p-7">
               <p className="eyebrow eyebrow-muted">
-                {variant === "trust" ? "Trust focus" : "Contact focus"}
+                {labels.trust}
               </p>
               <ul className="mt-5 space-y-4">
                 {highlights.map((highlight) => (
@@ -124,7 +141,7 @@ export function Hero({
               </p>
             </div>
             <aside className="panel border-line-strong bg-brand-strong px-6 py-6 text-white lg:px-7 lg:py-7">
-              <p className="eyebrow eyebrow-inverse">Directe routes</p>
+              <p className="eyebrow eyebrow-inverse">{labels.contact}</p>
               <div className="mt-5 flex flex-col gap-3">
                 <a href={primaryAction.href} className="button-primary-on-dark px-6 py-3">
                   {primaryAction.label}
@@ -179,7 +196,7 @@ export function Hero({
 
           <aside className="rounded-[1.9rem] border border-brand/12 bg-brand-strong px-6 py-6 text-white shadow-[0_18px_50px_rgba(12,36,68,0.16)]">
             <p className="eyebrow eyebrow-inverse">
-              Direct inzetbaar
+              {labels.available}
             </p>
             <ul className="mt-5 space-y-3">
               {highlights.map((highlight) => (

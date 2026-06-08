@@ -63,7 +63,6 @@ export default async function LocaleLayout({
     "@type": "ProfessionalService",
     name: organizationName,
     url: absoluteUrl(`/${locale}`),
-    areaServed: "NL",
     availableLanguage: [
       "Dutch",
       "Arabic",

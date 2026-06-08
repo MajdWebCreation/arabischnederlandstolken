@@ -56,7 +56,6 @@ export default async function MainServicePage({ params }: PageProps) {
       "@type": "Organization",
       name: organizationName,
     },
-    areaServed: "NL",
     serviceType:
       locale === "nl"
         ? "Telefonische, video- en fysieke tolkdiensten"
@@ -68,6 +67,7 @@ export default async function MainServicePage({ params }: PageProps) {
     <>
       <JsonLd data={serviceJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.mainService.eyebrow}
         title={content.mainService.title}
         intro={content.mainService.intro}

@@ -10,21 +10,21 @@ const faqData = {
   nl: {
     metaTitle: "FAQ | Arabisch ↔ Nederlands tolkencollectief",
     metaDescription:
-      "Veelgestelde vragen over boeken, spoed, beëdigde tolken, telefonische inzet, verificatie, kosten, beschikbaarheid en professionele werkwijze.",
+      "Veelgestelde vragen over aanvragen, spoed, beëdigde tolken, telefonische inzet, kosten, beschikbaarheid en professionele werkwijze.",
     hero: {
       eyebrow: "Veelgestelde vragen",
-      title: "Heldere antwoorden voor opdrachtgevers die snel én zorgvuldig willen boeken.",
+      title: "Heldere antwoorden voor opdrachtgevers die snel én zorgvuldig een tolk willen aanvragen.",
       intro:
         "Deze FAQ is opgezet voor citeerbare duidelijkheid. De antwoorden zijn compact, concreet en geschreven voor situaties waarin betrouwbaarheid, snelheid en formele context een rol spelen.",
       highlights: [
-        "Antwoorden op boeking, spoed en inzetvormen.",
+        "Antwoorden op aanvragen, spoed en inzetvormen.",
         "Duidelijke uitleg over beëdiging, verificatie en vertrouwelijkheid.",
         "Geschreven voor gemeente, zorg, advocatuur, rechtbank en IND-context.",
       ],
     },
     categories: [
       {
-        title: "Boeken en beschikbaarheid",
+        title: "Aanvragen en beschikbaarheid",
         description:
           "Praktische vragen over planning, bereikbaarheid en informatie die nodig is voor een aanvraag.",
       },
@@ -41,20 +41,20 @@ const faqData = {
     ],
     items: [
       {
-        category: "Boeken en beschikbaarheid",
-        question: "Hoe boek ik een Arabisch ↔ Nederlands tolk?",
+        category: "Aanvragen en beschikbaarheid",
+        question: "Hoe vraag ik een Arabisch ↔ Nederlands tolk aan?",
         answer:
           "Stuur een aanvraag met datum, tijd, verwachte duur, sectorcontext en gewenste inzetvorm. Daarmee kan snel worden beoordeeld welke tolkvorm passend is en welke vervolgstap nodig is.",
       },
       {
-        category: "Boeken en beschikbaarheid",
+        category: "Aanvragen en beschikbaarheid",
         question: "Wat moet ik meesturen bij een eerste aanvraag?",
         answer:
           "Minimaal nodig zijn datum, tijd, duur, contactvorm, locatie of onlinevorm en een korte omschrijving van de context, zoals gemeente, zorg, advocaat, rechtbank of IND.",
       },
       {
-        category: "Boeken en beschikbaarheid",
-        question: "Kan een opdrachtgever ook namens een cliënt of instelling boeken?",
+        category: "Aanvragen en beschikbaarheid",
+        question: "Kan een opdrachtgever ook namens een cliënt of instelling een aanvraag doen?",
         answer:
           "Ja. Gemeenten, zorginstellingen, advocatenkantoren, begeleiders en andere professionals kunnen namens een cliënt of dossier een aanvraag doen, zolang de context duidelijk wordt meegegeven.",
       },
@@ -62,7 +62,7 @@ const faqData = {
         category: "Spoed en inzetvorm",
         question: "Is een spoedtolk Arabisch ↔ Nederlands mogelijk?",
         answer:
-          "Ja, wanneer de planning het toelaat. Bij een spoedaanvraag is snelle context belangrijk: wanneer het gesprek plaatsvindt, hoe urgent het is en of telefonische of video-inzet acceptabel is.",
+          "Ja, soms kan inzet dezelfde dag of op korte termijn mogelijk zijn. Stuur de exacte tijd, context en gewenste inzetvorm mee, zodat de beschikbaarheid direct kan worden beoordeeld.",
       },
       {
         category: "Spoed en inzetvorm",
@@ -80,13 +80,13 @@ const faqData = {
         category: "Verificatie en professionaliteit",
         question: "Hoe kan ik registratie of bevoegdheid controleren?",
         answer:
-          "De verificatiestructuur van de site is erop ingericht om per profiel of opdracht duidelijk te maken welke status relevant is, zoals beëdigd, geregistreerd of sectorspecifiek gekwalificeerd. Bij formele inzet hoort die controle expliciet onderdeel van de afstemming te zijn.",
+          "Binnen het collectief zijn beëdigde tolken beschikbaar die in een nationaal register zijn ingeschreven. Bij een formele opdracht wordt vooraf afgestemd welke status of kwalificatie vereist is.",
       },
       {
         category: "Verificatie en professionaliteit",
         question: "Wordt rekening gehouden met geheimhouding en professionele neutraliteit?",
         answer:
-          "Ja. Gevoelige gesprekken vragen om zorgvuldige omgang met informatie, neutrale overdracht en duidelijke professionele grenzen. Dat is onderdeel van de high-trust positionering van deze website en dienst.",
+          "Ja. Gevoelige gesprekken vragen om zorgvuldige omgang met informatie, neutrale overdracht en duidelijke professionele grenzen. Deel bij een eerste e-mail alleen de informatie die nodig is om de opdracht te beoordelen.",
       },
       {
         category: "Verificatie en professionaliteit",
@@ -105,21 +105,21 @@ const faqData = {
   ar: {
     metaTitle: "الأسئلة الشائعة | مجموعة الترجمة الشفهية العربية الهولندية",
     metaDescription:
-      "إجابات واضحة حول الحجز والطوارئ والمترجم المحلّف والاستخدام الهاتفي والتحقق والسرية والتوافر.",
+      "إجابات واضحة حول الطلب والطوارئ والمترجم المحلّف والاستخدام الهاتفي والتحقق والسرية والتوافر.",
     hero: {
       eyebrow: "الأسئلة الشائعة",
-      title: "إجابات مباشرة للجهات التي تريد الحجز بسرعة لكن مع وضوح وثقة.",
+      title: "إجابات مباشرة للجهات التي تريد إرسال طلب بسرعة لكن مع وضوح وثقة.",
       intro:
         "تم إعداد هذه الصفحة بصياغة مباشرة وقابلة للاقتباس. الإجابات قصيرة ومهنية وتناسب السياقات الرسمية والطبية والقانونية والهجرية.",
       highlights: [
-        "تغطي الحجز والطوارئ وأشكال تقديم الخدمة.",
+        "تغطي الطلب والطوارئ وأشكال تقديم الخدمة.",
         "تشرح التحقق والتسجيل والسرية المهنية.",
         "مناسبة لسياقات البلدية والرعاية والمحاماة والمحاكم والهجرة.",
       ],
     },
     categories: [
       {
-        title: "الحجز والتوافر",
+        title: "الطلب والتوافر",
         description: "أسئلة عملية حول بدء الطلب وما المعلومات المطلوبة أولاً.",
       },
       {
@@ -133,19 +133,19 @@ const faqData = {
     ],
     items: [
       {
-        category: "الحجز والتوافر",
-        question: "كيف يمكن حجز مترجم شفهي عربي ↔ هولندي؟",
+        category: "الطلب والتوافر",
+        question: "كيف يمكن طلب مترجم شفهي عربي ↔ هولندي؟",
         answer:
           "أرسلوا تاريخ الاجتماع ووقته ومدته والسياق العام وطريقة الترجمة المطلوبة. بهذه المعلومات يمكن تقييم الطلب بسرعة وتحديد الخطوة التالية بوضوح.",
       },
       {
-        category: "الحجز والتوافر",
+        category: "الطلب والتوافر",
         question: "ما الذي يجب إرساله في أول طلب؟",
         answer:
           "يُفضّل إرسال التاريخ والوقت والمدة ونوع الجلسة والمكان أو طريقة الاتصال مع وصف مختصر للسياق، مثل بلدية أو رعاية صحية أو محامٍ أو محكمة أو هجرة.",
       },
       {
-        category: "الحجز والتوافر",
+        category: "الطلب والتوافر",
         question: "هل يمكن لجهة أو مهني أن يطلب الخدمة نيابة عن عميل؟",
         answer:
           "نعم. يمكن للبلديات أو المؤسسات الصحية أو المحامين أو المرافقين أو غيرهم تقديم الطلب نيابة عن عميل أو ملف محدد، بشرط توضيح السياق.",
@@ -154,7 +154,7 @@ const faqData = {
         category: "الطوارئ وشكل الجلسة",
         question: "هل يمكن طلب مترجم طوارئ عربي ↔ هولندي؟",
         answer:
-          "نعم إذا سمحت الجداول بذلك. في الطلبات العاجلة يجب توضيح وقت الجلسة ومدى الاستعجال وما إذا كان الهاتف أو الفيديو مقبولاً.",
+          "نعم، قد تتاح المهمة في اليوم نفسه أو خلال وقت قصير. أرسلوا الوقت الدقيق والسياق وشكل الجلسة المطلوب حتى يمكن تقييم التوافر مباشرة.",
       },
       {
         category: "الطوارئ وشكل الجلسة",
@@ -172,7 +172,7 @@ const faqData = {
         category: "التحقق والمهنية",
         question: "كيف يمكن التحقق من التسجيل أو الصفة المهنية؟",
         answer:
-          "تم إعداد بنية التحقق في الموقع بحيث يمكن ربط كل ملف أو مهمة بالحالة المهنية ذات الصلة، مثل محلّف أو مسجل أو مؤهل لقطاع محدد. في السياقات الرسمية يجب أن يكون هذا التحقق جزءاً واضحاً من التنسيق.",
+          "تضم المجموعة مترجمين محلّفين مسجلين في سجل وطني. في المهام الرسمية يتم الاتفاق مسبقاً على الصفة أو التأهيل المطلوب.",
       },
       {
         category: "التحقق والمهنية",

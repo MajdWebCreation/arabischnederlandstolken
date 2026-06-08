@@ -8,25 +8,32 @@ export const organizationName = "Arabisch Nederlands Tolkencollectief";
 
 export const organizationContact = {
   email: "info@arabischnederlandstolken.nl",
-  phoneLabel: "Telefoonnummer op aanvraag",
-  whatsappLabel: "WhatsApp op aanvraag",
-  officeHoursNl:
-    "Maandag tot en met vrijdag bereikbaar voor intake, planning en terugbelverzoeken.",
-  officeHoursAr:
-    "متاحون من الإثنين إلى الجمعة لطلبات الحجز والاتصال والمتابعة الأولية.",
 };
 
-export const contactActionSubjects = {
-  general: "Aanvraag Arabisch-Nederlands tolk",
-  callback: "Terugbelverzoek Arabisch-Nederlands tolk",
-  urgent: "Spoedaanvraag Arabisch-Nederlands tolk",
-  sworn: "Aanvraag beëdigd tolk Arabisch-Nederlands",
-  official: "Officiële afspraak Arabisch-Nederlands tolk",
-  municipality: "Aanvraag gemeentecontext Arabisch-Nederlands tolk",
-  healthcare: "Aanvraag zorgcontext Arabisch-Nederlands tolk",
-  legal: "Aanvraag juridische context Arabisch-Nederlands tolk",
-  whatsapp: "Verzoek WhatsApp-terugkoppeling tolkdienst",
-};
+const contactActionSubjects = {
+  nl: {
+    general: "Aanvraag Arabisch-Nederlands tolk",
+    callback: "Vraag over Arabisch-Nederlandse tolkdienst",
+    urgent: "Spoedaanvraag Arabisch-Nederlands tolk",
+    sworn: "Aanvraag beëdigd tolk Arabisch-Nederlands",
+    official: "Aanvraag officiële afspraak Arabisch-Nederlands tolk",
+    municipality: "Aanvraag gemeentecontext Arabisch-Nederlands tolk",
+    healthcare: "Aanvraag zorgcontext Arabisch-Nederlands tolk",
+    legal: "Aanvraag juridische context Arabisch-Nederlands tolk",
+    followUp: "Vraag over Arabisch-Nederlandse tolkdienst",
+  },
+  ar: {
+    general: "طلب مترجم شفهي عربي هولندي",
+    callback: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
+    urgent: "طلب عاجل لمترجم شفهي عربي هولندي",
+    sworn: "طلب مترجم محلّف عربي هولندي",
+    official: "طلب لموعد رسمي مع مترجم عربي هولندي",
+    municipality: "طلب ترجمة شفهية لسياق بلدي",
+    healthcare: "طلب ترجمة شفهية لسياق صحي",
+    legal: "طلب ترجمة شفهية لسياق قانوني",
+    followUp: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
+  },
+} as const;
 
 const localeDefinitions = {
   nl: {
@@ -67,69 +74,71 @@ export function buildMailtoHref(subject: string) {
 }
 
 export function getContactActions(locale: Locale) {
+  const subjects = contactActionSubjects[locale];
+
   return {
     general: {
       label:
         locale === "nl"
-          ? "Plan een tolkgesprek"
-          : "ابدأ طلب مترجم شفهي",
-      href: buildMailtoHref(contactActionSubjects.general),
+          ? "Stuur een tolkaanvraag"
+          : "أرسل طلب مترجم شفهي",
+      href: buildMailtoHref(subjects.general),
     },
     callback: {
       label:
         locale === "nl"
-          ? "Vraag een terugbelverzoek aan"
-          : "اطلب اتصالاً",
-      href: buildMailtoHref(contactActionSubjects.callback),
+          ? "Bespreek uw situatie per e-mail"
+          : "ناقش طلبك عبر البريد الإلكتروني",
+      href: buildMailtoHref(subjects.callback),
     },
     urgent: {
       label:
         locale === "nl"
-          ? "Dien een spoedaanvraag in"
-          : "أرسل طلباً عاجلاً",
-      href: buildMailtoHref(contactActionSubjects.urgent),
+          ? "Mail een spoedaanvraag"
+          : "أرسل طلباً عاجلاً بالبريد",
+      href: buildMailtoHref(subjects.urgent),
     },
     sworn: {
       label:
         locale === "nl"
-          ? "Vraag een beëdigd tolk aan"
-          : "اطلب مترجماً محلّفاً",
-      href: buildMailtoHref(contactActionSubjects.sworn),
+          ? "Mail een aanvraag voor een beëdigd tolk"
+          : "أرسل طلب مترجم محلّف بالبريد",
+      href: buildMailtoHref(subjects.sworn),
     },
     official: {
       label:
         locale === "nl"
-          ? "Plan een officiële afspraak"
-          : "نسّق موعداً رسمياً",
-      href: buildMailtoHref(contactActionSubjects.official),
+          ? "Mail uw vraag over een officiële afspraak"
+          : "أرسل استفسارك عن موعد رسمي",
+      href: buildMailtoHref(subjects.official),
     },
     municipality: {
       label:
         locale === "nl"
-          ? "Aanvraag voor gemeentecontext"
-          : "طلب لجهة بلدية",
-      href: buildMailtoHref(contactActionSubjects.municipality),
+          ? "Mail een aanvraag voor gemeentecontext"
+          : "أرسل طلباً لسياق بلدي",
+      href: buildMailtoHref(subjects.municipality),
     },
     healthcare: {
       label:
         locale === "nl"
-          ? "Aanvraag voor zorgcontext"
-          : "طلب لجهة صحية",
-      href: buildMailtoHref(contactActionSubjects.healthcare),
+          ? "Mail een aanvraag voor zorgcontext"
+          : "أرسل طلباً لسياق صحي",
+      href: buildMailtoHref(subjects.healthcare),
     },
     legal: {
       label:
         locale === "nl"
-          ? "Aanvraag voor juridische context"
-          : "طلب لسياق قانوني",
-      href: buildMailtoHref(contactActionSubjects.legal),
+          ? "Mail een aanvraag voor juridische context"
+          : "أرسل طلباً لسياق قانوني",
+      href: buildMailtoHref(subjects.legal),
     },
-    whatsapp: {
+    followUp: {
       label:
         locale === "nl"
-          ? "Vraag een WhatsApp-terugkoppeling aan"
-          : "اطلب متابعة عبر واتساب",
-      href: buildMailtoHref(contactActionSubjects.whatsapp),
+          ? "Stel uw vraag per e-mail"
+          : "أرسل استفسارك بالبريد الإلكتروني",
+      href: buildMailtoHref(subjects.followUp),
     },
   };
 }

@@ -14,7 +14,7 @@ const servicePages = {
         highlights: [
           "Geschikt voor juridische en andere officiële contexten.",
           "Gericht op verificatie, bevoegdheid en zorgvuldige intake.",
-          "Opgezet voor opdrachtgevers die high-trust inzet moeten onderbouwen.",
+          "Beschikbaar via beëdigde tolken die in een nationaal register zijn ingeschreven.",
         ],
       },
       answerFirst: {
@@ -44,13 +44,13 @@ const servicePages = {
       ],
       verification: {
         eyebrow: "Hoe verificatie werkt",
-        title: "De website bouwt trust niet op vage claims, maar op controlepunten.",
+        title: "Bij formele inzet wordt de vereiste status vooraf gecontroleerd.",
         description:
           "Voor formele inzet moet duidelijk zijn welke verificatie relevant is voor de opdracht.",
         items: [
           "Controle op of de opdracht beëdigde inzet vereist.",
           "Afstemming op formele context, procedure of instantie.",
-          "Ruimte voor Wbtv- of registercontrole waar passend.",
+          "Controle van registerinschrijving waar de opdracht dat vereist.",
           "Heldere scheiding tussen algemene tolkdienst en formeel verifieerbare inzet.",
         ],
       },
@@ -91,7 +91,7 @@ const servicePages = {
         {
           title: "Ontvang een terugkoppeling op geschiktheid en vervolgstap",
           description:
-            "U krijgt geen losse claim, maar een reactie die is afgestemd op haalbaarheid, verificatie en planning.",
+            "U krijgt een reactie die is afgestemd op haalbaarheid, vereiste kwalificatie en beschikbaarheid.",
         },
       ],
       cta: {
@@ -113,7 +113,7 @@ const servicePages = {
         highlights: [
           "Gericht op snelle intake en realistische terugkoppeling.",
           "Geschikt voor telefonisch, video en in sommige gevallen snelle fysieke inzet.",
-          "Professioneel voor zorg, gemeente, juridische en migratiecontext.",
+          "Soms mogelijk op dezelfde dag of op korte termijn, afhankelijk van beschikbaarheid.",
         ],
       },
       answerFirst: {
@@ -197,7 +197,7 @@ const servicePages = {
         eyebrow: "Spoedroute",
         title: "Heeft u snel een Arabisch-Nederlandse tolk nodig?",
         description:
-          "Gebruik de spoed- of terugbelroute en vermeld direct de exacte tijd, context en gewenste inzetvorm.",
+          "Mail uw spoedaanvraag en vermeld direct de exacte tijd, context en gewenste inzetvorm.",
       },
     },
   },
@@ -214,7 +214,7 @@ const servicePages = {
         highlights: [
           "مناسبة للسياقات القانونية والرسمية.",
           "تركّز على التحقق والصفة المهنية والمواءمة مع الإجراء.",
-          "مكتوبة لجهات تحتاج إلى توثيق الثقة قبل الحجز.",
+          "متاحة عبر مترجمين محلّفين مسجلين في سجل وطني.",
         ],
       },
       answerFirst: {
@@ -244,13 +244,13 @@ const servicePages = {
       ],
       verification: {
         eyebrow: "كيف يعمل التحقق",
-        title: "الثقة هنا تُبنى على نقاط تحقق واضحة، لا على عبارات عامة.",
+        title: "يتم التحقق مسبقاً من الصفة المطلوبة للمهام الرسمية.",
         description:
           "في الاستخدام الرسمي يجب أن يكون واضحاً ما نوع التحقق المرتبط بالمهمة.",
         items: [
           "تحديد ما إذا كانت الصفة المحلّفة مطلوبة فعلاً.",
           "ربط الطلب بالإجراء أو الجهة الرسمية المعنية.",
-          "إتاحة مساحة للتحقق من Wbtv أو السجل عند الحاجة.",
+          "التحقق من التسجيل عندما تتطلب المهمة ذلك.",
           "الفصل الواضح بين الخدمة العامة والاستخدام القابل للتحقق الرسمي.",
         ],
       },
@@ -313,7 +313,7 @@ const servicePages = {
         highlights: [
           "مبنية على استقبال سريع ورد مهني واقعي.",
           "مناسبة للهاتف والفيديو وبعض المواعيد الحضورية السريعة.",
-          "موجهة لسياقات الرعاية والبلديات والقانون والهجرة.",
+          "قد تتاح في اليوم نفسه أو خلال وقت قصير بحسب التوافر.",
         ],
       },
       answerFirst: {

@@ -12,19 +12,19 @@ const siteContent = {
       contact: "Contact",
     },
     actions: {
-      bookNow: "Boek een tolkgesprek",
+      bookNow: "Stuur een tolkaanvraag",
       viewServices: "Bekijk diensten",
       viewMainService: "Bekijk Arabisch ↔ Nederlands tolk",
     },
     footer: {
       title: "Professionele tolkondersteuning voor gesprekken die duidelijkheid vereisen.",
       description:
-        "Fase 1 van de website is ingericht op vertrouwen, directe boekbaarheid, meertaligheid en semantische duidelijkheid voor zoekmachines en AI-systemen.",
+        "Het Arabisch-Nederlandse tolkencollectief ondersteunt gesprekken in zorg, overheid, recht en migratie. Gebruik het formulier of e-mail om beschikbaarheid en de passende inzet af te stemmen.",
       navigationTitle: "Navigatie",
       contactTitle: "Contact",
-      contactNote: "Boekingen, terugbelverzoeken en intake via e-mail.",
+      contactNote: "Aanvragen kunnen via het formulier of per e-mail worden ingediend.",
       complianceNote:
-        "Structuur voorbereid op verificatie van registratie, Wbtv- en Rbtv-context.",
+        "Voor formele opdrachten stemmen we vooraf af welke kwalificatie of registerinschrijving vereist is.",
     },
     home: {
       metaTitle:
@@ -39,26 +39,26 @@ const siteContent = {
       highlights: [
         "Inzetbaar voor gemeente, zorg, advocaat, rechtbank en IND-context.",
         "Telefonisch, via video of op locatie inzetbaar per afspraak.",
-        "Voorbereid op verificatie van registratie, sectorervaring en geheimhouding.",
+        "Beschikbaarheid, context en vereiste kwalificatie worden vooraf afgestemd.",
       ],
       proofPoints: [
         {
-          kicker: "Boeken + bewijs",
-          title: "Niet alleen beschikbaar, maar ook uitlegbaar en verifieerbaar.",
+          kicker: "Duidelijke aanvraag",
+          title: "Vooraf helderheid over context, inzetvorm en beschikbaarheid.",
           description:
-            "De site is opgezet rond boekbaarheid, bewijsblokken en heldere context. Dat maakt het makkelijker voor opdrachtgevers om snel te handelen en voor zoekmachines om de dienst goed te begrijpen.",
+            "Stuur datum, tijd, duur en gesprekstype mee. Zo kan het collectief gericht beoordelen welke inzet passend en beschikbaar is.",
         },
         {
-          kicker: "High trust",
+          kicker: "Professionele context",
           title: "Professionele inzet voor gesprekken met impact.",
           description:
             "De positionering is gericht op formele en gevoelige contexten waarin taal, vertrouwen en neutraliteit essentieel zijn: medische afspraken, gemeenteprocessen, juridische trajecten en migratiegesprekken.",
         },
         {
           kicker: "Meertalig",
-          title: "NL en AR zijn vanaf de architectuur meegenomen.",
+          title: "Informatie beschikbaar in het Nederlands en Arabisch.",
           description:
-            "De route-opzet, metadata, canonicals en contentstructuur zijn vanaf fase 1 ingericht voor meertalige groei, inclusief voorbereiding op RTL voor Arabische pagina’s.",
+            "Bezoekers kunnen de belangrijkste informatie en aanvraagroutes in beide talen bekijken.",
         },
       ],
       answerFirst: {
@@ -92,7 +92,7 @@ const siteContent = {
         },
       ],
       bookingPanel: {
-        eyebrow: "Direct boeken",
+        eyebrow: "Aanvraag voorbereiden",
         title: "Wat hebben wij nodig om een passende tolk in te plannen?",
         description:
           "Een goede intake versnelt de inzet en helpt om de juiste tolkvorm te kiezen.",
@@ -104,43 +104,25 @@ const siteContent = {
         ],
       },
       serviceOverview: {
-        eyebrow: "Fase 1 diensten",
-        title: "Gebouwd voor uitbreiding, gestart met de kern.",
+        eyebrow: "Tolkdiensten",
+        title: "Kies de dienst die past bij uw gesprek.",
         description:
-          "De informatiearchitectuur ondersteunt meteen verdere groei naar extra diensten en kennispagina’s.",
+          "Het collectief ondersteunt algemene, formele en tijdkritische gesprekken, afhankelijk van beschikbaarheid en de vereiste kwalificatie.",
         cards: [
           {
             title: "Arabisch ↔ Nederlands tolk",
             description:
-              "De belangrijkste dienstpagina voor directe boekaanvragen, contextuitleg, bewijsblokken en toepassingsgebieden.",
+              "Voor telefonische, video- en fysieke gesprekken in onder meer zorg, overheid, recht en migratie.",
             href: "diensten/arabisch-nederlands-tolk",
             cta: "Bekijk dienst",
-          },
-          {
-            title: "Beëdigd tolk",
-            description:
-              "Voorbereid als vervolgroute voor situaties waarin formele registratie, juridische context of aanvullende verificatie centraal staat.",
-            status: "Voorbereid",
-          },
-          {
-            title: "Spoedtolk",
-            description:
-              "Voorbereid als aparte insteek voor urgente aanvragen, bereikbaarheid buiten standaard planning en tijdkritische gesprekken.",
-            status: "Voorbereid",
-          },
-          {
-            title: "Kennisbank en FAQ",
-            description:
-              "Voorbereid als semantische groeilaag voor zoekvragen, AI-citeerbaarheid, antwoordpagina’s en interne linkstructuur.",
-            status: "Voorbereid",
           },
         ],
       },
       process: {
-        eyebrow: "Hoe boeken werkt",
-        title: "Een duidelijke aanvraagroute verlaagt drempels en vergroot vertrouwen.",
+        eyebrow: "Hoe aanvragen werkt",
+        title: "Een duidelijke aanvraag helpt om snel de juiste inzet te beoordelen.",
         description:
-          "De intake wordt in fase 1 bewust eenvoudig en professioneel gehouden.",
+          "De eerste afstemming verloopt via het formulier of per e-mail en richt zich op de praktische en inhoudelijke eisen van het gesprek.",
         steps: [
           {
             title: "Stuur de aanvraag in",
@@ -155,20 +137,20 @@ const siteContent = {
           {
             title: "U ontvangt een passende terugkoppeling",
             description:
-              "De reactie is gericht op helderheid: wat mogelijk is, welke vorm passend is en welke vervolgstap nodig is om de boeking af te ronden.",
+              "De reactie geeft aan wat mogelijk is, welke vorm passend is en welke vervolgstap nodig is om de aanvraag af te ronden.",
           },
         ],
       },
       faqPreview: {
-        eyebrow: "Voorbereid op antwoordpagina’s",
-        title: "Veelgestelde vragen worden vanaf de basis meegenomen.",
+        eyebrow: "Veelgestelde vragen",
+        title: "Praktische antwoorden over inzet, kwalificatie en beschikbaarheid.",
         description:
-          "Deze thema’s keren later terug als aparte FAQ- en kennisbankpagina’s.",
+          "Bekijk de belangrijkste aandachtspunten voordat u een aanvraag verstuurt.",
         items: [
           {
             question: "Kan een Arabisch-Nederlandse tolk ook telefonisch worden ingezet?",
             answer:
-              "Ja. De architectuur en copy houden expliciet rekening met telefonische inzet, video-inzet en fysieke afspraken, zodat bezoekers en zoekmachines direct begrijpen welke vormen mogelijk zijn.",
+              "Ja. Telefonische inzet, video en afspraken op locatie zijn mogelijk, afhankelijk van de context en beschikbaarheid.",
           },
           {
             question: "Is de dienst geschikt voor gemeente, zorg en juridische gesprekken?",
@@ -178,20 +160,20 @@ const siteContent = {
           {
             question: "Wordt verificatie van registratie of Wbtv-context meegenomen?",
             answer:
-              "Ja. De site bereidt expliciet voor op verificatie, zodat toekomstige uitbreiding naar beëdigde en formeel gereguleerde inzet logisch aansluit.",
+              "Ja. Voor formele opdrachten wordt vooraf afgestemd welke kwalificatie of registerinschrijving nodig is.",
           },
           {
-            question: "Is de website al voorbereid op Arabische bezoekers?",
+            question: "Is informatie ook in het Arabisch beschikbaar?",
             answer:
-              "Ja. Er is een afzonderlijke /ar-structuur met RTL-voorbereiding en Arabische contentbasis, zodat de meertalige uitbouw niet achteraf hoeft te worden ingepast.",
+              "Ja. De belangrijkste informatie over diensten, aanvraag en werkwijze is ook in het Arabisch beschikbaar.",
           },
         ],
       },
       cta: {
         eyebrow: "Direct vervolg",
-        title: "Een tolkgesprek plannen of eerst de hoofdroute bekijken?",
+        title: "Een tolkaanvraag sturen of eerst de diensten bekijken?",
         description:
-          "De kernflow van de website is bewust eenvoudig: oriëntatie, bewijs, toepassingscontext en directe contactactie.",
+          "Stuur de datum, tijd, inzetvorm en korte context per e-mail om beschikbaarheid te laten beoordelen.",
       },
     },
     services: {
@@ -202,44 +184,44 @@ const siteContent = {
       title:
         "Tolkdiensten voor formele en gevoelige gesprekken in Nederland.",
       intro:
-        "De dienstenarchitectuur is opgezet rond concrete zoekintenties en gebruikssituaties. De huidige fase focust op de belangrijkste dienstpagina, terwijl de structuur al klaarstaat voor beëdigde inzet, spoed, locaties, FAQ en kennisbankcontent.",
+        "Het collectief biedt Arabisch-Nederlandse tolkondersteuning voor uiteenlopende gesprekken. Beëdigde en tijdkritische inzet is mogelijk wanneer de vereiste kwalificatie en beschikbaarheid aansluiten op de opdracht.",
       highlights: [
-        "Dienststructuur ingericht voor groei zonder herbouw.",
-        "Logische interne links tussen homepage, diensten en contact.",
-        "Sterke basis voor SEO, canonicals, hreflang en structured data.",
+        "Telefonisch, via video of op locatie, afhankelijk van de opdracht.",
+        "Beëdigde tolken zijn beschikbaar voor opdrachten waar formele kwalificatie vereist is.",
+        "Voor spoed kan inzet soms dezelfde dag of op korte termijn mogelijk zijn.",
       ],
       liveServices: {
-        eyebrow: "Nu beschikbaar",
-        title: "Actieve routes in fase 1",
+        eyebrow: "Beschikbare diensten",
+        title: "Tolkdiensten voor verschillende situaties",
         description:
-          "De eerste release concentreert zich op de hoofdvraag en de meest waarschijnlijke conversieroute.",
+          "Bekijk de algemene dienst of ga direct naar de aanvraagroute. Beschikbaarheid wordt altijd per opdracht bevestigd.",
         cards: [
           {
             title: "Arabisch ↔ Nederlands tolk",
             description:
-              "Hoofddienst voor boekingen, bewijsblokken, toepassingsgebieden, contactflow en voorbereidende FAQ-structuur.",
+              "Algemene tolkdienst voor gesprekken in zorg, overheid, recht, migratie en andere professionele contexten.",
             href: "diensten/arabisch-nederlands-tolk",
             cta: "Open dienstpagina",
           },
           {
             title: "Contact en aanvraag",
             description:
-              "Praktische route voor boekingen, terugbelverzoeken, WhatsApp-terugkoppeling en intake-informatie in één semantisch duidelijke contactpagina.",
+              "Stuur per e-mail de datum, tijd, inzetvorm en korte context om beschikbaarheid te laten beoordelen.",
             href: "contact",
             cta: "Open contactpagina",
           },
         ],
       },
       verification: {
-        eyebrow: "Vertrouwen en bewijs",
-        title: "Waarom deze opzet geschikt is voor high-trust dienstverlening",
+        eyebrow: "Zorgvuldige afstemming",
+        title: "Wat vooraf wordt afgestemd bij een professionele tolkaanvraag",
         description:
-          "De structuur laat niet alleen zien wat de dienst is, maar ook waarom deze geloofwaardig is.",
+          "Een passende inzet hangt af van de inhoud, setting, gewenste vorm en eventuele formele eisen.",
         items: [
           {
-            title: "Verifieerbaarheid voorbereid",
+            title: "Kwalificatie bij formele inzet",
             description:
-              "De copy en structuur reserveren expliciet ruimte voor registraties, Wbtv/Rbtv-verwijzingen en toekomstig toetsbare profielinformatie.",
+              "Wanneer een beëdigde of geregistreerde tolk nodig is, wordt dat vóór bevestiging bij de aanvraag betrokken.",
           },
           {
             title: "Context boven marketingtaal",
@@ -247,83 +229,83 @@ const siteContent = {
               "Elke pagina benoemt concrete gebruikssituaties zoals gemeente, zorg, advocaat, rechtbank en IND, zodat relevantie direct zichtbaar is.",
           },
           {
-            title: "Answer-first semantiek",
+            title: "Heldere intake",
             description:
-              "H1’s, introblokken en sectiekoppen beantwoorden eerst de kernvraag van de bezoeker. Dat helpt voor mens, Google en AI-systemen.",
+              "Datum, tijd, duur, sector en inzetvorm maken het mogelijk om beschikbaarheid en geschiktheid gericht te beoordelen.",
           },
         ],
       },
       future: {
-        eyebrow: "Voorbereide groeilaag",
-        title: "Routes die logisch als volgende uitbreiding kunnen landen",
+        eyebrow: "Inzetvormen en context",
+        title: "Welke vorm van tolkondersteuning past bij uw gesprek?",
         description:
-          "De codebase en navigatiestructuur zijn al voorbereid op deze inhoudelijke verbreding.",
+          "De juiste keuze hangt af van urgentie, gevoeligheid, locatie en eventuele formele eisen.",
         cards: [
           {
-            title: "Beëdigd tolk",
+            title: "Telefonisch of via video",
             description:
-              "Aparte route voor formele registratiesituaties en juridische of officiële context waarin specifieke kwalificaties centraal staan.",
-            status: "Route voorbereid",
+              "Praktisch voor intake, overleg en gesprekken waarbij deelnemers op afstand aansluiten.",
+            status: "Inzetvorm",
           },
           {
-            title: "Spoedtolk",
+            title: "Op locatie",
             description:
-              "Aparte route voor urgente aanvragen, snelle triage en beschikbaarheidscommunicatie.",
-            status: "Route voorbereid",
+              "Geschikt voor gevoelige, formele of meerpartijenafspraken waarbij fysieke aanwezigheid wenselijk is.",
+            status: "Inzetvorm",
           },
           {
-            title: "Team en verificatie",
+            title: "Beëdigde inzet",
             description:
-              "Groeipagina’s voor profieluitleg, collectiefopzet en controleerbare achtergrondinformatie.",
-            status: "Route voorbereid",
+              "Voor opdrachten waar een beëdigde en in een nationaal register ingeschreven tolk vereist is.",
+            status: "Formele context",
           },
           {
-            title: "Locaties",
+            title: "Spoed en korte termijn",
             description:
-              "Toekomstige lokale landingspagina’s voor steden, regio’s en sectorcontexten.",
-            status: "Route voorbereid",
+              "Inzet op dezelfde dag of binnenkort kan soms mogelijk zijn. Neem direct per e-mail contact op voor beschikbaarheid.",
+            status: "Afhankelijk van beschikbaarheid",
           },
           {
-            title: "FAQ",
+            title: "Zorg en overheid",
             description:
-              "Specifieke antwoordpagina’s voor veelgestelde vragen en zoekintenties met hoge semantische waarde.",
-            status: "Route voorbereid",
+              "Voor gesprekken met gemeenten, zorgverleners en andere publieke of maatschappelijke organisaties.",
+            status: "Sectorcontext",
           },
           {
-            title: "Kennisbank",
+            title: "Juridisch en migratie",
             description:
-              "Contentlaag voor uitleg over inzetvormen, voorbereiding, procedure-context en AI-citeerbare antwoorden.",
-            status: "Route voorbereid",
+              "Voor gesprekken met advocaten, rechtbanken, IND en andere dossier- of proceduregebonden situaties.",
+            status: "Sectorcontext",
           },
         ],
       },
       cta: {
         eyebrow: "Volgende stap",
-        title: "Bekijk de hoofdroute of plan direct een aanvraag.",
+        title: "Bekijk de hoofddienst of stuur direct een aanvraag.",
         description:
-          "Voor fase 1 is de conversiestroom bewust compact gehouden: diensten begrijpen, hoofdroute openen en direct contact opnemen.",
+          "Vermeld datum, tijd, context, gewenste inzetvorm en eventuele formele eisen in uw e-mail.",
       },
     },
     mainService: {
-      metaTitle: "Arabisch ↔ Nederlands tolk boeken in Nederland",
+      metaTitle: "Arabisch ↔ Nederlands tolk aanvragen in Nederland",
       metaDescription:
         "Arabisch-Nederlandse tolk voor zorg, gemeente, advocatuur, rechtbank en migratie. Telefonisch, via video of op locatie inzetbaar.",
       eyebrow: "Belangrijkste dienst",
       title: "Arabisch ↔ Nederlands tolk voor gesprekken met juridische, medische of bestuurlijke impact.",
       intro:
-        "Deze dienst is bedoeld voor gesprekken waarin Arabisch en Nederlands direct en zorgvuldig moeten worden overgebracht. De route is opgezet voor opdrachtgevers die snel willen boeken, maar óók willen zien waarom de inzet professioneel, passend en verifieerbaar is.",
+        "Deze dienst is bedoeld voor gesprekken waarin Arabisch en Nederlands direct en zorgvuldig moeten worden overgebracht. Stuur een aanvraag met de praktische gegevens van het gesprek, zodat beschikbaarheid, inzetvorm en eventuele formele eisen kunnen worden afgestemd.",
       highlights: [
         "Voor formele, gevoelige en impactvolle gesprekken.",
         "Geschikt voor telefonisch, video en fysieke inzet.",
-        "Gebouwd rond boekbaarheid, context en bewijs.",
+        "Afstemming op beschikbaarheid, context en vereiste kwalificatie.",
       ],
       answerFirst: {
         eyebrow: "Direct antwoord",
         title: "Wanneer kiest u voor een Arabisch ↔ Nederlands tolk?",
         description:
-          "De dienstpagina opent met de kernvraag die een opdrachtgever doorgaans heeft.",
+          "De passende inzet hangt af van het gesprek, de gewenste vorm en eventuele formele eisen.",
         body:
-          "U kiest deze dienst wanneer een gesprek inhoudelijk belangrijk genoeg is om misverstanden te voorkomen en beide talen volledig tot hun recht moeten komen. Denk aan gesprekken over gezondheid, rechten, verblijf, procedures, begeleiding of overheidszaken. Daarom combineert deze pagina praktische boekinformatie met duidelijke uitleg over betrouwbaarheid en inzetbaarheid.",
+          "U kiest deze dienst wanneer een gesprek inhoudelijk belangrijk genoeg is om misverstanden te voorkomen en beide talen volledig tot hun recht moeten komen. Denk aan gesprekken over gezondheid, rechten, verblijf, procedures, begeleiding of overheidszaken. Beschikbaarheid en de passende tolkvorm worden vooraf per aanvraag afgestemd.",
       },
       modes: [
         {
@@ -341,10 +323,10 @@ const siteContent = {
           description:
             "Passend bij gesprekken met hoge gevoeligheid, meerdere deelnemers of formele setting waarbij aanwezigheid helpt.",
         },
-        {
-          title: "Voorbereid op spoed",
-          description:
-            "De inhoud en structuur benoemen spoed en bereikbaarheid al, zodat een toekomstige spoedroute logisch aansluit.",
+          {
+            title: "Spoed en korte termijn",
+            description:
+              "Inzet op dezelfde dag of binnenkort kan soms mogelijk zijn. Stuur de exacte tijd en context mee voor een haalbaarheidscheck.",
         },
       ],
       proof: {
@@ -409,10 +391,10 @@ const siteContent = {
         ],
       },
       faq: {
-        eyebrow: "Voorbereidende FAQ",
+        eyebrow: "Veelgestelde vragen",
         title: "Vragen die deze route al direct beantwoordt",
         description:
-          "Deze antwoorden helpen bezoekers, maar bouwen ook aan semantische duidelijkheid en toekomstige knowledge-content.",
+          "Deze antwoorden geven vooraf duidelijkheid over inzetvorm, vertrouwelijkheid en formele opdrachten.",
         items: [
           {
             question: "Kan deze tolkdienst ook worden ingezet voor gesprekken met een gemeente of advocaat?",
@@ -430,63 +412,175 @@ const siteContent = {
               "Ja. Vertrouwen, neutraliteit en zorgvuldige omgang met gevoelige inhoud zijn bewust als bewijsblok in de route opgenomen.",
           },
           {
-            question: "Kan deze route later worden uitgebreid naar beëdigde of spoedinzet?",
+            question: "Zijn beëdigde of urgente tolkaanvragen mogelijk?",
             answer:
-              "Ja. De URL-architectuur en contentopzet zijn daar al op voorbereid, zodat de site zonder structuurbreuk kan doorgroeien.",
+              "Ja. Beëdigde tolken zijn beschikbaar voor formele opdrachten. Bij spoed kan inzet soms dezelfde dag of op korte termijn mogelijk zijn, afhankelijk van beschikbaarheid.",
           },
         ],
       },
       cta: {
-        eyebrow: "Direct boeken",
+        eyebrow: "Aanvraag sturen",
         title: "Wilt u deze dienst inzetten voor een concreet gesprek?",
         description:
-          "Gebruik de contactroute voor een directe aanvraag, terugbelverzoek of verdere afstemming over inzetvorm, context en verificatie.",
+          "Gebruik de contactroute om per e-mail datum, tijd, inzetvorm, context en eventuele formele eisen door te geven.",
       },
     },
     contact: {
       metaTitle: "Contact | Arabisch ↔ Nederlands tolk aanvragen",
       metaDescription:
-        "Neem contact op voor een Arabisch-Nederlandse tolk. Boek een gesprek, vraag een terugbelverzoek aan of stuur uw intake direct door.",
-      eyebrow: "Contact en boeking",
+        "Vraag een Arabisch-Nederlandse tolk aan via het contactformulier of per e-mail en geef datum, inzetvorm en context door.",
+      eyebrow: "Contact en aanvraag",
       title: "Een Arabisch ↔ Nederlands tolk aanvragen met duidelijke intake en heldere opvolging.",
       intro:
-        "De contactpagina is opgezet als praktische conversieroute. In plaats van losse contactgegevens zonder context, krijgt de bezoeker hier duidelijke manieren om een aanvraag te starten, een terugbelverzoek te doen of WhatsApp-terugkoppeling te vragen.",
+        "Gebruik het aanvraagformulier of stuur een e-mail met datum, tijd, duur, inzetvorm en een korte omschrijving van de context. Daarmee kan het collectief beschikbaarheid en de passende kwalificatie gericht beoordelen.",
       highlights: [
-        "Gericht op boekbaarheid zonder onnodige frictie.",
+        "Een duidelijk formulier met e-mail als zichtbare fallback.",
         "Duidelijke intake voor zorg, gemeente, recht en migratie.",
-        "Voorbereid op spoed, verificatie en sectorcontext.",
+        "Ook voor beëdigde of urgente inzet, afhankelijk van beschikbaarheid.",
       ],
-      primaryAction: "Stuur een directe aanvraag",
-      secondaryAction: "Vraag een terugbelverzoek aan",
+      primaryAction: "Vul het aanvraagformulier in",
+      secondaryAction: "Stel uw vraag per e-mail",
       directSubject: "Aanvraag Arabisch-Nederlands tolk",
-      callbackSubject: "Terugbelverzoek Arabisch-Nederlands tolk",
-      whatsAppSubject: "Verzoek WhatsApp-terugkoppeling tolkdienst",
+      callbackSubject: "Vraag over Arabisch-Nederlandse tolkdienst",
+      followUpSubject: "Vraag over Arabisch-Nederlandse tolkdienst",
+      form: {
+        eyebrow: "Aanvraagformulier",
+        title: "Stuur de praktische gegevens van uw tolkaanvraag.",
+        description:
+          "Vul de bekende gegevens in. Een spoedkeuze geeft alleen aan dat snelheid belangrijk is en is geen garantie op beschikbaarheid.",
+        requiredNote:
+          "Naam, e-mail, soort aanvraag, context, taalrichting en bericht zijn verplicht.",
+        optionalLabel: "(optioneel)",
+        fields: {
+          name: {
+            label: "Naam",
+            placeholder: "Uw naam",
+          },
+          email: {
+            label: "E-mailadres",
+            placeholder: "naam@organisatie.nl",
+          },
+          phone: {
+            label: "Telefoonnummer",
+            placeholder: "+31 6 12345678",
+          },
+          organization: {
+            label: "Organisatie",
+            placeholder: "Naam van uw organisatie",
+          },
+          requestType: {
+            label: "Soort aanvraag",
+            placeholder: "Kies het soort aanvraag",
+            options: [
+              { value: "regular", label: "Reguliere tolkaanvraag" },
+              { value: "urgent", label: "Spoed aangeven" },
+              { value: "sworn", label: "Beëdigde tolk gevraagd" },
+              { value: "availability", label: "Beschikbaarheid navragen" },
+              { value: "other", label: "Andere vraag" },
+            ],
+          },
+          context: {
+            label: "Context",
+            placeholder: "Kies de context",
+            options: [
+              { value: "healthcare", label: "Zorg" },
+              { value: "municipality", label: "Gemeente" },
+              { value: "legal", label: "Juridisch" },
+              { value: "migration", label: "Migratie / IND" },
+              { value: "business", label: "Zakelijk" },
+              { value: "other", label: "Anders" },
+            ],
+          },
+          languageDirection: {
+            label: "Taalrichting",
+            placeholder: "Kies de taalrichting",
+            options: [
+              { value: "ar_to_nl", label: "Arabisch naar Nederlands" },
+              { value: "nl_to_ar", label: "Nederlands naar Arabisch" },
+              {
+                value: "both_or_unknown",
+                label: "Beide richtingen / nog onbekend",
+              },
+            ],
+          },
+          deliveryMode: {
+            label: "Inzetvorm",
+            placeholder: "Kies indien bekend",
+            options: [
+              { value: "phone", label: "Telefonisch" },
+              { value: "video", label: "Video" },
+              { value: "on_location", label: "Op locatie" },
+              { value: "unknown", label: "Nog onbekend" },
+            ],
+          },
+          desiredDateTime: {
+            label: "Gewenste datum en tijd",
+            placeholder: "Bijvoorbeeld 18 juni 2026 om 14:00",
+          },
+          message: {
+            label: "Bericht",
+            placeholder:
+              "Omschrijf kort het gesprek, de verwachte duur en eventuele relevante vereisten.",
+          },
+        },
+        submitLabel: "Verstuur aanvraag",
+        submittingLabel: "Aanvraag wordt verstuurd…",
+        fallbackText: "Werkt het formulier niet?",
+        fallbackLabel: "Stuur uw aanvraag per e-mail.",
+        privacyText:
+          "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. We gebruiken je gegevens alleen om je aanvraag te beoordelen en contact met je op te nemen.",
+        messages: {
+          success:
+            "Dank u. Uw aanvraag is verzonden en wordt beoordeeld.",
+          invalidSubmission:
+            "Controleer de gemarkeerde velden en probeer het opnieuw.",
+          generalError:
+            "Verzenden is nu niet gelukt. Gebruik de e-maillink hieronder om uw aanvraag te versturen.",
+        },
+        validation: {
+          nameRequired: "Vul uw naam in.",
+          nameTooLong: "Uw naam mag maximaal 120 tekens bevatten.",
+          emailRequired: "Vul uw e-mailadres in.",
+          emailInvalid: "Vul een geldig e-mailadres in.",
+          emailTooLong: "Het e-mailadres is te lang.",
+          phoneTooLong:
+            "Het telefoonnummer mag maximaal 40 tekens bevatten.",
+          organizationTooLong:
+            "De organisatienaam mag maximaal 160 tekens bevatten.",
+          invalidOption: "Kies een geldige optie.",
+          desiredDateTimeTooLong:
+            "De gewenste datum en tijd mogen maximaal 120 tekens bevatten.",
+          messageRequired: "Vul een bericht in.",
+          messageTooShort: "Uw bericht moet minimaal 10 tekens bevatten.",
+          messageTooLong: "Uw bericht mag maximaal 3000 tekens bevatten.",
+        },
+      },
       methods: {
         eyebrow: "Contactopties",
-        title: "Kies de snelste route die past bij uw situatie.",
+        title: "Liever rechtstreeks per e-mail contact opnemen?",
         description:
-          "De CTA’s zijn geordend op concrete intentie, niet op losse contactkanalen.",
+          "Gebruik een van deze e-maillinks als het formulier niet passend is of niet werkt.",
         items: [
           {
-            kicker: "Boeking",
-            title: "Direct een tolk aanvragen",
+            kicker: "Aanvraag",
+            title: "Een tolkaanvraag starten",
             description:
-              "Voor concrete gesprekken met bekende datum, tijd en context. Gebruik dit wanneer u direct wilt plannen.",
+              "Voor concrete gesprekken met bekende datum, tijd en context. Beschikbaarheid en planning worden daarna afgestemd.",
             subject: "Aanvraag Arabisch-Nederlands tolk",
           },
           {
-            kicker: "Terugbellen",
-            title: "Vraag een terugbelverzoek aan",
+            kicker: "Afstemming",
+            title: "Bespreek uw situatie per e-mail",
             description:
-              "Handig als u eerst kort wilt afstemmen over geschiktheid, inzetvorm of de gevoeligheid van het gesprek.",
-            subject: "Terugbelverzoek Arabisch-Nederlands tolk",
+              "Handig als u eerst wilt afstemmen over geschiktheid, inzetvorm of de gevoeligheid van het gesprek.",
+            subject: "Vraag over Arabisch-Nederlandse tolkdienst",
           },
           {
-            kicker: "WhatsApp",
-            title: "Vraag een WhatsApp-terugkoppeling aan",
+            kicker: "Beschikbaarheid",
+            title: "Vraag beschikbaarheid aan",
             description:
-              "Geschikt voor snelle eerste afstemming wanneer u liever eerst kort schriftelijk contact heeft.",
-            subject: "Verzoek WhatsApp-terugkoppeling tolkdienst",
+              "Stuur de datum, tijd en gewenste inzetvorm om te laten beoordelen wat mogelijk is.",
+            subject: "Beschikbaarheidsvraag Arabisch-Nederlandse tolk",
           },
         ],
       },
@@ -561,9 +655,9 @@ const siteContent = {
       },
       cta: {
         eyebrow: "Klaar om te starten",
-        title: "Gebruik de contactroute die past bij uw aanvraag.",
+        title: "Stuur uw aanvraag via het formulier of per e-mail.",
         description:
-          "De fase-1 site is gericht op directe actie: aanvragen, teruggebeld worden of een WhatsApp-terugkoppeling laten starten.",
+          "Vermeld datum, tijd, duur, context, inzetvorm en eventuele vereiste kwalificatie voor een gerichte reactie.",
       },
     },
   },
@@ -578,19 +672,19 @@ const siteContent = {
       contact: "التواصل",
     },
     actions: {
-      bookNow: "احجز مترجماً شفهياً",
+      bookNow: "أرسل طلب مترجم شفهي",
       viewServices: "اعرض الخدمات",
       viewMainService: "خدمة العربية ↔ الهولندية",
     },
     footer: {
       title: "دعم ترجمة شفهية مهني للمحادثات التي تحتاج إلى وضوح وثقة.",
       description:
-        "المرحلة الأولى من الموقع مبنية على الثقة وسهولة الحجز والبنية متعددة اللغات مع وضوح دلالي مناسب لمحركات البحث وأنظمة الذكاء الاصطناعي.",
+        "تدعم مجموعة المترجمين الشفهيين المحادثات العربية الهولندية في مجالات الرعاية والجهات الرسمية والقانون والهجرة. استخدموا النموذج أو البريد لتقييم التوافر والشكل المناسب.",
       navigationTitle: "التنقل",
       contactTitle: "التواصل",
-      contactNote: "طلبات الحجز وطلبات الاتصال والمتابعة تتم عبر البريد الإلكتروني.",
+      contactNote: "يمكن إرسال الطلبات عبر النموذج أو البريد الإلكتروني.",
       complianceNote:
-        "تم إعداد البنية لاستيعاب التحقق من التسجيل والسياقات المرتبطة بـ Wbtv وRbtv.",
+        "في المهام الرسمية ننسق مسبقاً نوع التأهيل أو التسجيل المطلوب.",
     },
     home: {
       metaTitle: "مترجم شفهي عربي ↔ هولندي للجهات الرسمية والرعاية والقانون",
@@ -599,18 +693,18 @@ const siteContent = {
       eyebrow: "مجموعة ترجمة شفهية عربية هولندية",
       title: "مترجمون شفهيون بالعربية والهولندية للمحادثات التي تتطلب دقة وثقة مهنية.",
       intro:
-        "إذا كنتم بحاجة إلى مترجم شفهي عربي هولندي لاجتماع مع بلدية أو جهة رعاية أو محامٍ أو محكمة أو جهة هجرة، فهذه المنصة مهيأة لتوضيح الخدمة بسرعة وإظهار عناصر الثقة والتحقق وإتاحة التواصل المباشر للحجز.",
+        "إذا كنتم بحاجة إلى مترجم شفهي عربي هولندي لاجتماع مع بلدية أو جهة رعاية أو محامٍ أو محكمة أو جهة هجرة، فأرسلوا تفاصيل الموعد عبر البريد لتقييم التوافر والشكل المناسب للمهمة.",
       highlights: [
         "مناسبة للسياقات البلدية والطبية والقانونية وسياقات الهجرة في هولندا.",
-        "مهيأة لاستخدام هاتفي أو عبر الفيديو أو حضورياً حسب الحاجة.",
-        "الهيكل يعرض بوضوح عناصر التحقق والسرية والاحترافية.",
+        "يمكن تقديمها هاتفياً أو عبر الفيديو أو حضورياً بحسب المهمة.",
+        "يتم تنسيق التوافر والسياق والتأهيل المطلوب قبل تأكيد المهمة.",
       ],
       proofPoints: [
         {
-          kicker: "الحجز + الإثبات",
-          title: "الموقع لا يعرض الخدمة فقط، بل يشرح لماذا يمكن الوثوق بها.",
+          kicker: "طلب واضح",
+          title: "وضوح مسبق حول السياق وشكل الجلسة والتوافر.",
           description:
-            "تم بناء الصفحات حول سهولة الحجز ووضوح السياق وعناصر الإثبات حتى يفهم الزائر ومحركات البحث طبيعة الخدمة بسرعة.",
+            "أرسلوا التاريخ والوقت والمدة ونوع الجلسة حتى يمكن تقييم المترجم المناسب ومدى التوافر.",
         },
         {
           kicker: "ثقة مؤسسية",
@@ -620,9 +714,9 @@ const siteContent = {
         },
         {
           kicker: "متعدد اللغات",
-          title: "المسار العربي مهيأ من البداية لاتجاه RTL.",
+          title: "المعلومات الأساسية متاحة بالعربية والهولندية.",
           description:
-            "تم إعداد البنية التقنية والمحتوى العربي بشكل جاد حتى لا تكون إضافة العربية لاحقاً مجرد حل ترقيعي.",
+            "يمكن للزائر الاطلاع على الخدمات وطريقة الطلب والمعلومات الأساسية بكلتا اللغتين.",
         },
       ],
       answerFirst: {
@@ -656,7 +750,7 @@ const siteContent = {
         },
       ],
       bookingPanel: {
-        eyebrow: "بدء الحجز",
+        eyebrow: "إعداد الطلب",
         title: "ما المعلومات التي تساعد على اختيار المترجم المناسب؟",
         description:
           "كلما كانت المعلومات الأولية أوضح، كانت المتابعة أسرع وأكثر دقة.",
@@ -668,43 +762,25 @@ const siteContent = {
         ],
       },
       serviceOverview: {
-        eyebrow: "الخدمات في المرحلة الأولى",
-        title: "الهيكل جاهز للتوسع، لكنه يبدأ بالخدمة الأساسية الأكثر أهمية.",
+        eyebrow: "خدمات الترجمة الشفهية",
+        title: "اختاروا الخدمة التي تناسب طبيعة المحادثة.",
         description:
-          "تم إعداد المعمارية لاستيعاب صفحات إضافية لاحقاً دون إعادة بناء الموقع من جديد.",
+          "تتوفر خدمات عامة ورسمية وعاجلة بحسب التوافر والتأهيل المطلوب للمهمة.",
         cards: [
           {
             title: "مترجم شفهي عربي ↔ هولندي",
             description:
-              "الصفحة الأساسية للحجز وتوضيح السياقات وعناصر الثقة وروابط التحويل الرئيسية.",
+              "للمحادثات الهاتفية والمرئية والحضورية في الرعاية والجهات الرسمية والقانون والهجرة.",
             href: "diensten/arabisch-nederlands-tolk",
             cta: "عرض الخدمة",
-          },
-          {
-            title: "مترجم محلّف",
-            description:
-              "تم تجهيز البنية لاستقبال صفحة مستقلة لاحقاً للحالات التي تتطلب اعتماداً أو تحققاً رسمياً إضافياً.",
-            status: "مُعدّ",
-          },
-          {
-            title: "مترجم طوارئ",
-            description:
-              "تم تجهيز الموقع لمسار مستقل لاحقاً للطلبات العاجلة ولحالات الاستجابة السريعة.",
-            status: "مُعدّ",
-          },
-          {
-            title: "الأسئلة الشائعة والمعرفة",
-            description:
-              "تم إعداد البنية الدلالية لتوسيع الإجابات والصفحات المرجعية التي تسهّل الظهور في البحث والاقتباس عبر أنظمة الذكاء الاصطناعي.",
-            status: "مُعدّ",
           },
         ],
       },
       process: {
-        eyebrow: "كيف يتم الحجز",
-        title: "مسار واضح يقلل التردد ويزيد الثقة.",
+        eyebrow: "كيف يبدأ الطلب",
+        title: "الطلب الواضح يساعد على تقييم المهمة بسرعة.",
         description:
-          "المرحلة الأولى تعتمد تدفقاً بسيطاً ومهنياً من الاستفسار إلى المتابعة.",
+          "يبدأ التنسيق عبر النموذج أو البريد ويركز على المتطلبات العملية والمهنية للمحادثة.",
         steps: [
           {
             title: "أرسل الطلب",
@@ -719,90 +795,90 @@ const siteContent = {
           {
             title: "تصلك متابعة واضحة",
             description:
-              "الرد يوضح ما هو ممكن وما هي الخطوة التالية المطلوبة لتأكيد الحجز أو استكمال التنسيق.",
+              "الرد يوضح ما هو ممكن وما هي الخطوة التالية المطلوبة لتأكيد الطلب أو استكمال التنسيق.",
           },
         ],
       },
       faqPreview: {
-        eyebrow: "إعداد للأسئلة المتكررة",
-        title: "تم تضمين الأسئلة الأساسية منذ البداية.",
+        eyebrow: "الأسئلة الشائعة",
+        title: "إجابات عملية حول شكل الخدمة والتأهيل والتوافر.",
         description:
-          "هذه المحاور مهيأة لتتحول لاحقاً إلى صفحات FAQ ومقالات معرفة مستقلة.",
+          "راجعوا أهم النقاط قبل إرسال الطلب.",
         items: [
           {
             question: "هل يمكن استخدام المترجم هاتفياً أو عبر الفيديو؟",
             answer:
-              "نعم. تم ذكر أشكال الاستخدام الأساسية بوضوح حتى يفهم الزائر ومحركات البحث إمكانيات الخدمة مباشرة.",
+              "نعم. الهاتف والفيديو والحضور المباشر ممكنة بحسب السياق والتوافر.",
           },
           {
             question: "هل الخدمة مناسبة للبلديات والرعاية الصحية والمحامين؟",
             answer:
-              "نعم. تم إدراج هذه القطاعات بشكل صريح في بنية الصفحات لأنها تمثل حالات استخدام واقعية ومهمة.",
+              "نعم. هذه من السياقات المهنية التي يمكن للمجموعة دعمها بحسب التوافر والتأهيل المطلوب.",
           },
           {
             question: "هل أُخذ جانب التحقق والتسجيل المهني في الاعتبار؟",
             answer:
-              "نعم. تم إعداد المحتوى ليستوعب لاحقاً التحقق من التسجيل والسياقات المرتبطة بـ Wbtv/Rbtv.",
+              "نعم. في المهام الرسمية يتم الاتفاق مسبقاً على التأهيل أو التسجيل المطلوب.",
           },
           {
-            question: "هل المسار العربي جاد أم مجرد ترجمة شكلية؟",
+            question: "هل المعلومات متاحة باللغة العربية؟",
             answer:
-              "المسار العربي بُني مع إعداد جاد لـ RTL ومحتوى أساسي مهني حتى يكون التوسع مستقبلاً منطقياً ومتسقاً.",
+              "نعم. المعلومات الأساسية حول الخدمات وطريقة الطلب والعمل متاحة باللغة العربية.",
           },
         ],
       },
       cta: {
         eyebrow: "الخطوة التالية",
-        title: "يمكنكم الآن الانتقال إلى الخدمة الأساسية أو بدء التواصل مباشرة.",
+        title: "يمكنكم الاطلاع على الخدمة أو إرسال طلب عبر البريد.",
         description:
-          "التدفق الأساسي للموقع واضح: فهم الخدمة، رؤية عناصر الثقة، ثم اتخاذ إجراء مباشر.",
+          "أرسلوا التاريخ والوقت وشكل الجلسة والسياق المختصر لتقييم التوافر.",
       },
     },
     services: {
       metaTitle: "الخدمات | مجموعة الترجمة الشفهية العربية الهولندية",
       metaDescription:
-        "صفحة خدمات الترجمة الشفهية العربية الهولندية في هولندا مع إعداد مهني للتوسع لاحقاً.",
+        "خدمات ترجمة شفهية عربية هولندية في هولندا للمحادثات العامة والرسمية والعاجلة بحسب التوافر والتأهيل.",
       eyebrow: "صفحة الخدمات",
       title: "خدمات ترجمة شفهية مناسبة للسياقات الرسمية والحساسة.",
       intro:
-        "تم بناء صفحة الخدمات على أساس نية البحث والاستخدام الفعلي، مع تركيز المرحلة الأولى على الخدمة الأساسية ومسار التواصل، مع جاهزية كاملة للتوسع لاحقاً نحو صفحات أكثر تخصصاً.",
+        "تقدم المجموعة ترجمة شفهية عربية هولندية لمحادثات مختلفة. يمكن طلب مترجم محلّف أو مهمة عاجلة عندما يتوافق التأهيل المطلوب والتوافر مع طبيعة المهمة.",
       highlights: [
-        "هيكل قابل للتوسع دون إعادة تنظيم كبيرة.",
-        "روابط داخلية واضحة بين الصفحة الرئيسية والخدمات والتواصل.",
-        "إعداد مناسب للكانونيكال وhreflang والبيانات المنظمة.",
+        "هاتفياً أو عبر الفيديو أو حضورياً بحسب المهمة.",
+        "يتوفر مترجمون محلّفون مسجلون لمهام تتطلب صفة رسمية.",
+        "قد تتاح المهام العاجلة في اليوم نفسه أو خلال وقت قصير.",
       ],
       liveServices: {
-        eyebrow: "المتاح الآن",
-        title: "المسارات النشطة في المرحلة الأولى",
+        eyebrow: "الخدمات المتاحة",
+        title: "خدمات ترجمة شفهية لمواقف مختلفة",
         description:
-          "النسخة الأولى تركز على أكثر المسارات قابلية للتحويل إلى طلب فعلي.",
+          "اطلعوا على الخدمة العامة أو انتقلوا مباشرة إلى إرسال الطلب. يتم تأكيد التوافر لكل مهمة على حدة.",
         cards: [
           {
             title: "مترجم شفهي عربي ↔ هولندي",
             description:
-              "صفحة الخدمة الأساسية التي تجمع بين الشرح العملي والسياق والثقة ومسار الحجز المباشر.",
+              "خدمة عامة لمحادثات الرعاية والجهات الرسمية والقانون والهجرة وغيرها من السياقات المهنية.",
             href: "diensten/arabisch-nederlands-tolk",
             cta: "افتح صفحة الخدمة",
           },
           {
             title: "التواصل وبدء الطلب",
             description:
-              "صفحة عملية لبدء الحجز أو طلب اتصال أو طلب متابعة عبر واتساب ضمن بنية واضحة ومهنية.",
+              "أرسلوا عبر البريد التاريخ والوقت وشكل الجلسة والسياق المختصر لتقييم التوافر.",
             href: "contact",
             cta: "افتح صفحة التواصل",
           },
         ],
       },
       verification: {
-        eyebrow: "الثقة والإثبات",
-        title: "لماذا تبدو هذه البنية موثوقة من البداية",
+        eyebrow: "تنسيق مهني",
+        title: "ما الذي يتم الاتفاق عليه قبل تأكيد المهمة؟",
         description:
-          "الموقع لا يقول فقط ما الخدمة، بل يوضح أيضاً لماذا تبدو مناسبة وقابلة للتصديق.",
+          "تعتمد الملاءمة على مضمون اللقاء وشكله والتأهيل الرسمي المطلوب إن وجد.",
         items: [
           {
-            title: "جاهزية للتحقق",
+            title: "التأهيل في المهام الرسمية",
             description:
-              "تم إعداد النصوص والبنية لاستقبال معلومات تسجيل أو اعتماد أو تحقق مهني بشكل منظم لاحقاً.",
+              "عندما تكون هناك حاجة إلى مترجم محلّف أو مسجل، يؤخذ ذلك في الاعتبار قبل التأكيد.",
           },
           {
             title: "سياق واقعي بدل الكلام التسويقي",
@@ -810,75 +886,75 @@ const siteContent = {
               "كل صفحة تربط الخدمة مباشرة بقطاعات حقيقية مثل البلدية والرعاية والمحامين والمحاكم والهجرة.",
           },
           {
-            title: "بنية answer-first",
+            title: "استقبال واضح للطلب",
             description:
-              "العناوين والافتتاحيات والأقسام تجيب أولاً على السؤال الأساسي للزائر، ما يدعم الفهم البشري والظهور الدلالي.",
+              "التاريخ والوقت والمدة والقطاع وشكل الجلسة تساعد على تقييم التوافر والملاءمة.",
           },
         ],
       },
       future: {
-        eyebrow: "طبقة التوسع",
-        title: "مسارات منطقية يمكن إضافتها لاحقاً دون تغيير البنية الأساسية",
+        eyebrow: "أشكال الخدمة والسياق",
+        title: "ما شكل الترجمة الشفهية الأنسب لمحادثتكم؟",
         description:
-          "تم إعداد الكود والتنقل والمحتوى ليستوعب هذه الصفحات مستقبلاً بشكل طبيعي.",
+          "يعتمد الاختيار على الاستعجال وحساسية الموضوع والمكان والمتطلبات الرسمية.",
         cards: [
+          {
+            title: "هاتفياً أو عبر الفيديو",
+            description:
+              "مناسب للاستقبال الأولي والاجتماعات والمحادثات التي يشارك فيها الأطراف عن بُعد.",
+            status: "شكل الخدمة",
+          },
+          {
+            title: "حضورياً",
+            description:
+              "مناسب للمواعيد الحساسة أو الرسمية أو متعددة الأطراف التي تستفيد من الحضور المباشر.",
+            status: "شكل الخدمة",
+          },
           {
             title: "مترجم محلّف",
             description:
-              "صفحة مستقلة للحالات التي تتطلب اعتماداً أو تحققاً مهنياً أو قانونياً إضافياً.",
-            status: "المسار مُعدّ",
+              "للمهام التي تتطلب مترجماً محلّفاً ومسجلاً في سجل وطني.",
+            status: "سياق رسمي",
           },
           {
-            title: "مترجم طوارئ",
+            title: "الطوارئ والوقت القصير",
             description:
-              "صفحة للطلبات العاجلة ومسارات الاستجابة السريعة.",
-            status: "المسار مُعدّ",
+              "قد تتاح المهمة في اليوم نفسه أو خلال وقت قريب. أرسلوا التفاصيل فوراً لتقييم التوافر.",
+            status: "بحسب التوافر",
           },
           {
-            title: "الفريق والتحقق",
+            title: "الرعاية والجهات الرسمية",
             description:
-              "صفحات مستقبلية لتوضيح بنية المجموعة والخبرات والعناصر القابلة للتحقق.",
-            status: "المسار مُعدّ",
+              "للمحادثات مع البلديات ومقدمي الرعاية والجهات العامة أو المجتمعية.",
+            status: "سياق مهني",
           },
           {
-            title: "المناطق",
+            title: "القانون والهجرة",
             description:
-              "صفحات مستقبلية للمدن والمناطق والسياقات المحلية.",
-            status: "المسار مُعدّ",
-          },
-          {
-            title: "الأسئلة الشائعة",
-            description:
-              "صفحات إجابات مركزة على أسئلة البحث ذات القيمة الدلالية العالية.",
-            status: "المسار مُعدّ",
-          },
-          {
-            title: "قاعدة المعرفة",
-            description:
-              "طبقة محتوى تشرح الاستخدام والتحضير والسياقات الإجرائية بطريقة قابلة للاقتباس.",
-            status: "المسار مُعدّ",
+              "للمحادثات مع المحامين والمحاكم وIND وغيرها من الإجراءات والملفات.",
+            status: "سياق مهني",
           },
         ],
       },
       cta: {
         eyebrow: "الخطوة التالية",
-        title: "انتقلوا إلى الخدمة الأساسية أو ابدؤوا الطلب مباشرة.",
+        title: "اطلعوا على الخدمة الأساسية أو أرسلوا الطلب مباشرة.",
         description:
-          "النسخة الأولى تحافظ على مسار تحويل واضح ومهني دون تشتيت.",
+          "اذكروا التاريخ والوقت والسياق وشكل الجلسة وأي متطلبات رسمية في البريد.",
       },
     },
     mainService: {
-      metaTitle: "حجز مترجم شفهي عربي ↔ هولندي في هولندا",
+      metaTitle: "طلب مترجم شفهي عربي ↔ هولندي في هولندا",
       metaDescription:
         "خدمة مترجم شفهي عربي هولندي للاجتماعات الطبية والرسمية والقانونية والهجرية، هاتفياً أو عبر الفيديو أو حضورياً.",
       eyebrow: "الخدمة الأساسية",
       title: "مترجم شفهي عربي ↔ هولندي للمحادثات ذات الأثر القانوني أو الطبي أو الإداري.",
       intro:
-        "هذه الصفحة مخصصة للحالات التي يجب فيها نقل المعنى بين العربية والهولندية بدقة وحياد ووضوح. لذلك تجمع الصفحة بين الشرح العملي وإشارات الثقة وإمكانية بدء الطلب بشكل مباشر.",
+        "هذه الخدمة مخصصة للحالات التي يجب فيها نقل المعنى بين العربية والهولندية بدقة وحياد ووضوح. أرسلوا تفاصيل الاجتماع لتنسيق التوافر وشكل الجلسة وأي متطلبات رسمية.",
       highlights: [
         "مناسبة للمحادثات الحساسة والرسمية.",
-        "مهيأة للهاتف والفيديو والحضور المباشر.",
-        "بنية الصفحة تربط الحجز بالإثبات والسياق.",
+        "متاحة هاتفياً أو عبر الفيديو أو حضورياً بحسب المهمة.",
+        "يتم تنسيق التوافر والسياق والتأهيل المطلوب مسبقاً.",
       ],
       answerFirst: {
         eyebrow: "إجابة مباشرة",
@@ -905,9 +981,9 @@ const siteContent = {
             "مناسب للمحادثات الرسمية أو الحساسة أو متعددة الأطراف التي تستفيد من الحضور المباشر.",
         },
         {
-          title: "جاهزية للطوارئ",
+          title: "الطوارئ والوقت القصير",
           description:
-            "تم إدراج عنصر السرعة والطوارئ في البنية ليكون التوسع إلى صفحة مستقلة لاحقاً أمراً منطقياً.",
+            "قد تتاح المهمة في اليوم نفسه أو خلال وقت قصير. أرسلوا الوقت والسياق بدقة لتقييم الإمكانية.",
         },
       ],
       proof: {
@@ -915,14 +991,14 @@ const siteContent = {
         title: "ما الذي يجب أن يتمكن الزائر من التحقق منه مباشرة؟",
         items: [
           "وضوح الاستخدامات الفعلية للخدمة.",
-          "إتاحة المساحة للتحقق من التسجيل والاعتماد لاحقاً.",
+          "تنسيق التسجيل أو الصفة المهنية المطلوبة في المهام الرسمية.",
           "تأكيد السرية والحياد والسلوك المهني.",
           "وضوح أشكال التقديم: هاتف أو فيديو أو حضور مباشر.",
         ],
       },
       contexts: {
         eyebrow: "مجالات الاستخدام",
-        title: "الخدمة مهيأة لسياقات قد يؤدي فيها سوء الفهم إلى آثار مباشرة.",
+        title: "الخدمة مناسبة لسياقات قد يؤدي فيها سوء الفهم إلى آثار مباشرة.",
         description:
           "ربط الصفحة بسياقات عملية محددة يزيد الثقة والملاءمة الدلالية.",
         items: [
@@ -967,7 +1043,7 @@ const siteContent = {
           {
             title: "متابعة واضحة",
             description:
-              "تصلكم متابعة توضّح ما هو ممكن وما الخطوة التالية اللازمة لتأكيد الحجز.",
+              "تصلكم متابعة توضّح ما هو ممكن وما الخطوة التالية اللازمة لتأكيد الطلب.",
           },
         ],
       },
@@ -975,12 +1051,12 @@ const siteContent = {
         eyebrow: "أسئلة أساسية",
         title: "أسئلة تجيب عنها الصفحة منذ الآن",
         description:
-          "هذه الإجابات تبني الثقة وتؤسس لصفحات أسئلة ومعرفة أكثر تفصيلاً لاحقاً.",
+          "توضح هذه الإجابات شكل الخدمة والسرية والمهام الرسمية أو العاجلة.",
         items: [
           {
             question: "هل يمكن استخدام هذه الخدمة للبلدية أو للرعاية الصحية أو للمحامي؟",
             answer:
-              "نعم. الصفحة مبنية عمداً حول هذه السياقات لأنها تمثل الاستخدامات الأكثر واقعية وأهمية.",
+              "نعم. هذه من السياقات المهنية التي يمكن للمجموعة دعمها بحسب التوافر والتأهيل المطلوب.",
           },
           {
             question: "هل الخدمة متاحة عبر الهاتف أو الفيديو؟",
@@ -993,9 +1069,9 @@ const siteContent = {
               "نعم. عناصر الثقة في الصفحة تؤكد على الحياد والسرية والتعامل المهني مع المحتوى الحساس.",
           },
           {
-            question: "هل يمكن لاحقاً توسيع الصفحة إلى خدمات محلّفة أو عاجلة؟",
+            question: "هل يمكن طلب مترجم محلّف أو خدمة عاجلة؟",
             answer:
-              "نعم. بنية العناوين والمسارات والمحتوى معدّة للتوسع دون كسر البنية الحالية.",
+              "نعم. يتوفر مترجمون محلّفون للمهام الرسمية، وقد تتاح المهمة العاجلة في اليوم نفسه أو خلال وقت قصير بحسب التوافر.",
           },
         ],
       },
@@ -1003,53 +1079,163 @@ const siteContent = {
         eyebrow: "ابدأ الآن",
         title: "إذا كان لديكم اجتماع محدد، فابدؤوا الطلب عبر صفحة التواصل.",
         description:
-          "تم إعداد مسار التواصل ليخدم الحجز المباشر أو طلب الاتصال أو طلب متابعة عبر واتساب.",
+          "أرسلوا التاريخ والوقت وشكل الجلسة والسياق وأي متطلبات رسمية عبر البريد.",
       },
     },
     contact: {
       metaTitle: "التواصل | طلب مترجم شفهي عربي ↔ هولندي",
       metaDescription:
-        "ابدأ طلب مترجم شفهي عربي هولندي أو اطلب اتصالاً أو متابعة عبر واتساب من خلال صفحة تواصل واضحة ومهنية.",
-      eyebrow: "التواصل والحجز",
+        "أرسلوا طلب مترجم شفهي عربي هولندي عبر نموذج التواصل أو البريد مع التاريخ وشكل الجلسة والسياق.",
+      eyebrow: "التواصل والطلب",
       title: "بدء طلب مترجم شفهي عربي ↔ هولندي بطريقة واضحة ومنظمة.",
       intro:
-        "تم تصميم صفحة التواصل كمسار عملي للحجز. فهي لا تعرض معلومات تواصل مبعثرة، بل تنظم نية الزائر: طلب مباشر، طلب اتصال، أو طلب متابعة عبر واتساب.",
+        "استخدموا نموذج الطلب أو البريد الإلكتروني لإرسال التاريخ والوقت والمدة وشكل الجلسة ووصف مختصر للسياق. تساعد هذه المعلومات على تقييم التوافر والتأهيل المناسب.",
       highlights: [
-        "مبنية على نية واضحة للتحويل إلى طلب فعلي.",
+        "نموذج واضح مع إبقاء البريد الإلكتروني كخيار بديل.",
         "مناسبة لسياقات البلدية والرعاية والقانون والهجرة.",
-        "جاهزة لاستيعاب الاستعجال والتحقق والخصوصية.",
+        "مناسبة أيضاً للمهام المحلّفة أو العاجلة بحسب التوافر.",
       ],
-      primaryAction: "أرسل طلباً مباشراً",
-      secondaryAction: "اطلب اتصالاً",
+      primaryAction: "املأ نموذج الطلب",
+      secondaryAction: "أرسل استفسارك بالبريد",
       directSubject: "طلب مترجم عربي هولندي",
-      callbackSubject: "طلب اتصال بخصوص مترجم عربي هولندي",
-      whatsAppSubject: "طلب متابعة عبر واتساب لخدمة الترجمة الشفهية",
+      callbackSubject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
+      followUpSubject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
+      form: {
+        eyebrow: "نموذج الطلب",
+        title: "أرسلوا المعلومات العملية المتعلقة بطلب الترجمة الشفهية.",
+        description:
+          "أدخلوا المعلومات المتوفرة. اختيار الطلب العاجل يعني فقط أن السرعة مهمة، ولا يضمن التوافر.",
+        requiredNote:
+          "الاسم والبريد الإلكتروني ونوع الطلب والسياق واتجاه اللغة والرسالة حقول إلزامية.",
+        optionalLabel: "(اختياري)",
+        fields: {
+          name: {
+            label: "الاسم",
+            placeholder: "الاسم الكامل",
+          },
+          email: {
+            label: "البريد الإلكتروني",
+            placeholder: "name@example.com",
+          },
+          phone: {
+            label: "رقم الهاتف",
+            placeholder: "+31 6 12345678",
+          },
+          organization: {
+            label: "الجهة أو المؤسسة",
+            placeholder: "اسم الجهة",
+          },
+          requestType: {
+            label: "نوع الطلب",
+            placeholder: "اختاروا نوع الطلب",
+            options: [
+              { value: "regular", label: "طلب ترجمة شفهية عادي" },
+              { value: "urgent", label: "الإشارة إلى أن الطلب عاجل" },
+              { value: "sworn", label: "طلب مترجم شفهي محلّف" },
+              { value: "availability", label: "الاستفسار عن التوافر" },
+              { value: "other", label: "طلب آخر" },
+            ],
+          },
+          context: {
+            label: "السياق",
+            placeholder: "اختاروا السياق",
+            options: [
+              { value: "healthcare", label: "الرعاية الصحية" },
+              { value: "municipality", label: "البلدية" },
+              { value: "legal", label: "قانوني" },
+              { value: "migration", label: "الهجرة / IND" },
+              { value: "business", label: "عمل أو شركة" },
+              { value: "other", label: "سياق آخر" },
+            ],
+          },
+          languageDirection: {
+            label: "اتجاه اللغة",
+            placeholder: "اختاروا اتجاه اللغة",
+            options: [
+              { value: "ar_to_nl", label: "من العربية إلى الهولندية" },
+              { value: "nl_to_ar", label: "من الهولندية إلى العربية" },
+              {
+                value: "both_or_unknown",
+                label: "الاتجاهان أو غير محدد بعد",
+              },
+            ],
+          },
+          deliveryMode: {
+            label: "طريقة تقديم الخدمة",
+            placeholder: "اختاروا إذا كانت معروفة",
+            options: [
+              { value: "phone", label: "عبر الهاتف" },
+              { value: "video", label: "عبر الفيديو" },
+              { value: "on_location", label: "حضورياً في الموقع" },
+              { value: "unknown", label: "غير محددة بعد" },
+            ],
+          },
+          desiredDateTime: {
+            label: "التاريخ والوقت المطلوبان",
+            placeholder: "مثال: 18 يونيو 2026، الساعة 14:00",
+          },
+          message: {
+            label: "الرسالة",
+            placeholder:
+              "اذكروا بإيجاز طبيعة الاجتماع ومدته المتوقعة وأي متطلبات مهمة.",
+          },
+        },
+        submitLabel: "إرسال الطلب",
+        submittingLabel: "جارٍ إرسال الطلب…",
+        fallbackText: "إذا لم يعمل النموذج،",
+        fallbackLabel: "أرسلوا الطلب عبر البريد الإلكتروني.",
+        privacyText:
+          "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو أي بيانات حساسة غير ضرورية. نستخدم بياناتكم فقط لتقييم الطلب والتواصل معكم.",
+        messages: {
+          success: "شكراً لكم. تم إرسال الطلب وسيجري تقييمه.",
+          invalidSubmission:
+            "يرجى مراجعة الحقول المحددة والمحاولة مرة أخرى.",
+          generalError:
+            "تعذر إرسال النموذج حالياً. استخدموا رابط البريد الإلكتروني أدناه لإرسال الطلب.",
+        },
+        validation: {
+          nameRequired: "يرجى إدخال الاسم.",
+          nameTooLong: "يجب ألا يتجاوز الاسم 120 حرفاً.",
+          emailRequired: "يرجى إدخال البريد الإلكتروني.",
+          emailInvalid: "يرجى إدخال بريد إلكتروني صحيح.",
+          emailTooLong: "عنوان البريد الإلكتروني طويل جداً.",
+          phoneTooLong: "يجب ألا يتجاوز رقم الهاتف 40 حرفاً.",
+          organizationTooLong:
+            "يجب ألا يتجاوز اسم الجهة 160 حرفاً.",
+          invalidOption: "يرجى اختيار قيمة صحيحة.",
+          desiredDateTimeTooLong:
+            "يجب ألا يتجاوز التاريخ والوقت 120 حرفاً.",
+          messageRequired: "يرجى كتابة رسالة.",
+          messageTooShort: "يجب أن تتكون الرسالة من 10 أحرف على الأقل.",
+          messageTooLong: "يجب ألا تتجاوز الرسالة 3000 حرف.",
+        },
+      },
       methods: {
         eyebrow: "خيارات التواصل",
-        title: "اختر الطريقة الأنسب حسب حاجتكم الحالية.",
+        title: "هل تفضلون التواصل مباشرة عبر البريد؟",
         description:
-          "تم ترتيب الخيارات حسب نية الاستخدام الفعلية بدلاً من عرض وسائل التواصل بشكل عشوائي.",
+          "استخدموا أحد روابط البريد التالية إذا لم يكن النموذج مناسباً أو لم يعمل.",
         items: [
           {
-            kicker: "حجز",
-            title: "طلب مباشر",
+            kicker: "طلب",
+            title: "بدء طلب ترجمة شفهية",
             description:
-              "مناسب عندما تكون تفاصيل الاجتماع معروفة وتريدون بدء التخطيط مباشرة.",
+              "مناسب عندما تكون تفاصيل الاجتماع معروفة. يتم تنسيق التوافر والتخطيط بعد ذلك.",
             subject: "طلب مترجم عربي هولندي",
           },
           {
-            kicker: "اتصال",
-            title: "طلب اتصال هاتفي",
+            kicker: "تنسيق",
+            title: "ناقشوا الحالة عبر البريد",
             description:
-              "مفيد إذا احتجتم أولاً إلى تنسيق قصير حول ملاءمة الخدمة أو شكل الترجمة الشفهية المناسب.",
-            subject: "طلب اتصال بخصوص مترجم عربي هولندي",
+              "مفيد إذا احتجتم أولاً إلى تنسيق حول ملاءمة الخدمة أو شكل الترجمة الشفهية المناسب.",
+            subject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
           },
           {
-            kicker: "واتساب",
-            title: "طلب متابعة عبر واتساب",
+            kicker: "التوافر",
+            title: "استفسروا عن التوافر",
             description:
-              "مناسب كبداية مكتوبة سريعة قبل الانتقال إلى تنسيق أوسع أو طلب كامل.",
-            subject: "طلب متابعة عبر واتساب لخدمة الترجمة الشفهية",
+              "أرسلوا التاريخ والوقت وشكل الجلسة لتقييم ما هو ممكن.",
+            subject: "استفسار عن توافر مترجم شفهي عربي هولندي",
           },
         ],
       },
@@ -1124,9 +1310,9 @@ const siteContent = {
       },
       cta: {
         eyebrow: "ابدأ الآن",
-        title: "اختاروا طريقة التواصل المناسبة وابدؤوا الطلب.",
+        title: "أرسلوا الطلب عبر النموذج أو البريد الإلكتروني.",
         description:
-          "تم بناء النسخة الأولى لتدعم الحجز المباشر وطلب الاتصال وطلب المتابعة عبر واتساب ضمن مسار واحد واضح.",
+          "اذكروا التاريخ والوقت والمدة والسياق وشكل الجلسة وأي تأهيل مطلوب للحصول على متابعة دقيقة.",
       },
     },
   },

@@ -3,10 +3,9 @@ import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
 import { Hero } from "@/components/site/hero";
 import { JsonLd } from "@/components/site/json-ld";
-import { ProfileCard } from "@/components/site/profile-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import { createPageMetadata, getContactActions, isLocale, localizedPath, organizationName } from "@/lib/site";
-import { getTeamPageContent, teamProfiles } from "@/lib/team-data";
+import { getTeamPageContent, teamCapabilities } from "@/lib/team-data";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -37,36 +36,23 @@ export default async function TeamPage({ params }: PageProps) {
 
   const teamJsonLd = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        name: content.metaTitle,
-        about: organizationName,
-      },
-      {
-        "@type": "ItemList",
-        itemListElement: teamProfiles.map((profile, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: {
-            "@type": "Person",
-            name: profile.name,
-            description: profile.overview[locale],
-            knowsLanguage: profile.languages[locale],
-            memberOf: {
-              "@type": "Organization",
-              name: organizationName,
-            },
-          },
-        })),
-      },
-    ],
+    "@type": "CollectionPage",
+    name: content.metaTitle,
+    description: content.metaDescription,
+    inLanguage: locale,
+    about: {
+      "@type": "Organization",
+      name: organizationName,
+      knowsLanguage: ["Arabic", "Dutch"],
+      description: content.hero.intro,
+    },
   };
 
   return (
     <>
       <JsonLd data={teamJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.hero.eyebrow}
         title={content.hero.title}
         intro={content.hero.intro}
@@ -90,7 +76,7 @@ export default async function TeamPage({ params }: PageProps) {
           />
           <div className="panel-soft px-6 py-6">
             <p className="eyebrow eyebrow-muted">
-              {locale === "nl" ? "Wat deze laag toevoegt" : "ما الذي تضيفه هذه الطبقة"}
+              {locale === "nl" ? "Wat vooraf telt" : "ما الذي يهم مسبقاً"}
             </p>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="panel-quiet first:border-t-0 first:pt-0">
@@ -99,18 +85,18 @@ export default async function TeamPage({ params }: PageProps) {
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-muted">
                   {locale === "nl"
-                    ? "Sneller beoordelen of een profiel past bij zorg, overheid, recht of spoed."
-                    : "تساعد على تقييم مدى ملاءمة الملف لسياقات الرعاية والجهات الرسمية والقانون والطوارئ."}
+                    ? "Duidelijkheid over de context, inzetvorm en eventuele formele eisen."
+                    : "وضوح حول السياق وشكل الجلسة وأي متطلبات رسمية."}
                 </p>
               </div>
               <div className="panel-quiet first:border-t-0 first:pt-0">
                 <h3 className="text-lg font-semibold text-foreground">
-                  {locale === "nl" ? "Voor verdere groei" : "للتوسع اللاحق"}
+                  {locale === "nl" ? "Voor een passende match" : "لاختيار مناسب"}
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-muted">
                   {locale === "nl"
-                    ? "Klaar voor individuele profielen, sectorspecifieke detailpagina’s en verifieerbare registratielagen."
-                    : "مهيأة لصفحات ملفات فردية وصفحات قطاعية وطبقات تحقق مهنية أكثر تفصيلاً."}
+                    ? "Beschikbaarheid en kwalificatie worden per concrete aanvraag beoordeeld."
+                    : "يتم تقييم التوافر والتأهيل لكل طلب محدد."}
                 </p>
               </div>
             </div>
@@ -141,34 +127,63 @@ export default async function TeamPage({ params }: PageProps) {
 
       <section className="section-space">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={locale === "nl" ? "Teamprofielen" : "ملفات الفريق"}
-          title={
-            locale === "nl"
-              ? "Profielen zijn ingericht als inhoudelijke trust-objecten, niet als losse visitekaartjes."
-              : "تم إعداد الملفات كعناصر ثقة حقيقية، لا كبطاقات تعريف سطحية."
-          }
-          description={
-            locale === "nl"
-              ? "Elke kaart bevat inhoud die later kan uitgroeien tot een eigen profielpagina met sectorspecifieke en verificatiegebonden details."
-              : "كل بطاقة تتضمن عناصر يمكن توسيعها لاحقاً إلى صفحة ملف مستقل بتفاصيل قطاعية وتحقق مهني."
-          }
-          align="left"
-        />
-        <div className="mt-10 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          {teamProfiles.map((profile) => (
-            <ProfileCard key={profile.slug} profile={profile} locale={locale} />
-          ))}
-        </div>
+          <SectionHeading
+            eyebrow={content.sections.expertise.eyebrow}
+            title={content.sections.expertise.title}
+            description={content.sections.expertise.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {teamCapabilities.map((capability) => (
+              <article key={capability.id} className="panel px-6 py-6">
+                <h3 className="text-2xl font-semibold text-foreground">
+                  {capability.title[locale]}
+                </h3>
+                <p className="mt-4 text-base leading-8 text-muted">
+                  {capability.overview[locale]}
+                </p>
+                <div className="mt-6 panel-quiet">
+                  <h4 className="eyebrow eyebrow-muted">
+                    {locale === "nl" ? "Contexten" : "السياقات"}
+                  </h4>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-muted">
+                    {capability.contexts[locale].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-6 panel-quiet">
+                  <h4 className="eyebrow eyebrow-muted">
+                    {locale === "nl" ? "Inzetvormen" : "أشكال الخدمة"}
+                  </h4>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-muted">
+                    {capability.modes[locale].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-6 panel-quiet">
+                  <h4 className="eyebrow eyebrow-muted">
+                    {locale === "nl" ? "Aandachtspunten" : "نقاط مهمة"}
+                  </h4>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-muted">
+                    {capability.safeguards[locale].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="section-space-tight border-t border-line bg-soft/45">
         <div className="content-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <SectionHeading
-            eyebrow={content.sections.growth.eyebrow}
-            title={content.sections.growth.title}
-            description={content.sections.growth.description}
+            eyebrow={content.sections.assignment.eyebrow}
+            title={content.sections.assignment.title}
+            description={content.sections.assignment.description}
             align="left"
           />
           <div className="grid gap-4 lg:grid-cols-3">
@@ -208,7 +223,7 @@ export default async function TeamPage({ params }: PageProps) {
               <p className="mt-3 text-base leading-8 text-muted">
                 {locale === "nl"
                   ? "Compacte, citeerbare antwoorden die aansluiten op intake, verificatie en context."
-                  : "إجابات موجزة وقابلة للاقتباس تتصل بالحجز والتحقق والسياق المهني."}
+                  : "إجابات موجزة تتصل بالطلب والتحقق والسياق المهني."}
               </p>
             </a>
           </div>
@@ -216,16 +231,16 @@ export default async function TeamPage({ params }: PageProps) {
       </section>
 
       <CtaBand
-        eyebrow={locale === "nl" ? "Trust naar actie" : "من الثقة إلى الإجراء"}
+        eyebrow={locale === "nl" ? "Een aanvraag sturen" : "إرسال الطلب"}
         title={
           locale === "nl"
-            ? "Wilt u een aanvraag koppelen aan formele eisen, sectorcontext of snelle inzet?"
-            : "هل تريدون ربط الطلب بمتطلبات رسمية أو سياق قطاعي أو تنسيق سريع؟"
+            ? "Heeft uw gesprek formele eisen, een specifieke sectorcontext of korte doorlooptijd?"
+            : "هل ترتبط محادثتكم بمتطلبات رسمية أو قطاع محدد أو وقت قصير؟"
         }
         description={
           locale === "nl"
-            ? "Gebruik de contactroutes voor algemene, formele, juridische of spoedgebonden aanvragen."
-            : "استخدموا مسارات التواصل للطلبات العامة أو الرسمية أو القانونية أو العاجلة."
+            ? "Mail de datum, tijd, inzetvorm en context om beschikbaarheid en kwalificatie te laten beoordelen."
+            : "أرسلوا التاريخ والوقت وشكل الجلسة والسياق لتقييم التوافر والتأهيل."
         }
         primaryAction={actions.official}
         secondaryAction={actions.legal}

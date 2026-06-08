@@ -43,7 +43,6 @@ export default async function UrgentServicePage({ params }: PageProps) {
       "@type": "Organization",
       name: organizationName,
     },
-    areaServed: "NL",
     serviceType:
       locale === "nl"
         ? "Spoed- en snelle tolkondersteuning"
@@ -55,6 +54,7 @@ export default async function UrgentServicePage({ params }: PageProps) {
     <>
       <JsonLd data={serviceJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.hero.eyebrow}
         title={content.hero.title}
         intro={content.hero.intro}

@@ -55,6 +55,7 @@ export default async function HomePage({ params }: PageProps) {
     <>
       <JsonLd data={websiteJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.home.eyebrow}
         title={content.home.title}
         intro={content.home.intro}
@@ -177,7 +178,7 @@ export default async function HomePage({ params }: PageProps) {
               description={phaseTwo.sworn.hero.intro}
               href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
               label={locale === "nl" ? "Bekijk dienst" : "اعرض الخدمة"}
-              status={locale === "nl" ? "Fase 2" : "المرحلة الثانية"}
+              status={locale === "nl" ? "Formele inzet" : "استخدام رسمي"}
             />
             <ServiceCard
               title={
@@ -188,29 +189,29 @@ export default async function HomePage({ params }: PageProps) {
               description={phaseTwo.urgent.hero.intro}
               href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}
               label={locale === "nl" ? "Bekijk dienst" : "اعرض الخدمة"}
-              status={locale === "nl" ? "Fase 2" : "المرحلة الثانية"}
+              status={locale === "nl" ? "Afhankelijk van beschikbaarheid" : "بحسب التوافر"}
             />
             <ServiceCard
               title={locale === "nl" ? "FAQ" : "الأسئلة الشائعة"}
               description={
                 locale === "nl"
-                  ? "Citeerbare antwoorden over boeken, spoed, verificatie, kosten en inzet in officiële context."
-                  : "إجابات قابلة للاقتباس حول الحجز والطوارئ والتحقق والتكلفة والسياقات الرسمية."
+                  ? "Praktische antwoorden over aanvragen, spoed, kwalificatie, kosten en inzet in officiële context."
+                  : "إجابات عملية حول الطلب والطوارئ والتأهيل والتكلفة والسياقات الرسمية."
               }
               href={localizedPath(locale, "faq")}
               label={locale === "nl" ? "Bekijk FAQ" : "اعرض الصفحة"}
-              status={locale === "nl" ? "Fase 2" : "المرحلة الثانية"}
+              status={locale === "nl" ? "Praktische informatie" : "معلومات عملية"}
             />
             <ServiceCard
               title={locale === "nl" ? "Team en verificatie" : "الفريق والتحقق"}
               description={
                 locale === "nl"
-                  ? "Trust-architectuur met profielvelden, specialisaties, verificatiepunten en kwaliteitsnotities."
-                  : "بنية ثقة تتضمن حقول الملفات المهنية والتخصصات ونقاط التحقق ومؤشرات الجودة."
+                  ? "Lees hoe het collectief opdrachten afstemt op context, inzetvorm, beschikbaarheid en vereiste kwalificatie."
+                  : "تعرفوا على كيفية تنسيق المهام بحسب السياق وشكل الجلسة والتوافر والتأهيل."
               }
               href={localizedPath(locale, "team")}
               label={locale === "nl" ? "Bekijk team" : "اعرض الصفحة"}
-              status={locale === "nl" ? "Fase 2" : "المرحلة الثانية"}
+              status={locale === "nl" ? "Collectief en werkwijze" : "المجموعة وطريقة العمل"}
             />
           </div>
         </div>

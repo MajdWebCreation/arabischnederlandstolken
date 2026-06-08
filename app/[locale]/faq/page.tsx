@@ -52,6 +52,7 @@ export default async function FaqPage({ params }: PageProps) {
     <>
       <JsonLd data={faqJsonLd} />
       <Hero
+        locale={locale}
         eyebrow={content.hero.eyebrow}
         title={content.hero.title}
         intro={content.hero.intro}
@@ -76,8 +77,8 @@ export default async function FaqPage({ params }: PageProps) {
           }
           description={
             locale === "nl"
-              ? "Dat maakt de antwoorden bruikbaar voor bezoekers, zoekmachines en AI-systemen die op zoek zijn naar compacte, betrouwbare uitleg."
-              : "وهذا يجعل الإجابات مفيدة للزائر ولمحركات البحث ولأنظمة الذكاء الاصطناعي التي تبحث عن شرح موجز وموثوق."
+              ? "Zo vindt een opdrachtgever snel de informatie die nodig is om een passende aanvraag te sturen."
+              : "وبذلك تجد الجهة الطالبة سريعاً المعلومات اللازمة لإرسال طلب مناسب."
           }
           align="left"
         />
@@ -110,8 +111,8 @@ export default async function FaqPage({ params }: PageProps) {
             }
             description={
               locale === "nl"
-              ? "Elke vraag is gekoppeld aan echte boekings-, spoed-, verificatie- of contextvragen."
-              : "كل سؤال مرتبط فعلياً بالحجز أو الطوارئ أو التحقق أو السياقات الرسمية."
+              ? "Elke vraag sluit aan op aanvragen, spoed, kwalificatie of een specifieke gesprekscontext."
+              : "كل سؤال مرتبط بالطلبات أو الطوارئ أو التأهيل أو سياق محادثة محدد."
             }
             align="left"
           />
