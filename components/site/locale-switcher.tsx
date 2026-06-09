@@ -11,28 +11,37 @@ type LocaleSwitcherProps = {
 export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
   const pathname = usePathname();
 
-  const links = locales.filter((item) => item !== locale).map((target) => {
-    const nextPath = pathname.replace(`/${locale}`, `/${target}`);
-    return {
-      locale: target,
-      href: nextPath === pathname ? `/${target}` : nextPath,
-    };
-  });
-
   return (
-    <div className="flex items-center gap-2 rounded-full border border-line bg-white/92 p-1 shadow-[0_6px_18px_rgba(17,36,67,0.05)]">
-      <span className="px-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-strong">
-        {locale.toUpperCase()}
-      </span>
-      {links.map((link) => (
-        <Link
-          key={link.locale}
-          href={link.href}
-          className="rounded-full bg-brand-strong px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-        >
-          {link.locale.toUpperCase()}
-        </Link>
-      ))}
-    </div>
+    <nav
+      aria-label={locale === "nl" ? "Taal kiezen" : "اختيار اللغة"}
+      className="locale-switcher"
+      dir="ltr"
+    >
+      {locales.map((target) => {
+        if (target === locale) {
+          return (
+            <span
+              key={target}
+              aria-current="page"
+              className="locale-switcher__item locale-switcher__item--active"
+            >
+              {target.toUpperCase()}
+            </span>
+          );
+        }
+
+        const nextPath = pathname.replace(`/${locale}`, `/${target}`);
+
+        return (
+          <Link
+            key={target}
+            href={nextPath === pathname ? `/${target}` : nextPath}
+            className="locale-switcher__item locale-switcher__item--link"
+          >
+            {target.toUpperCase()}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
