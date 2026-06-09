@@ -1,7 +1,10 @@
 "use server";
 
 import { createContactFormSchema } from "@/lib/contact/schema";
-import { sendContactEmail } from "@/lib/contact/email";
+import {
+  sendContactConfirmationEmail,
+  sendContactEmail,
+} from "@/lib/contact/email";
 import type {
   ContactFormFieldErrors,
   ContactFormState,
@@ -74,6 +77,9 @@ export async function submitContactForm(
       values,
     };
   }
+
+  // Owner delivery is authoritative; visitor confirmation is best-effort.
+  await sendContactConfirmationEmail(result.data.email, locale);
 
   return {
     status: "success",
