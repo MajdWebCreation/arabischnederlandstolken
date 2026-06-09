@@ -19,10 +19,10 @@ const siteContent = {
     footer: {
       title: "Professionele tolkondersteuning voor gesprekken die duidelijkheid vereisen.",
       description:
-        "Het Arabisch-Nederlandse tolkencollectief ondersteunt gesprekken in zorg, overheid, recht en migratie. Gebruik het formulier of e-mail om beschikbaarheid en de passende inzet af te stemmen.",
+        "Het Arabisch-Nederlandse tolkencollectief ondersteunt gesprekken in zorg, overheid, recht en migratie. Gebruik het contactformulier om beschikbaarheid en de passende inzet af te stemmen.",
       navigationTitle: "Navigatie",
       contactTitle: "Contact",
-      contactNote: "Aanvragen kunnen via het formulier of per e-mail worden ingediend.",
+      contactNote: "Aanvragen kunnen via het contactformulier worden ingediend.",
       complianceNote:
         "Voor formele opdrachten stemmen we vooraf af welke kwalificatie of registerinschrijving vereist is.",
     },
@@ -122,7 +122,7 @@ const siteContent = {
         eyebrow: "Hoe aanvragen werkt",
         title: "Een duidelijke aanvraag helpt om snel de juiste inzet te beoordelen.",
         description:
-          "De eerste afstemming verloopt via het formulier of per e-mail en richt zich op de praktische en inhoudelijke eisen van het gesprek.",
+          "De eerste afstemming verloopt via het contactformulier en richt zich op de praktische en inhoudelijke eisen van het gesprek.",
         steps: [
           {
             title: "Stuur de aanvraag in",
@@ -173,7 +173,7 @@ const siteContent = {
         eyebrow: "Direct vervolg",
         title: "Een tolkaanvraag sturen of eerst de diensten bekijken?",
         description:
-          "Stuur de datum, tijd, inzetvorm en korte context per e-mail om beschikbaarheid te laten beoordelen.",
+          "Gebruik het contactformulier om datum, tijd, inzetvorm en korte context door te geven.",
       },
     },
     services: {
@@ -206,7 +206,7 @@ const siteContent = {
           {
             title: "Contact en aanvraag",
             description:
-              "Stuur per e-mail de datum, tijd, inzetvorm en korte context om beschikbaarheid te laten beoordelen.",
+              "Gebruik het contactformulier om datum, tijd, inzetvorm en korte context door te geven.",
             href: "contact",
             cta: "Open contactpagina",
           },
@@ -262,7 +262,7 @@ const siteContent = {
           {
             title: "Spoed en korte termijn",
             description:
-              "Inzet op dezelfde dag of binnenkort kan soms mogelijk zijn. Neem direct per e-mail contact op voor beschikbaarheid.",
+              "Inzet op dezelfde dag of binnenkort kan soms mogelijk zijn. Gebruik het contactformulier om beschikbaarheid te laten beoordelen.",
             status: "Afhankelijk van beschikbaarheid",
           },
           {
@@ -283,7 +283,7 @@ const siteContent = {
         eyebrow: "Volgende stap",
         title: "Bekijk de hoofddienst of stuur direct een aanvraag.",
         description:
-          "Vermeld datum, tijd, context, gewenste inzetvorm en eventuele formele eisen in uw e-mail.",
+          "Vermeld in het contactformulier datum, tijd, context, gewenste inzetvorm en eventuele formele eisen.",
       },
     },
     mainService: {
@@ -422,7 +422,7 @@ const siteContent = {
         eyebrow: "Aanvraag sturen",
         title: "Wilt u deze dienst inzetten voor een concreet gesprek?",
         description:
-          "Gebruik de contactroute om per e-mail datum, tijd, inzetvorm, context en eventuele formele eisen door te geven.",
+          "Gebruik het contactformulier om datum, tijd, inzetvorm, context en eventuele formele eisen door te geven.",
       },
     },
     contact: {
@@ -439,7 +439,7 @@ const siteContent = {
         "Ook voor beëdigde of urgente inzet, afhankelijk van beschikbaarheid.",
       ],
       primaryAction: "Vul het aanvraagformulier in",
-      secondaryAction: "Stel uw vraag per e-mail",
+      secondaryAction: "Vraag beschikbaarheid aan",
       directSubject: "Aanvraag Arabisch-Nederlands tolk",
       callbackSubject: "Vraag over Arabisch-Nederlandse tolkdienst",
       followUpSubject: "Vraag over Arabisch-Nederlandse tolkdienst",
@@ -557,9 +557,9 @@ const siteContent = {
       },
       methods: {
         eyebrow: "Contactopties",
-        title: "Liever rechtstreeks per e-mail contact opnemen?",
+        title: "Welke aanvraag past bij uw situatie?",
         description:
-          "Gebruik een van deze e-maillinks als het formulier niet passend is of niet werkt.",
+          "Kies de route die het beste past. Elke optie brengt u naar hetzelfde contactformulier.",
         items: [
           {
             kicker: "Aanvraag",
@@ -570,7 +570,7 @@ const siteContent = {
           },
           {
             kicker: "Afstemming",
-            title: "Bespreek uw situatie per e-mail",
+            title: "Beschrijf uw situatie",
             description:
               "Handig als u eerst wilt afstemmen over geschiktheid, inzetvorm of de gevoeligheid van het gesprek.",
             subject: "Vraag over Arabisch-Nederlandse tolkdienst",
@@ -655,7 +655,7 @@ const siteContent = {
       },
       cta: {
         eyebrow: "Klaar om te starten",
-        title: "Stuur uw aanvraag via het formulier of per e-mail.",
+        title: "Stuur uw aanvraag via het contactformulier.",
         description:
           "Vermeld datum, tijd, duur, context, inzetvorm en eventuele vereiste kwalificatie voor een gerichte reactie.",
       },
@@ -679,10 +679,10 @@ const siteContent = {
     footer: {
       title: "دعم ترجمة شفهية مهني للمحادثات التي تحتاج إلى وضوح وثقة.",
       description:
-        "تدعم مجموعة المترجمين الشفهيين المحادثات العربية الهولندية في مجالات الرعاية والجهات الرسمية والقانون والهجرة. استخدموا النموذج أو البريد لتقييم التوافر والشكل المناسب.",
+        "تدعم مجموعة المترجمين الشفهيين المحادثات العربية الهولندية في مجالات الرعاية والجهات الرسمية والقانون والهجرة. استخدموا نموذج التواصل لتقييم التوافر والشكل المناسب.",
       navigationTitle: "التنقل",
       contactTitle: "التواصل",
-      contactNote: "يمكن إرسال الطلبات عبر النموذج أو البريد الإلكتروني.",
+      contactNote: "يمكن إرسال الطلبات عبر نموذج التواصل.",
       complianceNote:
         "في المهام الرسمية ننسق مسبقاً نوع التأهيل أو التسجيل المطلوب.",
     },
@@ -693,7 +693,7 @@ const siteContent = {
       eyebrow: "مجموعة ترجمة شفهية عربية هولندية",
       title: "مترجمون شفهيون بالعربية والهولندية للمحادثات التي تتطلب دقة وثقة مهنية.",
       intro:
-        "إذا كنتم بحاجة إلى مترجم شفهي عربي هولندي لاجتماع مع بلدية أو جهة رعاية أو محامٍ أو محكمة أو جهة هجرة، فأرسلوا تفاصيل الموعد عبر البريد لتقييم التوافر والشكل المناسب للمهمة.",
+        "إذا كنتم بحاجة إلى مترجم شفهي عربي هولندي لاجتماع مع بلدية أو جهة رعاية أو محامٍ أو محكمة أو جهة هجرة، فاستخدموا نموذج التواصل لإرسال تفاصيل الموعد وتقييم التوافر والشكل المناسب للمهمة.",
       highlights: [
         "مناسبة للسياقات البلدية والطبية والقانونية وسياقات الهجرة في هولندا.",
         "يمكن تقديمها هاتفياً أو عبر الفيديو أو حضورياً بحسب المهمة.",
@@ -780,7 +780,7 @@ const siteContent = {
         eyebrow: "كيف يبدأ الطلب",
         title: "الطلب الواضح يساعد على تقييم المهمة بسرعة.",
         description:
-          "يبدأ التنسيق عبر النموذج أو البريد ويركز على المتطلبات العملية والمهنية للمحادثة.",
+          "يبدأ التنسيق عبر نموذج التواصل ويركز على المتطلبات العملية والمهنية للمحادثة.",
         steps: [
           {
             title: "أرسل الطلب",
@@ -829,9 +829,9 @@ const siteContent = {
       },
       cta: {
         eyebrow: "الخطوة التالية",
-        title: "يمكنكم الاطلاع على الخدمة أو إرسال طلب عبر البريد.",
+        title: "يمكنكم الاطلاع على الخدمة أو إرسال طلب عبر نموذج التواصل.",
         description:
-          "أرسلوا التاريخ والوقت وشكل الجلسة والسياق المختصر لتقييم التوافر.",
+          "أدخلوا التاريخ والوقت وشكل الجلسة والسياق المختصر لتقييم التوافر.",
       },
     },
     services: {
@@ -863,7 +863,7 @@ const siteContent = {
           {
             title: "التواصل وبدء الطلب",
             description:
-              "أرسلوا عبر البريد التاريخ والوقت وشكل الجلسة والسياق المختصر لتقييم التوافر.",
+              "استخدموا نموذج التواصل لإرسال التاريخ والوقت وشكل الجلسة والسياق المختصر.",
             href: "contact",
             cta: "افتح صفحة التواصل",
           },
@@ -940,7 +940,7 @@ const siteContent = {
         eyebrow: "الخطوة التالية",
         title: "اطلعوا على الخدمة الأساسية أو أرسلوا الطلب مباشرة.",
         description:
-          "اذكروا التاريخ والوقت والسياق وشكل الجلسة وأي متطلبات رسمية في البريد.",
+          "اذكروا في نموذج التواصل التاريخ والوقت والسياق وشكل الجلسة وأي متطلبات رسمية.",
       },
     },
     mainService: {
@@ -1079,7 +1079,7 @@ const siteContent = {
         eyebrow: "ابدأ الآن",
         title: "إذا كان لديكم اجتماع محدد، فابدؤوا الطلب عبر صفحة التواصل.",
         description:
-          "أرسلوا التاريخ والوقت وشكل الجلسة والسياق وأي متطلبات رسمية عبر البريد.",
+          "استخدموا نموذج التواصل لإرسال التاريخ والوقت وشكل الجلسة والسياق وأي متطلبات رسمية.",
       },
     },
     contact: {
@@ -1096,7 +1096,7 @@ const siteContent = {
         "مناسبة أيضاً للمهام المحلّفة أو العاجلة بحسب التوافر.",
       ],
       primaryAction: "املأ نموذج الطلب",
-      secondaryAction: "أرسل استفسارك بالبريد",
+      secondaryAction: "استفسروا عن التوافر",
       directSubject: "طلب مترجم عربي هولندي",
       callbackSubject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
       followUpSubject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
@@ -1212,9 +1212,9 @@ const siteContent = {
       },
       methods: {
         eyebrow: "خيارات التواصل",
-        title: "هل تفضلون التواصل مباشرة عبر البريد؟",
+        title: "ما نوع الطلب المناسب لحالتكم؟",
         description:
-          "استخدموا أحد روابط البريد التالية إذا لم يكن النموذج مناسباً أو لم يعمل.",
+          "اختاروا المسار الأنسب. جميع الخيارات تنقلكم إلى نموذج التواصل نفسه.",
         items: [
           {
             kicker: "طلب",
@@ -1225,7 +1225,7 @@ const siteContent = {
           },
           {
             kicker: "تنسيق",
-            title: "ناقشوا الحالة عبر البريد",
+            title: "اشرحوا حالتكم",
             description:
               "مفيد إذا احتجتم أولاً إلى تنسيق حول ملاءمة الخدمة أو شكل الترجمة الشفهية المناسب.",
             subject: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
@@ -1310,7 +1310,7 @@ const siteContent = {
       },
       cta: {
         eyebrow: "ابدأ الآن",
-        title: "أرسلوا الطلب عبر النموذج أو البريد الإلكتروني.",
+        title: "أرسلوا الطلب عبر نموذج التواصل.",
         description:
           "اذكروا التاريخ والوقت والمدة والسياق وشكل الجلسة وأي تأهيل مطلوب للحصول على متابعة دقيقة.",
       },

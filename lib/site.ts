@@ -10,31 +10,6 @@ export const organizationContact = {
   email: "info@arabischnederlandstolken.nl",
 };
 
-const contactActionSubjects = {
-  nl: {
-    general: "Aanvraag Arabisch-Nederlands tolk",
-    callback: "Vraag over Arabisch-Nederlandse tolkdienst",
-    urgent: "Spoedaanvraag Arabisch-Nederlands tolk",
-    sworn: "Aanvraag beëdigd tolk Arabisch-Nederlands",
-    official: "Aanvraag officiële afspraak Arabisch-Nederlands tolk",
-    municipality: "Aanvraag gemeentecontext Arabisch-Nederlands tolk",
-    healthcare: "Aanvraag zorgcontext Arabisch-Nederlands tolk",
-    legal: "Aanvraag juridische context Arabisch-Nederlands tolk",
-    followUp: "Vraag over Arabisch-Nederlandse tolkdienst",
-  },
-  ar: {
-    general: "طلب مترجم شفهي عربي هولندي",
-    callback: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
-    urgent: "طلب عاجل لمترجم شفهي عربي هولندي",
-    sworn: "طلب مترجم محلّف عربي هولندي",
-    official: "طلب لموعد رسمي مع مترجم عربي هولندي",
-    municipality: "طلب ترجمة شفهية لسياق بلدي",
-    healthcare: "طلب ترجمة شفهية لسياق صحي",
-    legal: "طلب ترجمة شفهية لسياق قانوني",
-    followUp: "استفسار عن خدمة الترجمة الشفهية العربية الهولندية",
-  },
-} as const;
-
 const localeDefinitions = {
   nl: {
     lang: "nl",
@@ -74,7 +49,7 @@ export function buildMailtoHref(subject: string) {
 }
 
 export function getContactActions(locale: Locale) {
-  const subjects = contactActionSubjects[locale];
+  const contactHref = localizedPath(locale, "contact");
 
   return {
     general: {
@@ -82,63 +57,63 @@ export function getContactActions(locale: Locale) {
         locale === "nl"
           ? "Stuur een tolkaanvraag"
           : "أرسل طلب مترجم شفهي",
-      href: buildMailtoHref(subjects.general),
+      href: contactHref,
     },
     callback: {
       label:
         locale === "nl"
-          ? "Bespreek uw situatie per e-mail"
-          : "ناقش طلبك عبر البريد الإلكتروني",
-      href: buildMailtoHref(subjects.callback),
+          ? "Beschrijf uw tolkvraag"
+          : "اشرحوا طلب الترجمة",
+      href: contactHref,
     },
     urgent: {
       label:
         locale === "nl"
-          ? "Mail een spoedaanvraag"
-          : "أرسل طلباً عاجلاً بالبريد",
-      href: buildMailtoHref(subjects.urgent),
+          ? "Dien een spoedaanvraag in"
+          : "أرسلوا طلباً عاجلاً",
+      href: contactHref,
     },
     sworn: {
       label:
         locale === "nl"
-          ? "Mail een aanvraag voor een beëdigd tolk"
-          : "أرسل طلب مترجم محلّف بالبريد",
-      href: buildMailtoHref(subjects.sworn),
+          ? "Vraag een beëdigd tolk aan"
+          : "اطلبوا مترجماً محلّفاً",
+      href: contactHref,
     },
     official: {
       label:
         locale === "nl"
-          ? "Mail uw vraag over een officiële afspraak"
-          : "أرسل استفسارك عن موعد رسمي",
-      href: buildMailtoHref(subjects.official),
+          ? "Vraag over een officiële afspraak"
+          : "استفسروا عن موعد رسمي",
+      href: contactHref,
     },
     municipality: {
       label:
         locale === "nl"
-          ? "Mail een aanvraag voor gemeentecontext"
-          : "أرسل طلباً لسياق بلدي",
-      href: buildMailtoHref(subjects.municipality),
+          ? "Aanvraag voor gemeentecontext"
+          : "طلب لسياق بلدي",
+      href: contactHref,
     },
     healthcare: {
       label:
         locale === "nl"
-          ? "Mail een aanvraag voor zorgcontext"
-          : "أرسل طلباً لسياق صحي",
-      href: buildMailtoHref(subjects.healthcare),
+          ? "Aanvraag voor zorgcontext"
+          : "طلب لسياق صحي",
+      href: contactHref,
     },
     legal: {
       label:
         locale === "nl"
-          ? "Mail een aanvraag voor juridische context"
-          : "أرسل طلباً لسياق قانوني",
-      href: buildMailtoHref(subjects.legal),
+          ? "Aanvraag voor juridische context"
+          : "طلب لسياق قانوني",
+      href: contactHref,
     },
     followUp: {
       label:
         locale === "nl"
-          ? "Stel uw vraag per e-mail"
-          : "أرسل استفسارك بالبريد الإلكتروني",
-      href: buildMailtoHref(subjects.followUp),
+          ? "Neem contact op"
+          : "تواصلوا معنا",
+      href: contactHref,
     },
   };
 }

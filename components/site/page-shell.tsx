@@ -3,7 +3,6 @@ import { getSiteContent } from "@/lib/site-content";
 import {
   getContactActions,
   localizedPath,
-  organizationContact,
   type Locale,
 } from "@/lib/site";
 
@@ -153,8 +152,10 @@ export function PageShell({ children, locale }: PageShellProps) {
                 {content.footer.contactTitle}
               </h3>
               <div className="mt-4 flex flex-col gap-3 text-sm text-muted">
-                <a href={`mailto:${organizationContact.email}`}>
-                  {organizationContact.email}
+                <a href={localizedPath(locale, "contact")}>
+                  {locale === "nl"
+                    ? "Open het contactformulier"
+                    : "افتح نموذج التواصل"}
                 </a>
                 <a href={actions.callback.href}>{actions.callback.label}</a>
                 <a href={actions.urgent.href}>{actions.urgent.label}</a>

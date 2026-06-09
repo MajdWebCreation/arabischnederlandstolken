@@ -197,7 +197,7 @@ const servicePages = {
         eyebrow: "Spoedroute",
         title: "Heeft u snel een Arabisch-Nederlandse tolk nodig?",
         description:
-          "Mail uw spoedaanvraag en vermeld direct de exacte tijd, context en gewenste inzetvorm.",
+          "Gebruik het contactformulier en vermeld de exacte tijd, context en gewenste inzetvorm.",
       },
     },
   },
@@ -397,7 +397,7 @@ const servicePages = {
         eyebrow: "مسار الطوارئ",
         title: "هل تحتاجون بسرعة إلى مترجم عربي هولندي؟",
         description:
-          "استخدموا مسار الطوارئ أو طلب الاتصال، واذكروا الوقت الدقيق والسياق ونوع الجلسة المطلوبة.",
+          "استخدموا نموذج التواصل واذكروا الوقت الدقيق والسياق ونوع الجلسة المطلوبة.",
       },
     },
   },

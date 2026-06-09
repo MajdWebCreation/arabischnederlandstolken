@@ -86,7 +86,7 @@ const faqData = {
         category: "Verificatie en professionaliteit",
         question: "Wordt rekening gehouden met geheimhouding en professionele neutraliteit?",
         answer:
-          "Ja. Gevoelige gesprekken vragen om zorgvuldige omgang met informatie, neutrale overdracht en duidelijke professionele grenzen. Deel bij een eerste e-mail alleen de informatie die nodig is om de opdracht te beoordelen.",
+          "Ja. Gevoelige gesprekken vragen om zorgvuldige omgang met informatie, neutrale overdracht en duidelijke professionele grenzen. Deel bij een eerste aanvraag alleen de informatie die nodig is om de opdracht te beoordelen.",
       },
       {
         category: "Verificatie en professionaliteit",

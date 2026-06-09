@@ -239,8 +239,8 @@ export default async function TeamPage({ params }: PageProps) {
         }
         description={
           locale === "nl"
-            ? "Mail de datum, tijd, inzetvorm en context om beschikbaarheid en kwalificatie te laten beoordelen."
-            : "أرسلوا التاريخ والوقت وشكل الجلسة والسياق لتقييم التوافر والتأهيل."
+            ? "Gebruik het contactformulier om datum, tijd, inzetvorm en context door te geven."
+            : "استخدموا نموذج التواصل لإرسال التاريخ والوقت وشكل الجلسة والسياق."
         }
         primaryAction={actions.official}
         secondaryAction={actions.legal}

@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: PageProps) {
         }}
         secondaryAction={{
           label: content.contact.secondaryAction,
-          href: buildMailtoHref(content.contact.callbackSubject),
+          href: "#contactformulier",
         }}
         highlights={content.contact.highlights}
         compact
@@ -112,7 +112,7 @@ export default async function ContactPage({ params }: PageProps) {
           {content.contact.methods.items.map((item) => (
             <a
               key={item.title}
-              href={buildMailtoHref(item.subject)}
+              href="#contactformulier"
               className="rounded-[1.75rem] border border-line bg-surface px-6 py-6 transition-transform duration-200 hover:-translate-y-1"
             >
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/65">
@@ -129,7 +129,7 @@ export default async function ContactPage({ params }: PageProps) {
         </div>
         <div className="mt-6 grid gap-5 lg:grid-cols-4">
           <a
-            href={actions.urgent.href}
+            href="#contactformulier"
             className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
           >
             <h3 className="text-lg font-semibold text-foreground">{actions.urgent.label}</h3>
@@ -140,7 +140,7 @@ export default async function ContactPage({ params }: PageProps) {
             </p>
           </a>
           <a
-            href={actions.sworn.href}
+            href="#contactformulier"
             className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
           >
             <h3 className="text-lg font-semibold text-foreground">{actions.sworn.label}</h3>
@@ -151,7 +151,7 @@ export default async function ContactPage({ params }: PageProps) {
             </p>
           </a>
           <a
-            href={actions.healthcare.href}
+            href="#contactformulier"
             className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
           >
             <h3 className="text-lg font-semibold text-foreground">{actions.healthcare.label}</h3>
@@ -162,7 +162,7 @@ export default async function ContactPage({ params }: PageProps) {
             </p>
           </a>
           <a
-            href={actions.legal.href}
+            href="#contactformulier"
             className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
           >
             <h3 className="text-lg font-semibold text-foreground">{actions.legal.label}</h3>
@@ -258,7 +258,7 @@ export default async function ContactPage({ params }: PageProps) {
         }}
         secondaryAction={{
           label: content.contact.secondaryAction,
-          href: buildMailtoHref(content.contact.followUpSubject),
+          href: "#contactformulier",
         }}
       />
     </>
