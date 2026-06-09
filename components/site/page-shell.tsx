@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LocaleSwitcher } from "@/components/site/locale-switcher";
 import { getSiteContent } from "@/lib/site-content";
 import {
@@ -46,14 +47,27 @@ export function PageShell({ children, locale }: PageShellProps) {
     <div className={`page-shell min-h-screen ${isArabic ? "font-arabic" : ""}`}>
       <header className="sticky top-0 z-40 border-b border-line/70 bg-background/92 backdrop-blur">
         <div className="content-shell flex items-center justify-between gap-3 py-4 sm:gap-6">
-          <div className="min-w-0">
-            <a href={localizedPath(locale, "")} className="block">
-              <p className="eyebrow eyebrow-muted">
-                {content.brand.tag}
-              </p>
-              <p className="mt-1 text-base font-semibold text-foreground sm:text-lg">
-                {content.brand.name}
-              </p>
+          <div className="min-w-0 shrink">
+            <a
+              href={localizedPath(locale, "")}
+              aria-label={content.brand.name}
+              className="flex min-w-0 items-center gap-2.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+            >
+              <Image
+                src="/brand/logo-mark.webp"
+                alt=""
+                width={48}
+                height={46}
+                className="h-[46px] w-12 shrink-0 object-contain"
+              />
+              <div className="hidden min-w-0 md:block">
+                <p className="eyebrow eyebrow-muted whitespace-nowrap">
+                  {content.brand.tag}
+                </p>
+                <p className="mt-1 max-w-64 truncate text-base font-semibold text-foreground xl:max-w-none xl:text-lg">
+                  {content.brand.name}
+                </p>
+              </div>
             </a>
           </div>
 
@@ -116,10 +130,28 @@ export function PageShell({ children, locale }: PageShellProps) {
       <footer className="border-t border-line bg-white/70">
         <div className="content-shell grid gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <p className="eyebrow eyebrow-muted">
-              {content.brand.tag}
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold text-foreground">
+            <a
+              href={localizedPath(locale, "")}
+              aria-label={content.brand.name}
+              className="inline-flex items-center gap-4 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+            >
+              <Image
+                src="/brand/logo-mark.webp"
+                alt=""
+                width={72}
+                height={69}
+                className="h-[69px] w-[72px] shrink-0 object-contain"
+              />
+              <span>
+                <span className="eyebrow eyebrow-muted block">
+                  {content.brand.tag}
+                </span>
+                <span className="mt-1 block text-sm font-semibold leading-6 text-foreground">
+                  {content.brand.name}
+                </span>
+              </span>
+            </a>
+            <h2 className="mt-6 text-2xl font-semibold text-foreground">
               {content.footer.title}
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
