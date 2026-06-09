@@ -528,7 +528,7 @@ const siteContent = {
         fallbackText: "Werkt het formulier niet?",
         fallbackLabel: "Stuur uw aanvraag per e-mail.",
         privacyText:
-          "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. We gebruiken je gegevens alleen om je aanvraag te beoordelen en contact met je op te nemen.",
+          "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. We gebruiken je gegevens alleen om je aanvraag te beoordelen en contact met je op te nemen. Uw ingevulde gegevens blijven tijdelijk in deze browsertab bewaard zolang het formulier niet is verzonden.",
         messages: {
           success:
             "Dank u. Uw aanvraag is verzonden en wordt beoordeeld.",
@@ -1185,7 +1185,7 @@ const siteContent = {
         fallbackText: "إذا لم يعمل النموذج،",
         fallbackLabel: "أرسلوا الطلب عبر البريد الإلكتروني.",
         privacyText:
-          "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو أي بيانات حساسة غير ضرورية. نستخدم بياناتكم فقط لتقييم الطلب والتواصل معكم.",
+          "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو أي بيانات حساسة غير ضرورية. نستخدم بياناتكم فقط لتقييم الطلب والتواصل معكم. تُحفظ البيانات التي أدخلتموها مؤقتاً في علامة تبويب المتصفح هذه ما دام النموذج لم يُرسل.",
         messages: {
           success: "شكراً لكم. تم إرسال الطلب وسيجري تقييمه.",
           invalidSubmission:

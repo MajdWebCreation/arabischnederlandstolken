@@ -33,26 +33,46 @@ export type ContactContext = (typeof contextValues)[number];
 export type LanguageDirection = (typeof languageDirectionValues)[number];
 export type DeliveryMode = (typeof deliveryModeValues)[number];
 
+export const contactFormFieldNames = [
+  "name",
+  "email",
+  "phone",
+  "organization",
+  "requestType",
+  "context",
+  "languageDirection",
+  "deliveryMode",
+  "desiredDateTime",
+  "message",
+] as const;
+
 export type ContactFormFieldName =
-  | "name"
-  | "email"
-  | "phone"
-  | "organization"
-  | "requestType"
-  | "context"
-  | "languageDirection"
-  | "deliveryMode"
-  | "desiredDateTime"
-  | "message";
+  (typeof contactFormFieldNames)[number];
 
 export type ContactFormFieldErrors = Partial<
   Record<ContactFormFieldName, string[]>
 >;
 
+export type ContactFormValues = Record<ContactFormFieldName, string>;
+
+export const emptyContactFormValues: ContactFormValues = {
+  name: "",
+  email: "",
+  phone: "",
+  organization: "",
+  requestType: "",
+  context: "",
+  languageDirection: "",
+  deliveryMode: "",
+  desiredDateTime: "",
+  message: "",
+};
+
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
   fieldErrors?: ContactFormFieldErrors;
+  values?: ContactFormValues;
 };
 
 export const initialContactFormState: ContactFormState = {

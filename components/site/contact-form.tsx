@@ -1,11 +1,23 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  type FormEvent,
+} from "react";
 import { submitContactForm } from "@/app/[locale]/contact/actions";
 import {
+  contactFormFieldNames,
+  contextValues,
+  deliveryModeValues,
+  emptyContactFormValues,
   initialContactFormState,
+  languageDirectionValues,
+  requestTypeValues,
   type ContactFormCopy,
   type ContactFormFieldName,
+  type ContactFormValues,
 } from "@/lib/contact/types";
 import type { Locale } from "@/lib/site";
 
@@ -17,6 +29,126 @@ type ContactFormProps = {
 
 const inputClassName =
   "mt-2 min-h-12 w-full rounded-xl border border-line-strong bg-white px-4 py-3 text-base text-foreground outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-wait disabled:opacity-70";
+
+const contactFormFieldNameSet = new Set<string>(contactFormFieldNames);
+
+const draftValueLimits: Record<ContactFormFieldName, number> = {
+  name: 121,
+  email: 255,
+  phone: 41,
+  organization: 161,
+  requestType: 64,
+  context: 64,
+  languageDirection: 64,
+  deliveryMode: 64,
+  desiredDateTime: 121,
+  message: 3001,
+};
+
+function isAllowedValue(
+  value: string,
+  allowedValues: readonly string[],
+) {
+  return value === "" || allowedValues.includes(value);
+}
+
+function readContactFormDraft(storageKey: string) {
+  try {
+    const storedDraft = window.sessionStorage.getItem(storageKey);
+
+    if (!storedDraft) {
+      return null;
+    }
+
+    const parsedDraft: unknown = JSON.parse(storedDraft);
+
+    if (
+      typeof parsedDraft !== "object" ||
+      parsedDraft === null ||
+      Array.isArray(parsedDraft)
+    ) {
+      window.sessionStorage.removeItem(storageKey);
+      return null;
+    }
+
+    const record = parsedDraft as Record<string, unknown>;
+    const draft = { ...emptyContactFormValues };
+
+    for (const fieldName of contactFormFieldNames) {
+      const value = record[fieldName];
+
+      if (typeof value === "string") {
+        draft[fieldName] = value.slice(0, draftValueLimits[fieldName]);
+      }
+    }
+
+    if (!isAllowedValue(draft.requestType, requestTypeValues)) {
+      draft.requestType = "";
+    }
+
+    if (!isAllowedValue(draft.context, contextValues)) {
+      draft.context = "";
+    }
+
+    if (
+      !isAllowedValue(draft.languageDirection, languageDirectionValues)
+    ) {
+      draft.languageDirection = "";
+    }
+
+    if (!isAllowedValue(draft.deliveryMode, deliveryModeValues)) {
+      draft.deliveryMode = "";
+    }
+
+    return draft;
+  } catch {
+    return null;
+  }
+}
+
+function writeContactFormDraft(
+  storageKey: string,
+  values: ContactFormValues,
+) {
+  try {
+    if (Object.values(values).some((value) => value !== "")) {
+      window.sessionStorage.setItem(storageKey, JSON.stringify(values));
+    } else {
+      window.sessionStorage.removeItem(storageKey);
+    }
+  } catch {
+    // Storage can be unavailable in privacy-restricted browser contexts.
+  }
+}
+
+function removeContactFormDraft(storageKey: string) {
+  try {
+    window.sessionStorage.removeItem(storageKey);
+  } catch {
+    // A successful submission must not be turned into an error by storage.
+  }
+}
+
+function applyContactFormValues(
+  form: HTMLFormElement | null,
+  values: ContactFormValues,
+) {
+  if (!form) {
+    return;
+  }
+
+  for (const fieldName of contactFormFieldNames) {
+    const field = form.elements.namedItem(fieldName);
+
+    if (
+      field instanceof HTMLInputElement ||
+      field instanceof HTMLSelectElement ||
+      field instanceof HTMLTextAreaElement
+    ) {
+      field.value = values[fieldName];
+    }
+  }
+}
 
 export function ContactForm({
   locale,
@@ -30,6 +162,20 @@ export function ContactForm({
   );
   const formRef = useRef<HTMLFormElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
+  const storageKey = `contact-form-draft:${locale}`;
+  const storageKeyRef = useRef(storageKey);
+  const valuesRef = useRef<ContactFormValues>({
+    ...emptyContactFormValues,
+  });
+
+  useEffect(() => {
+    storageKeyRef.current = storageKey;
+    const storedDraft = readContactFormDraft(storageKey);
+    const nextValues = storedDraft ?? { ...emptyContactFormValues };
+
+    valuesRef.current = nextValues;
+    applyContactFormValues(formRef.current, nextValues);
+  }, [storageKey]);
 
   useEffect(() => {
     if (state.status === "idle") {
@@ -37,11 +183,43 @@ export function ContactForm({
     }
 
     if (state.status === "success") {
+      removeContactFormDraft(storageKeyRef.current);
+      const emptyValues = { ...emptyContactFormValues };
+
+      valuesRef.current = emptyValues;
       formRef.current?.reset();
+    } else if (state.values) {
+      valuesRef.current = state.values;
+      applyContactFormValues(formRef.current, state.values);
+      writeContactFormDraft(storageKeyRef.current, state.values);
     }
 
     statusRef.current?.focus();
   }, [state]);
+
+  function handleFormChange(event: FormEvent<HTMLFormElement>) {
+    const target = event.target;
+
+    if (
+      !(
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLSelectElement ||
+        target instanceof HTMLTextAreaElement
+      ) ||
+      !contactFormFieldNameSet.has(target.name)
+    ) {
+      return;
+    }
+
+    const fieldName = target.name as ContactFormFieldName;
+    const nextValues = {
+      ...valuesRef.current,
+      [fieldName]: target.value,
+    };
+
+    valuesRef.current = nextValues;
+    writeContactFormDraft(storageKeyRef.current, nextValues);
+  }
 
   function fieldError(name: ContactFormFieldName) {
     return state.fieldErrors?.[name]?.[0];
@@ -53,7 +231,12 @@ export function ContactForm({
 
   return (
     <div className="panel px-6 py-7 sm:px-8 sm:py-9">
-      <form ref={formRef} action={formAction} noValidate>
+      <form
+        ref={formRef}
+        action={formAction}
+        onChange={handleFormChange}
+        noValidate
+      >
         <p className="text-sm leading-7 text-muted">{content.requiredNote}</p>
 
         <div
