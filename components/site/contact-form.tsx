@@ -28,7 +28,7 @@ type ContactFormProps = {
 };
 
 const inputClassName =
-  "mt-2 min-h-12 w-full rounded-xl border border-line-strong bg-white px-4 py-3 text-base text-foreground outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-wait disabled:opacity-70";
+  "form-control mt-2";
 
 const contactFormFieldNameSet = new Set<string>(contactFormFieldNames);
 
@@ -230,7 +230,7 @@ export function ContactForm({
   }
 
   return (
-    <div className="panel px-6 py-7 sm:px-8 sm:py-9">
+    <div className="panel form-panel px-6 py-7 sm:px-8 sm:py-9">
       <form
         ref={formRef}
         action={formAction}
@@ -244,7 +244,7 @@ export function ContactForm({
           tabIndex={-1}
           role={state.status === "error" ? "alert" : "status"}
           aria-live="polite"
-          className={`mt-5 rounded-xl border px-4 py-3 text-sm leading-6 outline-none ${
+          className={`mt-5 rounded-2xl border px-4 py-3 text-sm leading-6 outline-none ${
             state.status === "success"
               ? "border-brand/20 bg-brand-soft/60 text-brand-strong"
               : state.status === "error"
@@ -573,7 +573,7 @@ export function ContactForm({
           />
         </div>
 
-        <p className="mt-6 rounded-xl border border-line bg-background px-4 py-3 text-sm leading-7 text-muted">
+        <p className="form-note mt-6 px-4 py-3 text-sm leading-7 text-muted">
           {content.privacyText}
         </p>
 

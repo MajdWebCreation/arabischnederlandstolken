@@ -68,39 +68,39 @@ export default async function FaqPage({ params }: PageProps) {
 
       <section className="section-space-tight">
         <div className="content-shell grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
-        <SectionHeading
-          eyebrow={locale === "nl" ? "Vraagstructuur" : "هيكل الأسئلة"}
-          title={
-            locale === "nl"
-              ? "De FAQ is geordend op de onderwerpen waar opdrachtgevers het eerst duidelijkheid over nodig hebben."
-              : "تم ترتيب الأسئلة وفق الموضوعات التي تحتاج الجهات إلى وضوح مباشر بشأنها."
-          }
-          description={
-            locale === "nl"
-              ? "Zo vindt een opdrachtgever snel de informatie die nodig is om een passende aanvraag te sturen."
-              : "وبذلك تجد الجهة الطالبة سريعاً المعلومات اللازمة لإرسال طلب مناسب."
-          }
-          align="left"
-        />
-        <div className="grid gap-3">
-          {content.categories.map((category) => (
-            <article
-              key={category.title}
-              className="panel-soft px-6 py-5"
-            >
-              <h3 className="text-xl font-semibold text-foreground">
-                {category.title}
-              </h3>
-              <p className="mt-3 text-base leading-8 text-muted">
-                {category.description}
-              </p>
-            </article>
-          ))}
-        </div>
+          <SectionHeading
+            eyebrow={locale === "nl" ? "Vraagstructuur" : "هيكل الأسئلة"}
+            title={
+              locale === "nl"
+                ? "De FAQ is geordend op de onderwerpen waar opdrachtgevers het eerst duidelijkheid over nodig hebben."
+                : "تم ترتيب الأسئلة وفق الموضوعات التي تحتاج الجهات إلى وضوح مباشر بشأنها."
+            }
+            description={
+              locale === "nl"
+                ? "Zo vindt een opdrachtgever snel de informatie die nodig is om een passende aanvraag te sturen."
+                : "وبذلك تجد الجهة الطالبة سريعاً المعلومات اللازمة لإرسال طلب مناسب."
+            }
+            align="left"
+          />
+          <div className="grid gap-3">
+            {content.categories.map((category) => (
+              <article
+                key={category.title}
+                className="brand-panel px-6 py-5"
+              >
+                <h3 className="text-xl font-semibold text-foreground">
+                  {category.title}
+                </h3>
+                <p className="mt-3 text-base leading-8 text-muted">
+                  {category.description}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="section-space border-y border-line bg-white/75">
+      <section className="section-surface section-space">
         <div className="content-shell">
           <SectionHeading
             eyebrow={locale === "nl" ? "Antwoorden" : "الإجابات"}

@@ -74,7 +74,7 @@ export default async function TeamPage({ params }: PageProps) {
             description={content.sections.overview.description}
             align="left"
           />
-          <div className="panel-soft px-6 py-6">
+          <div className="brand-panel px-6 py-6">
             <p className="eyebrow eyebrow-muted">
               {locale === "nl" ? "Wat vooraf telt" : "ما الذي يهم مسبقاً"}
             </p>
@@ -104,7 +104,7 @@ export default async function TeamPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="section-space-tight border-y border-line bg-white/75">
+      <section className="section-surface section-space-tight">
         <div className="content-shell">
           <SectionHeading
             eyebrow={content.sections.verification.eyebrow}
@@ -116,7 +116,7 @@ export default async function TeamPage({ params }: PageProps) {
             {content.sections.verification.items.map((item) => (
               <div
                 key={item}
-                className="panel-quiet first:border-t-0 first:pt-0 text-sm leading-7 text-muted"
+                className="content-card content-card-compact text-sm leading-7 text-muted"
               >
                 {item}
               </div>
@@ -135,7 +135,7 @@ export default async function TeamPage({ params }: PageProps) {
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {teamCapabilities.map((capability) => (
-              <article key={capability.id} className="panel px-6 py-6">
+              <article key={capability.id} className="brand-panel px-6 py-6">
                 <h3 className="text-2xl font-semibold text-foreground">
                   {capability.title[locale]}
                 </h3>
@@ -178,7 +178,7 @@ export default async function TeamPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="section-space-tight border-t border-line bg-soft/45">
+      <section className="section-warm section-space-tight">
         <div className="content-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <SectionHeading
             eyebrow={content.sections.assignment.eyebrow}
@@ -189,7 +189,7 @@ export default async function TeamPage({ params }: PageProps) {
           <div className="grid gap-4 lg:grid-cols-3">
             <a
               href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
-              className="panel px-6 py-6"
+              className="link-card px-6 py-6"
             >
               <h3 className="text-xl font-semibold text-foreground">
                 {locale === "nl" ? "Beëdigd tolk" : "مترجم محلّف"}
@@ -202,7 +202,7 @@ export default async function TeamPage({ params }: PageProps) {
             </a>
             <a
               href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}
-              className="panel px-6 py-6"
+              className="link-card px-6 py-6"
             >
               <h3 className="text-xl font-semibold text-foreground">
                 {locale === "nl" ? "Spoedtolk" : "مترجم طوارئ"}
@@ -215,7 +215,7 @@ export default async function TeamPage({ params }: PageProps) {
             </a>
             <a
               href={localizedPath(locale, "faq")}
-              className="panel px-6 py-6"
+              className="link-card px-6 py-6"
             >
               <h3 className="text-xl font-semibold text-foreground">
                 {locale === "nl" ? "FAQ" : "الأسئلة الشائعة"}

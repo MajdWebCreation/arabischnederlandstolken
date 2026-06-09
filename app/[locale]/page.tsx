@@ -70,12 +70,12 @@ export default async function HomePage({ params }: PageProps) {
         highlights={content.home.highlights}
       />
 
-      <section className="border-t border-line/80 bg-white/75">
-        <div className="mx-auto grid max-w-7xl gap-5 px-5 py-14 sm:px-6 lg:grid-cols-3 lg:px-8">
+      <section className="section-surface">
+        <div className="content-shell grid gap-5 py-14 lg:grid-cols-3">
           {content.home.proofPoints.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1.75rem] border border-line/70 bg-surface px-6 py-6 shadow-[0_18px_50px_rgba(17,36,67,0.06)]"
+              className="brand-panel px-6 py-6"
             >
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/70">
                 {item.kicker}
@@ -91,14 +91,15 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow={content.home.answerFirst.eyebrow}
-          title={content.home.answerFirst.title}
-          description={content.home.answerFirst.description}
-        />
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-[2rem] border border-line bg-surface px-7 py-8 shadow-[0_20px_60px_rgba(17,36,67,0.05)]">
+      <section className="section-space">
+        <div className="content-shell">
+          <SectionHeading
+            eyebrow={content.home.answerFirst.eyebrow}
+            title={content.home.answerFirst.title}
+            description={content.home.answerFirst.description}
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="brand-panel px-7 py-8">
             <p className="text-base leading-8 text-muted">
               {content.home.answerFirst.body}
             </p>
@@ -106,7 +107,7 @@ export default async function HomePage({ params }: PageProps) {
               {content.home.sectors.map((sector) => (
                 <div
                   key={sector.title}
-                  className="rounded-[1.5rem] border border-line/70 bg-background px-5 py-5"
+                  className="subpanel px-5 py-5"
                 >
                   <h3 className="text-lg font-semibold text-foreground">
                     {sector.title}
@@ -119,7 +120,7 @@ export default async function HomePage({ params }: PageProps) {
             </div>
           </div>
 
-          <aside className="rounded-[2rem] border border-brand/15 bg-brand px-7 py-8 text-white shadow-[0_22px_60px_rgba(9,27,53,0.18)]">
+          <aside className="brand-panel-dark px-7 py-8">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/65">
               {content.home.bookingPanel.eyebrow}
             </p>
@@ -133,7 +134,7 @@ export default async function HomePage({ params }: PageProps) {
               {content.home.bookingPanel.items.map((item) => (
                 <li
                   key={item}
-                  className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3"
+                  className="dark-list-item"
                 >
                   {item}
                 </li>
@@ -141,10 +142,11 @@ export default async function HomePage({ params }: PageProps) {
             </ul>
           </aside>
         </div>
+        </div>
       </section>
 
-      <section className="border-y border-line bg-soft/60">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
+      <section className="section-warm section-space">
+        <div className="content-shell">
           <SectionHeading
             eyebrow={content.home.serviceOverview.eyebrow}
             title={content.home.serviceOverview.title}
@@ -217,19 +219,20 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow={content.home.process.eyebrow}
-          title={content.home.process.title}
-          description={content.home.process.description}
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+      <section className="section-space">
+        <div className="content-shell">
+          <SectionHeading
+            eyebrow={content.home.process.eyebrow}
+            title={content.home.process.title}
+            description={content.home.process.description}
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {content.home.process.steps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-[1.75rem] border border-line bg-surface px-6 py-6"
+              className="step-card"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/65">
+              <p className="step-marker">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-3 text-xl font-semibold text-foreground">
@@ -240,11 +243,12 @@ export default async function HomePage({ params }: PageProps) {
               </p>
             </article>
           ))}
+          </div>
         </div>
       </section>
 
-      <section className="border-t border-line bg-white/75">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
+      <section className="section-surface section-space">
+        <div className="content-shell">
           <SectionHeading
             eyebrow={content.home.faqPreview.eyebrow}
             title={content.home.faqPreview.title}
@@ -254,7 +258,7 @@ export default async function HomePage({ params }: PageProps) {
             {content.home.faqPreview.items.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[1.5rem] border border-line bg-surface px-6 py-5"
+                className="content-card px-6 py-5"
               >
                 <h3 className="text-lg font-semibold text-foreground">
                   {item.question}

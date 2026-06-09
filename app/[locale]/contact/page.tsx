@@ -81,7 +81,7 @@ export default async function ContactPage({ params }: PageProps) {
 
       <section
         id="contactformulier"
-        className="section-space-tight scroll-mt-28 border-y border-line bg-white/75"
+        className="section-surface section-space-tight scroll-mt-28"
       >
         <div className="content-shell">
           <SectionHeading
@@ -102,83 +102,83 @@ export default async function ContactPage({ params }: PageProps) {
 
       <section className="section-space-tight">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.contact.methods.eyebrow}
-          title={content.contact.methods.title}
-          description={content.contact.methods.description}
-          align="left"
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {content.contact.methods.items.map((item) => (
+          <SectionHeading
+            eyebrow={content.contact.methods.eyebrow}
+            title={content.contact.methods.title}
+            description={content.contact.methods.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {content.contact.methods.items.map((item) => (
+              <a
+                key={item.title}
+                href="#contactformulier"
+                className="brand-panel link-card px-6 py-6"
+              >
+                <p className="eyebrow eyebrow-muted">
+                  {item.kicker}
+                </p>
+                <h2 className="mt-3 text-xl font-semibold text-foreground">
+                  {item.title}
+                </h2>
+                <p className="mt-3 text-base leading-8 text-muted">
+                  {item.description}
+                </p>
+              </a>
+            ))}
+          </div>
+          <div className="mt-6 grid gap-5 lg:grid-cols-4">
             <a
-              key={item.title}
               href="#contactformulier"
-              className="rounded-[1.75rem] border border-line bg-surface px-6 py-6 transition-transform duration-200 hover:-translate-y-1"
+              className="link-card px-5 py-5"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/65">
-                {item.kicker}
-              </p>
-              <h2 className="mt-3 text-xl font-semibold text-foreground">
-                {item.title}
-              </h2>
-              <p className="mt-3 text-base leading-8 text-muted">
-                {item.description}
+              <h3 className="text-lg font-semibold text-foreground">{actions.urgent.label}</h3>
+              <p className="mt-2 text-sm leading-7 text-muted">
+                {locale === "nl"
+                  ? "Voor gesprekken op zeer korte termijn waarbij snelheid in de intake nodig is."
+                  : "للاجتماعات القريبة جداً التي تحتاج إلى تنسيق سريع وواضح."}
               </p>
             </a>
-          ))}
-        </div>
-        <div className="mt-6 grid gap-5 lg:grid-cols-4">
-          <a
-            href="#contactformulier"
-            className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
-          >
-            <h3 className="text-lg font-semibold text-foreground">{actions.urgent.label}</h3>
-            <p className="mt-2 text-sm leading-7 text-muted">
-              {locale === "nl"
-                ? "Voor gesprekken op zeer korte termijn waarbij snelheid in de intake nodig is."
-                : "للاجتماعات القريبة جداً التي تحتاج إلى تنسيق سريع وواضح."}
-            </p>
-          </a>
-          <a
-            href="#contactformulier"
-            className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
-          >
-            <h3 className="text-lg font-semibold text-foreground">{actions.sworn.label}</h3>
-            <p className="mt-2 text-sm leading-7 text-muted">
-              {locale === "nl"
-                ? "Voor formele afspraken waarbij beëdigde of verifieerbare inzet relevant kan zijn."
-                : "للمواعيد الرسمية التي قد تتطلب صفة محلّفة أو قابلة للتحقق."}
-            </p>
-          </a>
-          <a
-            href="#contactformulier"
-            className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
-          >
-            <h3 className="text-lg font-semibold text-foreground">{actions.healthcare.label}</h3>
-            <p className="mt-2 text-sm leading-7 text-muted">
-              {locale === "nl"
-                ? "Voor huisarts, specialist, GGZ, ziekenhuis en andere zorggesprekken."
-                : "للطبيب والمستشفى والصحة النفسية وسائر اللقاءات الطبية."}
-            </p>
-          </a>
-          <a
-            href="#contactformulier"
-            className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
-          >
-            <h3 className="text-lg font-semibold text-foreground">{actions.legal.label}</h3>
-            <p className="mt-2 text-sm leading-7 text-muted">
-              {locale === "nl"
-                ? "Voor advocaat, rechtbank en andere juridische of dossiergebonden context."
-                : "للمحامي أو المحكمة أو أي سياق قانوني أو مرتبط بالملف."}
-            </p>
-          </a>
-        </div>
+            <a
+              href="#contactformulier"
+              className="link-card px-5 py-5"
+            >
+              <h3 className="text-lg font-semibold text-foreground">{actions.sworn.label}</h3>
+              <p className="mt-2 text-sm leading-7 text-muted">
+                {locale === "nl"
+                  ? "Voor formele afspraken waarbij beëdigde of verifieerbare inzet relevant kan zijn."
+                  : "للمواعيد الرسمية التي قد تتطلب صفة محلّفة أو قابلة للتحقق."}
+              </p>
+            </a>
+            <a
+              href="#contactformulier"
+              className="link-card px-5 py-5"
+            >
+              <h3 className="text-lg font-semibold text-foreground">{actions.healthcare.label}</h3>
+              <p className="mt-2 text-sm leading-7 text-muted">
+                {locale === "nl"
+                  ? "Voor huisarts, specialist, GGZ, ziekenhuis en andere zorggesprekken."
+                  : "للطبيب والمستشفى والصحة النفسية وسائر اللقاءات الطبية."}
+              </p>
+            </a>
+            <a
+              href="#contactformulier"
+              className="link-card px-5 py-5"
+            >
+              <h3 className="text-lg font-semibold text-foreground">{actions.legal.label}</h3>
+              <p className="mt-2 text-sm leading-7 text-muted">
+                {locale === "nl"
+                  ? "Voor advocaat, rechtbank en andere juridische of dossiergebonden context."
+                  : "للمحامي أو المحكمة أو أي سياق قانوني أو مرتبط بالملف."}
+              </p>
+            </a>
+          </div>
         </div>
       </section>
 
-      <section className="section-space-tight border-y border-line bg-white/75">
+      <section className="section-surface section-space-tight">
         <div className="content-shell grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="panel px-7 py-8">
+          <div className="brand-panel px-7 py-8">
             <SectionHeading
               eyebrow={content.contact.intake.eyebrow}
               title={content.contact.intake.title}
@@ -189,7 +189,7 @@ export default async function ContactPage({ params }: PageProps) {
               {content.contact.intake.items.map((item) => (
                 <li
                   key={item}
-                  className="rounded-2xl border border-line/70 bg-background px-4 py-3 text-sm leading-7 text-muted"
+                  className="info-list-item text-sm leading-7 text-muted"
                 >
                   {item}
                 </li>
@@ -197,7 +197,7 @@ export default async function ContactPage({ params }: PageProps) {
             </ul>
           </div>
 
-          <div className="rounded-[2rem] border border-brand/10 bg-brand-strong px-7 py-8 text-white">
+          <div className="brand-panel-dark px-7 py-8">
             <SectionHeading
               eyebrow={content.contact.response.eyebrow}
               title={content.contact.response.title}
@@ -209,7 +209,7 @@ export default async function ContactPage({ params }: PageProps) {
               {content.contact.response.items.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-[1.4rem] border border-white/10 bg-white/10 px-5 py-5"
+                  className="dark-list-item px-5 py-5"
                 >
                   <h3 className="text-lg font-semibold">{item.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-white/80">
@@ -222,29 +222,29 @@ export default async function ContactPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="section-space">
+      <section className="section-warm section-space">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.contact.sectors.eyebrow}
-          title={content.contact.sectors.title}
-          description={content.contact.sectors.description}
-          align="left"
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-4">
-          {content.contact.sectors.items.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-[1.5rem] border border-line bg-surface px-5 py-5"
-            >
-              <h3 className="text-lg font-semibold text-foreground">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-7 text-muted">
-                {item.description}
-              </p>
-            </article>
-          ))}
-        </div>
+          <SectionHeading
+            eyebrow={content.contact.sectors.eyebrow}
+            title={content.contact.sectors.title}
+            description={content.contact.sectors.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-4">
+            {content.contact.sectors.items.map((item) => (
+              <article
+                key={item.title}
+                className="content-card px-5 py-5"
+              >
+                <h3 className="text-lg font-semibold text-foreground">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-muted">
+                  {item.description}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

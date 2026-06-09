@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Locale } from "@/lib/site";
 
 type Action = {
@@ -45,11 +46,13 @@ export function Hero({
     return (
       <section className="section-space-tight">
         <div className="content-shell">
-          <div className="mx-auto max-w-4xl">
+          <div className="hero-editorial mx-auto max-w-4xl py-2 sm:py-4">
             <p className="eyebrow eyebrow-muted">{eyebrow}</p>
             <h1
               className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
-                compact ? "text-4xl leading-tight sm:text-5xl" : "text-5xl leading-tight sm:text-6xl"
+                compact
+                  ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
+                  : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
               }`}
             >
               {title}
@@ -82,12 +85,14 @@ export function Hero({
     return (
       <section className="section-space-tight">
         <div className="content-shell">
-          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+          <div className="hero-shell grid gap-8 px-7 py-9 sm:px-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:px-12 lg:py-12">
             <div className="max-w-3xl">
               <p className="eyebrow eyebrow-muted">{eyebrow}</p>
               <h1
                 className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
-                  compact ? "text-4xl leading-tight sm:text-5xl" : "text-5xl leading-tight sm:text-6xl"
+                  compact
+                    ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
+                    : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
                 }`}
               >
                 {title}
@@ -104,7 +109,7 @@ export function Hero({
                 </a>
               </div>
             </div>
-            <aside className="panel-soft p-6 lg:p-7">
+            <aside className="hero-trust-panel panel-soft p-6 lg:p-7">
               <p className="eyebrow eyebrow-muted">
                 {labels.trust}
               </p>
@@ -126,12 +131,14 @@ export function Hero({
     return (
       <section className="section-space-tight">
         <div className="content-shell">
-          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+          <div className="hero-shell grid gap-8 px-7 py-9 sm:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:px-12 lg:py-12">
             <div className="max-w-3xl">
               <p className="eyebrow eyebrow-muted">{eyebrow}</p>
               <h1
                 className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
-                  compact ? "text-4xl leading-tight sm:text-5xl" : "text-5xl leading-tight sm:text-6xl"
+                  compact
+                    ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
+                    : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
                 }`}
               >
                 {title}
@@ -140,7 +147,7 @@ export function Hero({
                 {intro}
               </p>
             </div>
-            <aside className="panel border-line-strong bg-brand-strong px-6 py-6 text-white lg:px-7 lg:py-7">
+            <aside className="brand-panel-dark px-6 py-6 lg:px-7 lg:py-7">
               <p className="eyebrow eyebrow-inverse">{labels.contact}</p>
               <div className="mt-5 flex flex-col gap-3">
                 <a href={primaryAction.href} className="button-primary-on-dark px-6 py-3">
@@ -154,7 +161,7 @@ export function Hero({
                 {highlights.map((highlight) => (
                   <li
                     key={highlight}
-                    className="rounded-2xl border border-white/12 bg-white/10 px-4 py-3 text-sm leading-7 text-white/84"
+                    className="dark-list-item text-sm leading-7 text-white/84"
                   >
                     {highlight}
                   </li>
@@ -170,13 +177,22 @@ export function Hero({
   return (
     <section className="section-space-tight pb-10">
       <div className="content-shell">
-        <div className="surface-grid overflow-hidden rounded-[2.3rem] border border-line/80 bg-surface shadow-[0_24px_90px_rgba(17,36,67,0.08)]">
-        <div className="grid gap-8 px-7 py-10 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-12 lg:py-14">
+        <div className="hero-shell surface-grid">
+          <Image
+            src="/brand/logo-mark.webp"
+            alt=""
+            width={160}
+            height={153}
+            className="hero-brand-mark"
+          />
+          <div className="grid gap-8 px-7 py-10 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-12 lg:py-14">
           <div className="max-w-3xl">
             <p className="eyebrow eyebrow-muted">{eyebrow}</p>
             <h1
               className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
-                compact ? "text-4xl leading-tight sm:text-5xl" : "text-5xl leading-tight sm:text-6xl"
+                compact
+                  ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
+                  : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
               }`}
             >
               {title}
@@ -194,7 +210,7 @@ export function Hero({
             </div>
           </div>
 
-          <aside className="rounded-[1.9rem] border border-brand/12 bg-brand-strong px-6 py-6 text-white shadow-[0_18px_50px_rgba(12,36,68,0.16)]">
+          <aside className="brand-panel-dark px-6 py-6">
             <p className="eyebrow eyebrow-inverse">
               {labels.available}
             </p>
@@ -202,15 +218,15 @@ export function Hero({
               {highlights.map((highlight) => (
                 <li
                   key={highlight}
-                  className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm leading-7 text-white/80"
+                  className="dark-list-item text-sm leading-7 text-white/80"
                 >
                   {highlight}
                 </li>
               ))}
             </ul>
           </aside>
+          </div>
         </div>
-      </div>
       </div>
     </section>
   );

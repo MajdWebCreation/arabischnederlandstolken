@@ -63,18 +63,18 @@ export default async function ServicesPage({ params }: PageProps) {
 
       <section className="section-space-tight">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.services.liveServices.eyebrow}
-          title={content.services.liveServices.title}
-          description={`${content.services.liveServices.description} ${
-            locale === "nl"
-              ? "Kies de route die het beste aansluit op uw situatie."
-              : "اختاروا المسار الأنسب لحالتكم."
-          }`}
-          align="left"
-        />
-        <div className="mt-10 grid gap-4">
-          {content.services.liveServices.cards.map((card) => (
+          <SectionHeading
+            eyebrow={content.services.liveServices.eyebrow}
+            title={content.services.liveServices.title}
+            description={`${content.services.liveServices.description} ${
+              locale === "nl"
+                ? "Kies de route die het beste aansluit op uw situatie."
+                : "اختاروا المسار الأنسب لحالتكم."
+            }`}
+            align="left"
+          />
+          <div className="mt-10 grid gap-4">
+            {content.services.liveServices.cards.map((card) => (
             <ServiceCard
               key={card.title}
               title={card.title}
@@ -91,34 +91,34 @@ export default async function ServicesPage({ params }: PageProps) {
                   | undefined
               }
             />
-          ))}
-          <ServiceCard
-            title={
-              locale === "nl"
-                ? "Beëdigd tolk Arabisch ↔ Nederlands"
-                : "مترجم محلّف عربي ↔ هولندي"
-            }
-            description={phaseTwo.sworn.hero.intro}
-            href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
-            label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
-            status={locale === "nl" ? "Formele inzet" : "استخدام رسمي"}
-          />
-          <ServiceCard
-            title={
-              locale === "nl"
-                ? "Spoedtolk Arabisch ↔ Nederlands"
-                : "مترجم طوارئ عربي ↔ هولندي"
-            }
-            description={phaseTwo.urgent.hero.intro}
-            href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}
-            label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
-            status={locale === "nl" ? "Afhankelijk van beschikbaarheid" : "بحسب التوافر"}
-          />
-        </div>
+            ))}
+            <ServiceCard
+              title={
+                locale === "nl"
+                  ? "Beëdigd tolk Arabisch ↔ Nederlands"
+                  : "مترجم محلّف عربي ↔ هولندي"
+              }
+              description={phaseTwo.sworn.hero.intro}
+              href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
+              label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
+              status={locale === "nl" ? "Formele inzet" : "استخدام رسمي"}
+            />
+            <ServiceCard
+              title={
+                locale === "nl"
+                  ? "Spoedtolk Arabisch ↔ Nederlands"
+                  : "مترجم طوارئ عربي ↔ هولندي"
+              }
+              description={phaseTwo.urgent.hero.intro}
+              href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}
+              label={locale === "nl" ? "Open dienstpagina" : "افتح صفحة الخدمة"}
+              status={locale === "nl" ? "Afhankelijk van beschikbaarheid" : "بحسب التوافر"}
+            />
+          </div>
         </div>
       </section>
 
-      <section className="section-space-tight border-y border-line bg-white/75">
+      <section className="section-surface section-space-tight">
         <div className="content-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <SectionHeading
             eyebrow={content.services.verification.eyebrow}
@@ -130,7 +130,7 @@ export default async function ServicesPage({ params }: PageProps) {
             {content.services.verification.items.map((item) => (
               <article
                 key={item.title}
-                className="panel-quiet first:border-t-0 first:pt-0"
+                className="content-card px-6 py-5"
               >
                 <h3 className="text-xl font-semibold text-foreground">
                   {item.title}
@@ -144,16 +144,16 @@ export default async function ServicesPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="section-space">
+      <section className="section-warm section-space">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.services.future.eyebrow}
-          title={content.services.future.title}
-          description={content.services.future.description}
-          align="left"
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-2">
-          {content.services.future.cards.map((card) => (
+          <SectionHeading
+            eyebrow={content.services.future.eyebrow}
+            title={content.services.future.title}
+            description={content.services.future.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {content.services.future.cards.map((card) => (
             <ServiceCard
               key={card.title}
               title={card.title}
@@ -164,8 +164,8 @@ export default async function ServicesPage({ params }: PageProps) {
                   | undefined
               }
             />
-          ))}
-          <ServiceCard
+            ))}
+            <ServiceCard
             title={locale === "nl" ? "FAQ" : "الأسئلة الشائعة"}
             description={
               locale === "nl"
@@ -175,8 +175,8 @@ export default async function ServicesPage({ params }: PageProps) {
             href={localizedPath(locale, "faq")}
             label={locale === "nl" ? "Open FAQ" : "افتح الصفحة"}
             status={locale === "nl" ? "Praktische informatie" : "معلومات عملية"}
-          />
-          <ServiceCard
+            />
+            <ServiceCard
             title={locale === "nl" ? "Team en verificatie" : "الفريق والتحقق"}
             description={
               locale === "nl"
@@ -186,8 +186,8 @@ export default async function ServicesPage({ params }: PageProps) {
             href={localizedPath(locale, "team")}
             label={locale === "nl" ? "Open team" : "افتح الصفحة"}
             status={locale === "nl" ? "Collectief en werkwijze" : "المجموعة وطريقة العمل"}
-          />
-        </div>
+            />
+          </div>
         </div>
       </section>
 

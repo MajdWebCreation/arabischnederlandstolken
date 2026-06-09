@@ -70,37 +70,37 @@ export default async function SwornServicePage({ params }: PageProps) {
 
       <section className="section-space-tight">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.answerFirst.eyebrow}
-          title={content.answerFirst.title}
-          description={content.answerFirst.description}
-          align="left"
-        />
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[2rem] border border-line bg-surface px-7 py-8">
-            <p className="text-base leading-8 text-muted">{content.answerFirst.body}</p>
-          </div>
-          <aside className="rounded-[2rem] border border-brand/10 bg-soft px-7 py-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/70">
-              {locale === "nl" ? "Signalen" : "مؤشرات"}
-            </p>
-            <div className="mt-6 space-y-3">
-              {content.signals.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-line/70 bg-white/80 px-4 py-4"
-                >
-                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-muted">{item.description}</p>
-                </div>
-              ))}
+          <SectionHeading
+            eyebrow={content.answerFirst.eyebrow}
+            title={content.answerFirst.title}
+            description={content.answerFirst.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="brand-panel px-7 py-8">
+              <p className="text-base leading-8 text-muted">{content.answerFirst.body}</p>
             </div>
-          </aside>
-        </div>
+            <aside className="panel-soft px-7 py-8">
+              <p className="eyebrow eyebrow-muted">
+                {locale === "nl" ? "Signalen" : "مؤشرات"}
+              </p>
+              <div className="mt-6 space-y-3">
+                {content.signals.map((item) => (
+                  <div
+                    key={item.title}
+                    className="info-list-item px-4 py-4"
+                  >
+                    <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-muted">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
 
-      <section className="section-space-tight border-y border-line bg-white/75">
+      <section className="section-surface section-space-tight">
         <div className="content-shell">
           <SectionHeading
             eyebrow={content.verification.eyebrow}
@@ -112,7 +112,7 @@ export default async function SwornServicePage({ params }: PageProps) {
             {content.verification.items.map((item) => (
               <div
                 key={item}
-                className="rounded-[1.35rem] border border-line bg-surface px-4 py-4 text-sm leading-7 text-muted"
+                className="content-card content-card-compact text-sm leading-7 text-muted"
               >
                 {item}
               </div>
@@ -123,27 +123,27 @@ export default async function SwornServicePage({ params }: PageProps) {
 
       <section className="section-space">
         <div className="content-shell">
-        <SectionHeading
-          eyebrow={content.contexts.eyebrow}
-          title={content.contexts.title}
-          description={content.contexts.description}
-          align="left"
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {content.contexts.items.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-[1.75rem] border border-line bg-surface px-6 py-6"
-            >
-              <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
-              <p className="mt-3 text-base leading-8 text-muted">{item.description}</p>
-            </article>
-          ))}
-        </div>
+          <SectionHeading
+            eyebrow={content.contexts.eyebrow}
+            title={content.contexts.title}
+            description={content.contexts.description}
+            align="left"
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {content.contexts.items.map((item) => (
+              <article
+                key={item.title}
+                className="content-card px-6 py-6"
+              >
+                <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+                <p className="mt-3 text-base leading-8 text-muted">{item.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="section-space-tight border-t border-line bg-soft/45">
+      <section className="section-warm section-space-tight">
         <div className="content-shell">
           <SectionHeading
             eyebrow={locale === "nl" ? "Aanvraagproces" : "مسار الطلب"}
@@ -163,9 +163,9 @@ export default async function SwornServicePage({ params }: PageProps) {
             {content.steps.map((step, index) => (
               <article
                 key={step.title}
-                className="rounded-[1.75rem] border border-line bg-surface px-6 py-6"
+                className="step-card"
               >
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/65">
+                <p className="step-marker">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-3 text-xl font-semibold text-foreground">{step.title}</h3>

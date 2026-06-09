@@ -36,7 +36,7 @@ export function ServiceCard({
     return (
       <a
         href={href}
-        className="panel block px-6 py-6 transition-transform duration-200 hover:-translate-y-1 hover:border-brand/25"
+        className="brand-panel link-card block px-6 py-6 sm:px-7 sm:py-7"
       >
         {content}
       </a>
@@ -44,7 +44,7 @@ export function ServiceCard({
   }
 
   return (
-    <article className="panel px-6 py-6">
+    <article className="brand-panel px-6 py-6 sm:px-7 sm:py-7">
       {content}
     </article>
   );

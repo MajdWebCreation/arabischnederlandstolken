@@ -83,14 +83,15 @@ export default async function MainServicePage({ params }: PageProps) {
         compact
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow={content.mainService.answerFirst.eyebrow}
-          title={content.mainService.answerFirst.title}
-          description={content.mainService.answerFirst.description}
-        />
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[2rem] border border-line bg-surface px-7 py-8">
+      <section className="section-space">
+        <div className="content-shell">
+          <SectionHeading
+            eyebrow={content.mainService.answerFirst.eyebrow}
+            title={content.mainService.answerFirst.title}
+            description={content.mainService.answerFirst.description}
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="brand-panel px-7 py-8">
             <p className="text-base leading-8 text-muted">
               {content.mainService.answerFirst.body}
             </p>
@@ -98,7 +99,7 @@ export default async function MainServicePage({ params }: PageProps) {
               {content.mainService.modes.map((mode) => (
                 <div
                   key={mode.title}
-                  className="rounded-[1.4rem] border border-line/70 bg-background px-5 py-5"
+                  className="subpanel px-5 py-5"
                 >
                   <h3 className="text-lg font-semibold text-foreground">
                     {mode.title}
@@ -110,7 +111,7 @@ export default async function MainServicePage({ params }: PageProps) {
               ))}
             </div>
           </div>
-          <aside className="rounded-[2rem] border border-line bg-soft px-7 py-8">
+          <aside className="panel-soft px-7 py-8">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/70">
               {content.mainService.proof.eyebrow}
             </p>
@@ -121,18 +122,19 @@ export default async function MainServicePage({ params }: PageProps) {
               {content.mainService.proof.items.map((item) => (
                 <li
                   key={item}
-                  className="rounded-2xl border border-line/70 bg-white/85 px-4 py-3 text-sm leading-7 text-muted"
+                  className="info-list-item text-sm leading-7 text-muted"
                 >
                   {item}
                 </li>
               ))}
             </ul>
           </aside>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-line bg-white/75">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
+      <section className="section-surface section-space">
+        <div className="content-shell">
           <SectionHeading
             eyebrow={content.mainService.contexts.eyebrow}
             title={content.mainService.contexts.title}
@@ -142,7 +144,7 @@ export default async function MainServicePage({ params }: PageProps) {
             {content.mainService.contexts.items.map((item) => (
               <article
                 key={item.title}
-                className="rounded-[1.75rem] border border-line bg-surface px-6 py-6"
+                className="content-card px-6 py-6"
               >
                 <h3 className="text-xl font-semibold text-foreground">
                   {item.title}
@@ -156,19 +158,20 @@ export default async function MainServicePage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow={content.mainService.booking.eyebrow}
-          title={content.mainService.booking.title}
-          description={content.mainService.booking.description}
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+      <section className="section-space">
+        <div className="content-shell">
+          <SectionHeading
+            eyebrow={content.mainService.booking.eyebrow}
+            title={content.mainService.booking.title}
+            description={content.mainService.booking.description}
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {content.mainService.booking.steps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-[1.75rem] border border-line bg-surface px-6 py-6"
+              className="step-card"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand/65">
+              <p className="step-marker">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-3 text-xl font-semibold text-foreground">
@@ -179,11 +182,12 @@ export default async function MainServicePage({ params }: PageProps) {
               </p>
             </article>
           ))}
+          </div>
         </div>
       </section>
 
-      <section className="border-t border-line bg-soft/60">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
+      <section className="section-warm section-space">
+        <div className="content-shell">
           <SectionHeading
             eyebrow={content.mainService.faq.eyebrow}
             title={content.mainService.faq.title}
@@ -193,7 +197,7 @@ export default async function MainServicePage({ params }: PageProps) {
             {content.mainService.faq.items.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[1.5rem] border border-line bg-surface px-6 py-5"
+                className="content-card px-6 py-5"
               >
                 <h3 className="text-lg font-semibold text-foreground">
                   {item.question}

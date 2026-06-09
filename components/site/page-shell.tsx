@@ -45,7 +45,7 @@ export function PageShell({ children, locale }: PageShellProps) {
 
   return (
     <div className={`page-shell min-h-screen ${isArabic ? "font-arabic" : ""}`}>
-      <header className="sticky top-0 z-40 border-b border-line/70 bg-background/92 backdrop-blur">
+      <header className="site-header sticky top-0 z-40 border-b border-line/70 bg-background/94 backdrop-blur">
         <div className="content-shell flex items-center justify-between gap-3 py-4 sm:gap-6">
           <div className="min-w-0 shrink">
             <a
@@ -79,7 +79,7 @@ export function PageShell({ children, locale }: PageShellProps) {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-muted-strong transition hover:text-brand focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                className="site-nav-link text-sm font-medium text-muted-strong transition hover:text-brand focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
               >
                 {item.label}
               </a>
@@ -127,7 +127,7 @@ export function PageShell({ children, locale }: PageShellProps) {
 
       <main>{children}</main>
 
-      <footer className="border-t border-line bg-white/70">
+      <footer className="site-footer border-t border-line">
         <div className="content-shell grid gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <a
@@ -165,18 +165,18 @@ export function PageShell({ children, locale }: PageShellProps) {
                 {content.footer.navigationTitle}
               </h3>
               <div className="mt-4 flex flex-col gap-3 text-sm text-muted">
-                <a href={localizedPath(locale, "")}>{content.navigation.home}</a>
-                <a href={localizedPath(locale, "diensten")}>
+                <a className="footer-link" href={localizedPath(locale, "")}>{content.navigation.home}</a>
+                <a className="footer-link" href={localizedPath(locale, "diensten")}>
                   {content.navigation.services}
                 </a>
-                <a href={localizedPath(locale, "diensten/arabisch-nederlands-tolk")}>
+                <a className="footer-link" href={localizedPath(locale, "diensten/arabisch-nederlands-tolk")}>
                   {content.actions.viewMainService}
                 </a>
-                <a href={localizedPath(locale, "contact")}>
+                <a className="footer-link" href={localizedPath(locale, "contact")}>
                   {content.navigation.contact}
                 </a>
-                <a href={localizedPath(locale, "faq")}>{navLabels.faq}</a>
-                <a href={localizedPath(locale, "team")}>{navLabels.team}</a>
+                <a className="footer-link" href={localizedPath(locale, "faq")}>{navLabels.faq}</a>
+                <a className="footer-link" href={localizedPath(locale, "team")}>{navLabels.team}</a>
               </div>
             </div>
             <div>
@@ -184,13 +184,13 @@ export function PageShell({ children, locale }: PageShellProps) {
                 {content.footer.contactTitle}
               </h3>
               <div className="mt-4 flex flex-col gap-3 text-sm text-muted">
-                <a href={localizedPath(locale, "contact")}>
+                <a className="footer-link" href={localizedPath(locale, "contact")}>
                   {locale === "nl"
                     ? "Open het contactformulier"
                     : "افتح نموذج التواصل"}
                 </a>
-                <a href={actions.callback.href}>{actions.callback.label}</a>
-                <a href={actions.urgent.href}>{actions.urgent.label}</a>
+                <a className="footer-link" href={actions.callback.href}>{actions.callback.label}</a>
+                <a className="footer-link" href={actions.urgent.href}>{actions.urgent.label}</a>
                 <p>{content.footer.contactNote}</p>
                 <p>{content.footer.complianceNote}</p>
               </div>
