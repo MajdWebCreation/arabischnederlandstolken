@@ -10,14 +10,16 @@ const staticPaths = [
   "contact",
   "faq",
   "team",
+  "privacy",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return locales.flatMap((locale) =>
     staticPaths.map((path) => ({
       url: `${siteUrl}${localizedPath(locale, path)}`,
-      changeFrequency: "weekly" as const,
-      priority: path === "" ? 1 : 0.8,
+      changeFrequency:
+        path === "privacy" ? ("yearly" as const) : ("weekly" as const),
+      priority: path === "" ? 1 : path === "privacy" ? 0.5 : 0.8,
     })),
   );
 }

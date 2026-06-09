@@ -26,6 +26,145 @@ const siteContent = {
       complianceNote:
         "Voor formele opdrachten stemmen we vooraf af welke kwalificatie of registerinschrijving vereist is.",
     },
+    privacy: {
+      metaTitle:
+        "Privacyverklaring | Arabisch Nederlands Tolkencollectief",
+      metaDescription:
+        "Lees welke persoonsgegevens deze website via het contactformulier verwerkt, waarvoor ze worden gebruikt en welke dienstverleners daarbij betrokken zijn.",
+      eyebrow: "Privacy en persoonsgegevens",
+      title: "Privacyverklaring",
+      intro:
+        "Deze verklaring legt in begrijpelijke taal uit welke gegevens via deze website worden verwerkt en wat daarmee gebeurt. Het is een praktische beschrijving van de huidige werkwijze, geen formeel juridisch advies.",
+      overviewTitle: "In het kort",
+      overviewItems: [
+        "Gegevens worden gebruikt om uw tolkaanvraag te beoordelen en contact met u op te nemen.",
+        "De website bewaart aanvragen niet in een eigen database.",
+        "Formuliergegevens worden per e-mail verwerkt via Resend; de website wordt gehost door Vercel.",
+        "Een niet-verzonden concept kan tijdelijk in sessionStorage van uw eigen browser worden bewaard.",
+      ],
+      navigationLabel: "Onderwerpen in deze verklaring",
+      contactCta: "Neem contact op over privacy",
+      sections: [
+        {
+          id: "gegevens",
+          title: "Welke gegevens wij ontvangen",
+          body: [
+            "Via het contactformulier kunnen wij uw naam, e-mailadres, telefoonnummer indien ingevuld, organisatie indien ingevuld, aanvraagtype, context, taalrichting, inzetvorm, gewenste datum of tijd en uw bericht ontvangen.",
+            "Wij ontvangen alleen de gegevens die u zelf invult en verstuurt. Er is geen gebruikersaccount en via deze website vindt geen betaling plaats.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "gebruik",
+          title: "Waarvoor wij gegevens gebruiken",
+          body: [
+            "Wij gebruiken de gegevens om uw aanvraag te beoordelen, te bepalen welke vervolginformatie nodig is en contact met u op te nemen over een mogelijke tolkinzet.",
+            "Het verborgen honeypotveld in het formulier wordt gebruikt om geautomatiseerde spam te beperken. Het is niet bedoeld om aanvullende persoonsgegevens van bezoekers te verzamelen.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "formulier-email",
+          title: "Contactformulier en e-mail",
+          body: [
+            "Na verzending wordt de aanvraag via Resend naar het zakelijke ontvangadres gestuurd. De website slaat de aanvraag niet daarnaast op in een eigen database.",
+            "E-mailberichten kunnen wel worden bewaard in de zakelijke mailbox en binnen de systemen van de betrokken e-maildienst, voor zover dat nodig is voor behandeling van de aanvraag en de normale werking van e-mail.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "bevestiging",
+          title: "Automatische ontvangstbevestiging",
+          body: [
+            "Na succesvolle verzending van de aanvraag ontvangt u op het opgegeven e-mailadres een sobere automatische ontvangstbevestiging.",
+            "Deze bevestiging bevat niet uw volledige aanvraag, berichtinhoud, telefoonnummer, organisatie, datum of andere inhoudelijke details uit het formulier.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "gevoelige-gegevens",
+          title: "Geen onnodige gevoelige gegevens",
+          body: [
+            "Stuur via het formulier of per e-mail geen medische dossiers, BSN’s, processtukken of andere gevoelige documenten mee, tenzij daar later uitdrukkelijk en via een passende werkwijze om wordt gevraagd.",
+            "Beschrijf in de eerste aanvraag alleen wat nodig is om de tolkvraag en de gewenste inzet te kunnen beoordelen.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "concepten",
+          title: "Tijdelijke formulierconcepten",
+          body: [
+            "Tijdens het invullen kan een concept tijdelijk in sessionStorage van uw browser worden bewaard. Dit helpt voorkomen dat ingevoerde tekst bij een herlaadactie direct verloren gaat.",
+            "Deze conceptgegevens blijven in uw eigen browseromgeving, worden na een succesvolle verzending verwijderd en verdwijnen normaal gesproken wanneer de betreffende browsersessie wordt afgesloten.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "bewaartermijn",
+          title: "Bewaartermijn",
+          body: [
+            "Wij bewaren persoonsgegevens niet langer dan redelijkerwijs nodig is voor de behandeling en opvolging van de aanvraag, de eventuele uitvoering van een opdracht en toepasselijke administratieve of wettelijke verplichtingen.",
+            "De precieze termijn kan afhangen van de aard van de aanvraag en van de vraag of daaruit een opdracht of verdere correspondentie ontstaat.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "dienstverleners",
+          title: "Delen met dienstverleners",
+          body: [
+            "Vercel verzorgt de hosting van de website en Resend verwerkt de verzending van formuliermails en ontvangstbevestigingen. Deze dienstverleners verwerken technische gegevens en, waar nodig voor e-mailbezorging, de inhoud en adresgegevens van berichten.",
+            "Andere verstrekking kan plaatsvinden wanneer dit nodig is om uw aanvraag uit te voeren of wanneer een wettelijke verplichting dit vereist.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "beveiliging",
+          title: "Beveiliging",
+          body: [
+            "Wij nemen redelijke technische en organisatorische maatregelen om persoonsgegevens te beschermen. Geen website of e-mailsysteem kan echter absolute beveiliging garanderen.",
+            "De waarschuwing om geen onnodige gevoelige gegevens te versturen is daarom een belangrijk onderdeel van een zorgvuldige intake.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "rechten",
+          title: "Uw rechten",
+          body: [
+            "Afhankelijk van de toepasselijke privacywetgeving kunt u vragen om inzage, correctie of verwijdering van uw persoonsgegevens. Ook kunt u in bepaalde gevallen vragen om beperking van de verwerking of bezwaar maken.",
+            "Een verzoek kan worden beperkt wanneer gegevens nog nodig zijn voor een wettelijke verplichting, een lopende aanvraag of de vaststelling, uitoefening of onderbouwing van rechten.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "contact",
+          title: "Contact over privacy",
+          body: [
+            "Heeft u een vraag over uw gegevens of wilt u een privacyverzoek doen? Gebruik dan het contactformulier en vermeld dat uw bericht over privacy gaat. U kunt ook schrijven naar het zakelijke e-mailadres dat hieronder staat.",
+          ],
+          items: [],
+          showContact: true,
+        },
+        {
+          id: "wijzigingen",
+          title: "Wijzigingen",
+          body: [
+            "Deze privacyverklaring kan worden aangepast wanneer de website, de gebruikte dienstverleners of de werkwijze veranderen. De actuele versie staat steeds op deze pagina.",
+          ],
+          items: [],
+          showContact: false,
+        },
+      ],
+    },
     home: {
       metaTitle:
         "Arabisch ↔ Nederlands tolk voor zorg, gemeente, recht en migratie",
@@ -528,7 +667,9 @@ const siteContent = {
         fallbackText: "Werkt het formulier niet?",
         fallbackLabel: "Stuur uw aanvraag per e-mail.",
         privacyText:
-          "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. We gebruiken je gegevens alleen om je aanvraag te beoordelen en contact met je op te nemen. Uw ingevulde gegevens blijven tijdelijk in deze browsertab bewaard zolang het formulier niet is verzonden.",
+          "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. Wij gebruiken uw gegevens alleen om uw aanvraag te beoordelen en contact met u op te nemen. Uw ingevulde gegevens blijven tijdelijk in deze browsertab bewaard zolang het formulier niet is verzonden.",
+        privacyLinkLabel:
+          "Lees hoe wij met uw gegevens omgaan in onze privacyverklaring.",
         messages: {
           success:
             "Dank u. Uw aanvraag is verzonden en wordt beoordeeld.",
@@ -685,6 +826,145 @@ const siteContent = {
       contactNote: "يمكن إرسال الطلبات عبر نموذج التواصل.",
       complianceNote:
         "في المهام الرسمية ننسق مسبقاً نوع التأهيل أو التسجيل المطلوب.",
+    },
+    privacy: {
+      metaTitle:
+        "بيان الخصوصية | مجموعة الترجمة الشفهية العربية الهولندية",
+      metaDescription:
+        "اطلعوا على البيانات الشخصية التي يعالجها الموقع عبر نموذج التواصل، وأغراض استخدامها، ومقدمي الخدمات المشاركين في المعالجة.",
+      eyebrow: "الخصوصية والبيانات الشخصية",
+      title: "بيان الخصوصية",
+      intro:
+        "يوضح هذا البيان بلغة مبسطة البيانات التي يعالجها هذا الموقع وكيفية التعامل معها. وهو وصف عملي لطريقة العمل الحالية، وليس استشارة قانونية رسمية.",
+      overviewTitle: "الخلاصة",
+      overviewItems: [
+        "تُستخدم البيانات لتقييم طلب الترجمة الشفهية والتواصل معكم.",
+        "لا يحفظ الموقع الطلبات في قاعدة بيانات خاصة به.",
+        "تُرسل بيانات النموذج عبر البريد الإلكتروني بواسطة Resend، ويستضيف Vercel الموقع.",
+        "قد تُحفظ مسودة غير مرسلة مؤقتاً في sessionStorage داخل متصفحكم.",
+      ],
+      navigationLabel: "موضوعات هذا البيان",
+      contactCta: "تواصلوا معنا بشأن الخصوصية",
+      sections: [
+        {
+          id: "gegevens",
+          title: "البيانات التي نستلمها",
+          body: [
+            "قد نستلم عبر نموذج التواصل الاسم وعنوان البريد الإلكتروني ورقم الهاتف عند إدخاله واسم الجهة عند إدخاله ونوع الطلب والسياق واتجاه اللغة وطريقة تقديم الخدمة والتاريخ أو الوقت المطلوب والرسالة.",
+            "نستلم فقط البيانات التي تدخلونها وترسلونها بأنفسكم. لا توجد حسابات مستخدمين ولا تتم أي مدفوعات عبر هذا الموقع.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "gebruik",
+          title: "أغراض استخدام البيانات",
+          body: [
+            "نستخدم البيانات لتقييم الطلب وتحديد المعلومات الإضافية اللازمة والتواصل معكم بشأن إمكانية توفير خدمة الترجمة الشفهية.",
+            "يُستخدم حقل honeypot المخفي في النموذج للحد من الرسائل الآلية المزعجة، وليس لجمع بيانات شخصية إضافية من الزوار.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "formulier-email",
+          title: "نموذج التواصل والبريد الإلكتروني",
+          body: [
+            "بعد الإرسال يُنقل الطلب بواسطة Resend إلى عنوان البريد الإلكتروني التجاري. ولا يحفظ الموقع نسخة إضافية من الطلب في قاعدة بيانات خاصة به.",
+            "قد تبقى رسائل البريد الإلكتروني محفوظة في صندوق البريد التجاري وفي أنظمة خدمة البريد المعنية بالقدر اللازم لمعالجة الطلب وتشغيل خدمة البريد بصورة اعتيادية.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "bevestiging",
+          title: "تأكيد الاستلام التلقائي",
+          body: [
+            "بعد إرسال الطلب بنجاح، يصلكم على عنوان البريد الإلكتروني المدخل تأكيد استلام تلقائي ومختصر.",
+            "لا يتضمن هذا التأكيد الطلب كاملاً ولا نص الرسالة أو رقم الهاتف أو اسم الجهة أو التاريخ أو أي تفاصيل موضوعية أخرى من النموذج.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "gevoelige-gegevens",
+          title: "تجنب البيانات الحساسة غير الضرورية",
+          body: [
+            "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو وثائق حساسة أخرى عبر النموذج أو البريد الإلكتروني، إلا إذا طُلب ذلك لاحقاً بصورة صريحة وبطريقة مناسبة.",
+            "اكتفوا في الطلب الأول بالمعلومات اللازمة لتقييم الحاجة إلى الترجمة الشفهية وطريقة تقديم الخدمة المطلوبة.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "concepten",
+          title: "مسودات النموذج المؤقتة",
+          body: [
+            "قد تُحفظ مسودة مؤقتاً أثناء تعبئة النموذج في sessionStorage داخل متصفحكم، وذلك للمساعدة في منع فقدان النص المدخل عند إعادة تحميل الصفحة.",
+            "تبقى هذه المسودة في بيئة متصفحكم، وتُحذف بعد الإرسال الناجح، وتختفي عادةً عند انتهاء جلسة التصفح المعنية.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "bewaartermijn",
+          title: "مدة الاحتفاظ",
+          body: [
+            "لا نحتفظ بالبيانات الشخصية مدة أطول مما يلزم بصورة معقولة لمعالجة الطلب ومتابعته وتنفيذ أي مهمة لاحقة والوفاء بالالتزامات الإدارية أو القانونية المطبقة.",
+            "قد تختلف المدة الدقيقة بحسب طبيعة الطلب وما إذا نتجت عنه مهمة أو مراسلات إضافية.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "dienstverleners",
+          title: "مشاركة البيانات مع مقدمي الخدمات",
+          body: [
+            "يتولى Vercel استضافة الموقع، بينما يعالج Resend إرسال رسائل النموذج وتأكيدات الاستلام. وقد يعالج هذان المزودان بيانات تقنية، وعند الحاجة لتسليم البريد، محتوى الرسائل وعناوينها.",
+            "وقد تتم مشاركة أخرى عندما تكون ضرورية لتنفيذ الطلب أو للوفاء بالتزام قانوني.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "beveiliging",
+          title: "الأمان",
+          body: [
+            "نتخذ تدابير تقنية وتنظيمية معقولة لحماية البيانات الشخصية، لكن لا يمكن لأي موقع أو نظام بريد إلكتروني أن يضمن أماناً مطلقاً.",
+            "لذلك يشكل التنبيه بعدم إرسال بيانات حساسة غير ضرورية جزءاً مهماً من التعامل الحذر مع الطلب.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "rechten",
+          title: "حقوقكم",
+          body: [
+            "بحسب قوانين الخصوصية المطبقة، يمكنكم طلب الاطلاع على بياناتكم الشخصية أو تصحيحها أو حذفها. وفي بعض الحالات يمكنكم طلب تقييد المعالجة أو الاعتراض عليها.",
+            "قد يكون الطلب محدوداً إذا ظلت البيانات لازمة لالتزام قانوني أو طلب جارٍ أو لإثبات حقوق أو ممارستها أو الدفاع عنها.",
+          ],
+          items: [],
+          showContact: false,
+        },
+        {
+          id: "contact",
+          title: "التواصل بشأن الخصوصية",
+          body: [
+            "إذا كان لديكم سؤال عن بياناتكم أو رغبتم في تقديم طلب متعلق بالخصوصية، فاستخدموا نموذج التواصل واذكروا أن الرسالة تتعلق بالخصوصية. ويمكنكم أيضاً الكتابة إلى عنوان البريد الإلكتروني التجاري المبين أدناه.",
+          ],
+          items: [],
+          showContact: true,
+        },
+        {
+          id: "wijzigingen",
+          title: "التعديلات",
+          body: [
+            "قد نعدل بيان الخصوصية عندما يتغير الموقع أو مقدمو الخدمات أو طريقة العمل. وتبقى النسخة الحالية متاحة دائماً على هذه الصفحة.",
+          ],
+          items: [],
+          showContact: false,
+        },
+      ],
     },
     home: {
       metaTitle: "مترجم شفهي عربي ↔ هولندي للجهات الرسمية والرعاية والقانون",
@@ -1186,6 +1466,8 @@ const siteContent = {
         fallbackLabel: "أرسلوا الطلب عبر البريد الإلكتروني.",
         privacyText:
           "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو أي بيانات حساسة غير ضرورية. نستخدم بياناتكم فقط لتقييم الطلب والتواصل معكم. تُحفظ البيانات التي أدخلتموها مؤقتاً في علامة تبويب المتصفح هذه ما دام النموذج لم يُرسل.",
+        privacyLinkLabel:
+          "اقرؤوا في بيان الخصوصية كيف نتعامل مع بياناتكم.",
         messages: {
           success: "شكراً لكم. تم إرسال الطلب وسيجري تقييمه.",
           invalidSubmission:

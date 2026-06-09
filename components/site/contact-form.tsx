@@ -19,7 +19,7 @@ import {
   type ContactFormFieldName,
   type ContactFormValues,
 } from "@/lib/contact/types";
-import type { Locale } from "@/lib/site";
+import { localizedPath, type Locale } from "@/lib/site";
 
 type ContactFormProps = {
   locale: Locale;
@@ -574,7 +574,13 @@ export function ContactForm({
         </div>
 
         <p className="form-note mt-6 px-4 py-3 text-sm leading-7 text-muted">
-          {content.privacyText}
+          {content.privacyText}{" "}
+          <a
+            href={localizedPath(locale, "privacy")}
+            className="font-semibold text-brand-strong underline decoration-brand/30 underline-offset-4 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {content.privacyLinkLabel}
+          </a>
         </p>
 
         <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
