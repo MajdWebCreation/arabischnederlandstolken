@@ -40,6 +40,15 @@ export function absoluteUrl(path: string) {
   return `${siteUrl}${path}`;
 }
 
+export const organizationLogoUrl = absoluteUrl("/brand/logo-mark.webp");
+
+const socialImage = {
+  url: absoluteUrl("/brand/og-image.png"),
+  width: 1200,
+  height: 630,
+  alt: "Arabisch Nederlands Tolkencollectief - Tolkdiensten voor duidelijke communicatie",
+} as const;
+
 export function buildMailtoHref(subject: string) {
   const query = new URLSearchParams({
     subject,
@@ -156,11 +165,13 @@ export function createPageMetadata({
       siteName: organizationName,
       locale: locale === "nl" ? "nl_NL" : "ar",
       type: "website",
+      images: [socialImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [socialImage],
     },
   };
 }

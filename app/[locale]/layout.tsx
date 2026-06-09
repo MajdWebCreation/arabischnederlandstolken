@@ -11,6 +11,7 @@ import {
   isLocale,
   locales,
   organizationContact,
+  organizationLogoUrl,
   organizationName,
   type Locale,
 } from "@/lib/site";
@@ -63,6 +64,7 @@ export default async function LocaleLayout({
     "@type": "ProfessionalService",
     name: organizationName,
     url: absoluteUrl(`/${locale}`),
+    logo: organizationLogoUrl,
     availableLanguage: [
       "Dutch",
       "Arabic",
