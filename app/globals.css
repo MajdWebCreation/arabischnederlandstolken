@@ -436,54 +436,6 @@ a {
     0 10px 35px rgba(var(--shadow-color), 0.045);
 }
 
-.locale-switcher {
-  display: inline-grid;
-  grid-template-columns: repeat(2, 2.65rem);
-  align-items: center;
-  gap: 0.2rem;
-  min-height: 2.5rem;
-  border: 1px solid rgba(187, 179, 164, 0.92);
-  border-radius: 999px;
-  background: rgba(255, 253, 249, 0.96);
-  padding: 0.2rem;
-  box-shadow: 0 6px 18px rgba(var(--shadow-color), 0.06);
-}
-
-.locale-switcher__item {
-  display: inline-flex;
-  min-height: 2rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.locale-switcher__item--active {
-  background: var(--brand-strong);
-  color: #fffdf9;
-  box-shadow: 0 5px 14px rgba(12, 36, 68, 0.2);
-}
-
-.locale-switcher__item--link {
-  color: var(--brand-strong);
-  transition:
-    background-color 160ms ease,
-    color 160ms ease;
-}
-
-.locale-switcher__item--link:hover {
-  background: var(--brand-soft);
-  color: var(--brand-strong);
-}
-
-.locale-switcher__item--link:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
-}
-
 .site-nav-link {
   position: relative;
 }

@@ -10,11 +10,13 @@ type LocaleSwitcherProps = {
 
 export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
   const pathname = usePathname();
+  const itemClassName =
+    "inline-flex min-h-8 min-w-11 items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.12em]";
 
   return (
     <nav
       aria-label={locale === "nl" ? "Taal kiezen" : "اختيار اللغة"}
-      className="locale-switcher"
+      className="inline-flex shrink-0 items-center gap-1 rounded-full border border-line-strong/80 bg-surface p-1 shadow-[0_6px_18px_rgba(17,36,67,0.08)]"
       dir="ltr"
     >
       {locales.map((target) => {
@@ -23,7 +25,7 @@ export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
             <span
               key={target}
               aria-current="page"
-              className="locale-switcher__item locale-switcher__item--active"
+              className={`${itemClassName} bg-brand-strong text-[#fffdf9] shadow-[0_4px_12px_rgba(12,36,68,0.2)]`}
             >
               {target.toUpperCase()}
             </span>
@@ -36,7 +38,7 @@ export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
           <Link
             key={target}
             href={nextPath === pathname ? `/${target}` : nextPath}
-            className="locale-switcher__item locale-switcher__item--link"
+            className={`${itemClassName} text-brand-strong transition-colors hover:bg-brand-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
           >
             {target.toUpperCase()}
           </Link>
