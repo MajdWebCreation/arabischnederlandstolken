@@ -3,12 +3,12 @@ import type { Locale } from "@/lib/site";
 const servicePages = {
   nl: {
     sworn: {
-      metaTitle: "Beëdigd tolk Arabisch ↔ Nederlands | Officiële context",
+      metaTitle: "Beëdigd tolk Arabisch-Nederlands | Officiële context",
       metaDescription:
         "Beëdigd Arabisch-Nederlands tolk voor officiële, juridische en procedurele contexten waarin verificatie en formele inzet belangrijk zijn.",
       hero: {
         eyebrow: "Officiële inzet",
-        title: "Beëdigd tolk Arabisch ↔ Nederlands voor contexten waarin verificatie telt.",
+        title: "Beëdigd tolk Arabisch-Nederlands voor contexten waarin verificatie telt.",
         intro:
           "Deze pagina is bedoeld voor opdrachtgevers die niet alleen een Arabisch-Nederlandse tolk zoeken, maar expliciet willen beoordelen of beëdigde of formeel verifieerbare inzet noodzakelijk is. De inhoud helpt bij het onderscheiden van gewone inzet en inzet waarbij registratie, bevoegdheid of procedurele eisen zwaarder wegen.",
         highlights: [
@@ -102,12 +102,12 @@ const servicePages = {
       },
     },
     urgent: {
-      metaTitle: "Spoedtolk Arabisch ↔ Nederlands | Snelle inzet",
+      metaTitle: "Spoedtolk Arabisch-Nederlands | Snelle inzet",
       metaDescription:
         "Spoedtolk Arabisch-Nederlands voor urgente gesprekken in zorg, gemeente, recht en migratie. Gericht op snelle intake en realistische inzet.",
       hero: {
         eyebrow: "Snelle inzet",
-        title: "Spoedtolk Arabisch ↔ Nederlands voor gesprekken die niet kunnen wachten.",
+        title: "Spoedtolk Arabisch-Nederlands voor gesprekken die niet kunnen wachten.",
         intro:
           "Deze route is bedoeld voor tijdkritische situaties waarin snel duidelijk moet worden of Arabisch-Nederlandse tolkondersteuning haalbaar is. De pagina vermijdt loze spoedbeloftes en focust op wat opdrachtgevers direct moeten aanleveren om snelle inzet mogelijk te maken.",
         highlights: [
@@ -203,12 +203,12 @@ const servicePages = {
   },
   ar: {
     sworn: {
-      metaTitle: "مترجم محلّف عربي ↔ هولندي | سياق رسمي",
+      metaTitle: "مترجم محلّف عربي هولندي | سياق رسمي",
       metaDescription:
         "مترجم شفهي عربي هولندي محلّف أو قابل للتحقق الرسمي في السياقات القانونية والرسمية والإجرائية.",
       hero: {
         eyebrow: "استخدام رسمي",
-        title: "مترجم محلّف عربي ↔ هولندي للسياقات التي تتطلب تحققاً واضحاً.",
+        title: "مترجم محلّف عربي هولندي للسياقات التي تتطلب تحققاً واضحاً.",
         intro:
           "هذه الصفحة مخصصة للجهات التي لا تبحث فقط عن مترجم عربي هولندي، بل تريد أيضاً تقييم ما إذا كانت الصفة المحلّفة أو القابلة للتحقق الرسمي مطلوبة فعلاً. وهي تساعد على التمييز بين الخدمة العامة والسياقات التي تتطلب تحققاً مهنياً أو إجرائياً أدق.",
         highlights: [
@@ -302,12 +302,12 @@ const servicePages = {
       },
     },
     urgent: {
-      metaTitle: "مترجم طوارئ عربي ↔ هولندي | تنسيق سريع",
+      metaTitle: "مترجم طوارئ عربي هولندي | تنسيق سريع",
       metaDescription:
         "مترجم طوارئ عربي هولندي للحالات العاجلة في الرعاية والبلديات والسياقات القانونية والهجرية مع استقبال سريع وواقعي.",
       hero: {
         eyebrow: "تنسيق سريع",
-        title: "مترجم طوارئ عربي ↔ هولندي للمحادثات التي لا تحتمل التأجيل.",
+        title: "مترجم طوارئ عربي هولندي للمحادثات التي لا تحتمل التأجيل.",
         intro:
           "هذه الصفحة مخصصة للحالات التي يجب فيها معرفة إمكانية توفير ترجمة شفوية عربية هولندية خلال وقت قصير. وهي تتجنب الوعود غير الواقعية وتركز على ما يجب إرساله فوراً لتسريع التقييم.",
         highlights: [

@@ -39,7 +39,7 @@ export async function generateMetadata({
     path: "",
     title:
       locale === "nl"
-        ? "Arabisch ↔ Nederlands tolkencollectief"
+        ? "Arabisch-Nederlands tolkencollectief"
         : "مجموعة ترجمة شفهية عربية هولندية",
     description:
       locale === "nl"
@@ -73,7 +73,7 @@ export default async function LocaleLayout({
     email: organizationContact.email,
     serviceType:
       locale === "nl"
-        ? "Arabisch ↔ Nederlands tolkdiensten"
+        ? "Arabisch-Nederlandse tolkdiensten"
         : "خدمات الترجمة الشفهية العربية الهولندية",
     knowsAbout: [
       "Zorgtolk",

@@ -37,8 +37,8 @@ export default async function SwornServicePage({ params }: PageProps) {
     "@type": "Service",
     name:
       locale === "nl"
-        ? "Beëdigd tolk Arabisch ↔ Nederlands"
-        : "مترجم محلّف عربي ↔ هولندي",
+        ? "Beëdigd tolk Arabisch-Nederlands"
+        : "مترجم محلّف عربي هولندي",
     provider: {
       "@type": "Organization",
       name: organizationName,

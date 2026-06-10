@@ -48,7 +48,7 @@ export default async function HomePage({ params }: PageProps) {
     name: content.home.metaTitle,
     description: content.home.metaDescription,
     inLanguage: locale,
-    about: "Arabisch ↔ Nederlands tolkdiensten",
+    about: "Arabisch-Nederlandse tolkdiensten",
   };
 
   return (
@@ -174,8 +174,8 @@ export default async function HomePage({ params }: PageProps) {
             <ServiceCard
               title={
                 locale === "nl"
-                  ? "Beëdigd tolk Arabisch ↔ Nederlands"
-                  : "مترجم محلّف عربي ↔ هولندي"
+                  ? "Beëdigd tolk Arabisch-Nederlands"
+                  : "مترجم محلّف عربي هولندي"
               }
               description={phaseTwo.sworn.hero.intro}
               href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
@@ -185,8 +185,8 @@ export default async function HomePage({ params }: PageProps) {
             <ServiceCard
               title={
                 locale === "nl"
-                  ? "Spoedtolk Arabisch ↔ Nederlands"
-                  : "مترجم طوارئ عربي ↔ هولندي"
+                  ? "Spoedtolk Arabisch-Nederlands"
+                  : "مترجم طوارئ عربي هولندي"
               }
               description={phaseTwo.urgent.hero.intro}
               href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}

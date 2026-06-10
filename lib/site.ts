@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const locales = ["nl", "ar"] as const;
 export type Locale = (typeof locales)[number];
 
-export const siteUrl = "https://arabischnederlandstolken.nl";
+export const siteUrl = "https://www.arabischnederlandstolken.nl";
 export const organizationName = "Arabisch Nederlands Tolkencollectief";
 
 export const organizationContact = {

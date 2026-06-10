@@ -8,7 +8,7 @@ export type FaqItem = {
 
 const faqData = {
   nl: {
-    metaTitle: "FAQ | Arabisch ↔ Nederlands tolkencollectief",
+    metaTitle: "FAQ | Arabisch-Nederlands tolkencollectief",
     metaDescription:
       "Veelgestelde vragen over aanvragen, spoed, beëdigde tolken, telefonische inzet, kosten, beschikbaarheid en professionele werkwijze.",
     hero: {
@@ -42,7 +42,7 @@ const faqData = {
     items: [
       {
         category: "Aanvragen en beschikbaarheid",
-        question: "Hoe vraag ik een Arabisch ↔ Nederlands tolk aan?",
+        question: "Hoe vraag ik een Arabisch-Nederlandse tolk aan?",
         answer:
           "Stuur een aanvraag met datum, tijd, verwachte duur, sectorcontext en gewenste inzetvorm. Daarmee kan snel worden beoordeeld welke tolkvorm passend is en welke vervolgstap nodig is.",
       },
@@ -60,7 +60,7 @@ const faqData = {
       },
       {
         category: "Spoed en inzetvorm",
-        question: "Is een spoedtolk Arabisch ↔ Nederlands mogelijk?",
+        question: "Is een spoedtolk Arabisch-Nederlands mogelijk?",
         answer:
           "Ja, soms kan inzet dezelfde dag of op korte termijn mogelijk zijn. Stuur de exacte tijd, context en gewenste inzetvorm mee, zodat de beschikbaarheid direct kan worden beoordeeld.",
       },
@@ -134,7 +134,7 @@ const faqData = {
     items: [
       {
         category: "الطلب والتوافر",
-        question: "كيف يمكن طلب مترجم شفهي عربي ↔ هولندي؟",
+        question: "كيف يمكن طلب مترجم شفهي عربي هولندي؟",
         answer:
           "أرسلوا تاريخ الاجتماع ووقته ومدته والسياق العام وطريقة الترجمة المطلوبة. بهذه المعلومات يمكن تقييم الطلب بسرعة وتحديد الخطوة التالية بوضوح.",
       },
@@ -152,7 +152,7 @@ const faqData = {
       },
       {
         category: "الطوارئ وشكل الجلسة",
-        question: "هل يمكن طلب مترجم طوارئ عربي ↔ هولندي؟",
+        question: "هل يمكن طلب مترجم طوارئ عربي هولندي؟",
         answer:
           "نعم، قد تتاح المهمة في اليوم نفسه أو خلال وقت قصير. أرسلوا الوقت الدقيق والسياق وشكل الجلسة المطلوب حتى يمكن تقييم التوافر مباشرة.",
       },

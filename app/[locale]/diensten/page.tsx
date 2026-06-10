@@ -95,8 +95,8 @@ export default async function ServicesPage({ params }: PageProps) {
             <ServiceCard
               title={
                 locale === "nl"
-                  ? "Beëdigd tolk Arabisch ↔ Nederlands"
-                  : "مترجم محلّف عربي ↔ هولندي"
+                  ? "Beëdigd tolk Arabisch-Nederlands"
+                  : "مترجم محلّف عربي هولندي"
               }
               description={phaseTwo.sworn.hero.intro}
               href={localizedPath(locale, "diensten/beedigd-tolk-arabisch-nederlands")}
@@ -106,8 +106,8 @@ export default async function ServicesPage({ params }: PageProps) {
             <ServiceCard
               title={
                 locale === "nl"
-                  ? "Spoedtolk Arabisch ↔ Nederlands"
-                  : "مترجم طوارئ عربي ↔ هولندي"
+                  ? "Spoedtolk Arabisch-Nederlands"
+                  : "مترجم طوارئ عربي هولندي"
               }
               description={phaseTwo.urgent.hero.intro}
               href={localizedPath(locale, "diensten/spoedtolk-arabisch-nederlands")}

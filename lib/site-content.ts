@@ -4,7 +4,7 @@ const siteContent = {
   nl: {
     brand: {
       name: organizationName,
-      tag: "Arabisch ↔ Nederlands",
+      tag: "Arabisch-Nederlands",
     },
     navigation: {
       home: "Home",
@@ -14,7 +14,7 @@ const siteContent = {
     actions: {
       bookNow: "Stuur een tolkaanvraag",
       viewServices: "Bekijk diensten",
-      viewMainService: "Bekijk Arabisch ↔ Nederlands tolk",
+      viewMainService: "Bekijk Arabisch-Nederlandse tolk",
     },
     footer: {
       title: "Professionele tolkondersteuning voor gesprekken die duidelijkheid vereisen.",
@@ -167,12 +167,12 @@ const siteContent = {
     },
     home: {
       metaTitle:
-        "Arabisch ↔ Nederlands tolk voor zorg, gemeente, recht en migratie",
+        "Arabisch-Nederlandse tolk voor zorg, gemeente, recht en migratie",
       metaDescription:
         "Arabisch-Nederlands tolkencollectief voor professionele tolkdiensten in Nederland. Inzetbaar voor zorg, gemeente, advocatuur, rechtbank en IND.",
       eyebrow: "Professioneel Arabisch-Nederlands tolkencollectief",
       title:
-        "Arabisch ↔ Nederlands tolken voor gesprekken waar duidelijkheid en vertrouwen tellen.",
+        "Arabisch-Nederlandse tolken voor gesprekken waar duidelijkheid en vertrouwen tellen.",
       intro:
         "Heeft u een Arabisch-Nederlandse tolk nodig voor zorg, gemeente, advocatuur, rechtbank of migratie? Het collectief organiseert tolkondersteuning voor telefonische, video- en fysieke afspraken, met focus op heldere communicatie, verifieerbare kwaliteit en professionele omgang met vertrouwelijke informatie.",
       highlights: [
@@ -206,7 +206,7 @@ const siteContent = {
         description:
           "De homepage beantwoordt eerst de kernvraag, voordat de bezoeker verder navigeert.",
         body:
-          "Het collectief levert Arabisch ↔ Nederlands tolkdiensten voor gesprekken waarbij één partij Arabisch spreekt en de andere Nederlands. De inzet is bedoeld voor gesprekken die juridisch, medisch, administratief of persoonlijk belangrijk zijn. Daardoor staat niet alleen taalondersteuning centraal, maar ook betrouwbaarheid, voorbereiding en passende inzetvorm.",
+          "Het collectief levert Arabisch-Nederlandse tolkdiensten voor gesprekken waarbij één partij Arabisch spreekt en de andere Nederlands. De inzet is bedoeld voor gesprekken die juridisch, medisch, administratief of persoonlijk belangrijk zijn. Daardoor staat niet alleen taalondersteuning centraal, maar ook betrouwbaarheid, voorbereiding en passende inzetvorm.",
       },
       sectors: [
         {
@@ -249,7 +249,7 @@ const siteContent = {
           "Het collectief ondersteunt algemene, formele en tijdkritische gesprekken, afhankelijk van beschikbaarheid en de vereiste kwalificatie.",
         cards: [
           {
-            title: "Arabisch ↔ Nederlands tolk",
+            title: "Arabisch-Nederlandse tolk",
             description:
               "Voor telefonische, video- en fysieke gesprekken in onder meer zorg, overheid, recht en migratie.",
             href: "diensten/arabisch-nederlands-tolk",
@@ -316,7 +316,7 @@ const siteContent = {
       },
     },
     services: {
-      metaTitle: "Diensten | Arabisch ↔ Nederlands tolkencollectief",
+      metaTitle: "Diensten | Arabisch-Nederlands tolkencollectief",
       metaDescription:
         "Overzicht van Arabisch-Nederlandse tolkdiensten voor overheid, zorg, advocatuur, rechtbank en migratie in Nederland.",
       eyebrow: "Dienstenoverzicht",
@@ -336,7 +336,7 @@ const siteContent = {
           "Bekijk de algemene dienst of ga direct naar de aanvraagroute. Beschikbaarheid wordt altijd per opdracht bevestigd.",
         cards: [
           {
-            title: "Arabisch ↔ Nederlands tolk",
+            title: "Arabisch-Nederlandse tolk",
             description:
               "Algemene tolkdienst voor gesprekken in zorg, overheid, recht, migratie en andere professionele contexten.",
             href: "diensten/arabisch-nederlands-tolk",
@@ -426,11 +426,11 @@ const siteContent = {
       },
     },
     mainService: {
-      metaTitle: "Arabisch ↔ Nederlands tolk aanvragen in Nederland",
+      metaTitle: "Arabisch-Nederlandse tolk aanvragen in Nederland",
       metaDescription:
         "Arabisch-Nederlandse tolk voor zorg, gemeente, advocatuur, rechtbank en migratie. Telefonisch, via video of op locatie inzetbaar.",
       eyebrow: "Belangrijkste dienst",
-      title: "Arabisch ↔ Nederlands tolk voor gesprekken met juridische, medische of bestuurlijke impact.",
+      title: "Arabisch-Nederlandse tolk voor gesprekken met juridische, medische of bestuurlijke impact.",
       intro:
         "Deze dienst is bedoeld voor gesprekken waarin Arabisch en Nederlands direct en zorgvuldig moeten worden overgebracht. Stuur een aanvraag met de praktische gegevens van het gesprek, zodat beschikbaarheid, inzetvorm en eventuele formele eisen kunnen worden afgestemd.",
       highlights: [
@@ -440,7 +440,7 @@ const siteContent = {
       ],
       answerFirst: {
         eyebrow: "Direct antwoord",
-        title: "Wanneer kiest u voor een Arabisch ↔ Nederlands tolk?",
+        title: "Wanneer kiest u voor een Arabisch-Nederlandse tolk?",
         description:
           "De passende inzet hangt af van het gesprek, de gewenste vorm en eventuele formele eisen.",
         body:
@@ -565,11 +565,11 @@ const siteContent = {
       },
     },
     contact: {
-      metaTitle: "Contact | Arabisch ↔ Nederlands tolk aanvragen",
+      metaTitle: "Contact | Arabisch-Nederlandse tolk aanvragen",
       metaDescription:
         "Vraag een Arabisch-Nederlandse tolk aan via het contactformulier of per e-mail en geef datum, inzetvorm en context door.",
       eyebrow: "Contact en aanvraag",
-      title: "Een Arabisch ↔ Nederlands tolk aanvragen met duidelijke intake en heldere opvolging.",
+      title: "Een Arabisch-Nederlandse tolk aanvragen met duidelijke intake en heldere opvolging.",
       intro:
         "Gebruik het aanvraagformulier of stuur een e-mail met datum, tijd, duur, inzetvorm en een korte omschrijving van de context. Daarmee kan het collectief beschikbaarheid en de passende kwalificatie gericht beoordelen.",
       highlights: [
@@ -805,7 +805,7 @@ const siteContent = {
   ar: {
     brand: {
       name: "مجموعة الترجمة الشفهية العربية الهولندية",
-      tag: "العربية ↔ الهولندية",
+      tag: "العربية والهولندية",
     },
     navigation: {
       home: "الرئيسية",
@@ -815,7 +815,7 @@ const siteContent = {
     actions: {
       bookNow: "أرسل طلب مترجم شفهي",
       viewServices: "اعرض الخدمات",
-      viewMainService: "خدمة العربية ↔ الهولندية",
+      viewMainService: "خدمة الترجمة العربية الهولندية",
     },
     footer: {
       title: "دعم ترجمة شفهية مهني للمحادثات التي تحتاج إلى وضوح وثقة.",
@@ -967,7 +967,7 @@ const siteContent = {
       ],
     },
     home: {
-      metaTitle: "مترجم شفهي عربي ↔ هولندي للجهات الرسمية والرعاية والقانون",
+      metaTitle: "مترجم شفهي عربي هولندي للجهات الرسمية والرعاية والقانون",
       metaDescription:
         "خدمات ترجمة شفهية عربية هولندية في هولندا لقطاعات البلدية والرعاية الصحية والمحاماة والمحاكم والهجرة.",
       eyebrow: "مجموعة ترجمة شفهية عربية هولندية",
@@ -1048,7 +1048,7 @@ const siteContent = {
           "تتوفر خدمات عامة ورسمية وعاجلة بحسب التوافر والتأهيل المطلوب للمهمة.",
         cards: [
           {
-            title: "مترجم شفهي عربي ↔ هولندي",
+            title: "مترجم شفهي عربي هولندي",
             description:
               "للمحادثات الهاتفية والمرئية والحضورية في الرعاية والجهات الرسمية والقانون والهجرة.",
             href: "diensten/arabisch-nederlands-tolk",
@@ -1134,7 +1134,7 @@ const siteContent = {
           "اطلعوا على الخدمة العامة أو انتقلوا مباشرة إلى إرسال الطلب. يتم تأكيد التوافر لكل مهمة على حدة.",
         cards: [
           {
-            title: "مترجم شفهي عربي ↔ هولندي",
+            title: "مترجم شفهي عربي هولندي",
             description:
               "خدمة عامة لمحادثات الرعاية والجهات الرسمية والقانون والهجرة وغيرها من السياقات المهنية.",
             href: "diensten/arabisch-nederlands-tolk",
@@ -1224,11 +1224,11 @@ const siteContent = {
       },
     },
     mainService: {
-      metaTitle: "طلب مترجم شفهي عربي ↔ هولندي في هولندا",
+      metaTitle: "طلب مترجم شفهي عربي هولندي في هولندا",
       metaDescription:
         "خدمة مترجم شفهي عربي هولندي للاجتماعات الطبية والرسمية والقانونية والهجرية، هاتفياً أو عبر الفيديو أو حضورياً.",
       eyebrow: "الخدمة الأساسية",
-      title: "مترجم شفهي عربي ↔ هولندي للمحادثات ذات الأثر القانوني أو الطبي أو الإداري.",
+      title: "مترجم شفهي عربي هولندي للمحادثات ذات الأثر القانوني أو الطبي أو الإداري.",
       intro:
         "هذه الخدمة مخصصة للحالات التي يجب فيها نقل المعنى بين العربية والهولندية بدقة وحياد ووضوح. أرسلوا تفاصيل الاجتماع لتنسيق التوافر وشكل الجلسة وأي متطلبات رسمية.",
       highlights: [
@@ -1238,7 +1238,7 @@ const siteContent = {
       ],
       answerFirst: {
         eyebrow: "إجابة مباشرة",
-        title: "متى تحتاجون إلى مترجم شفهي عربي ↔ هولندي؟",
+        title: "متى تحتاجون إلى مترجم شفهي عربي هولندي؟",
         description:
           "تبدأ الصفحة من السؤال الأكثر واقعية لدى الجهة الطالبة.",
         body:
@@ -1363,11 +1363,11 @@ const siteContent = {
       },
     },
     contact: {
-      metaTitle: "التواصل | طلب مترجم شفهي عربي ↔ هولندي",
+      metaTitle: "التواصل | طلب مترجم شفهي عربي هولندي",
       metaDescription:
         "أرسلوا طلب مترجم شفهي عربي هولندي عبر نموذج التواصل أو البريد مع التاريخ وشكل الجلسة والسياق.",
       eyebrow: "التواصل والطلب",
-      title: "بدء طلب مترجم شفهي عربي ↔ هولندي بطريقة واضحة ومنظمة.",
+      title: "بدء طلب مترجم شفهي عربي هولندي بطريقة واضحة ومنظمة.",
       intro:
         "استخدموا نموذج الطلب أو البريد الإلكتروني لإرسال التاريخ والوقت والمدة وشكل الجلسة ووصف مختصر للسياق. تساعد هذه المعلومات على تقييم التوافر والتأهيل المناسب.",
       highlights: [

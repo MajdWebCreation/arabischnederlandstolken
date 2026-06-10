@@ -50,7 +50,7 @@ export default async function MainServicePage({ params }: PageProps) {
     "@type": "Service",
     name:
       locale === "nl"
-        ? "Arabisch ↔ Nederlands tolk"
+        ? "Arabisch-Nederlandse tolk"
         : "مترجم شفهي عربي هولندي",
     provider: {
       "@type": "Organization",

@@ -37,8 +37,8 @@ export default async function UrgentServicePage({ params }: PageProps) {
     "@type": "Service",
     name:
       locale === "nl"
-        ? "Spoedtolk Arabisch ↔ Nederlands"
-        : "مترجم طوارئ عربي ↔ هولندي",
+        ? "Spoedtolk Arabisch-Nederlands"
+        : "مترجم طوارئ عربي هولندي",
     provider: {
       "@type": "Organization",
       name: organizationName,

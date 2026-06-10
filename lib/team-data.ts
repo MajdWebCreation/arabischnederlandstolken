@@ -83,7 +83,7 @@ export const teamCapabilities: TeamCapability[] = [
 
 const teamPageContent = {
   nl: {
-    metaTitle: "Collectief en werkwijze | Arabisch ↔ Nederlands tolken",
+    metaTitle: "Collectief en werkwijze | Arabisch-Nederlandse tolken",
     metaDescription:
       "Lees hoe het Arabisch-Nederlandse tolkencollectief opdrachten afstemt op context, inzetvorm, beschikbaarheid en vereiste kwalificatie.",
     hero: {
