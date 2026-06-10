@@ -1,9 +1,19 @@
 import Image from "next/image";
+import { BrandImage } from "@/components/site/brand-image";
 import type { Locale } from "@/lib/site";
 
 type Action = {
   label: string;
   href: string;
+};
+
+type HeroVisual = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  sizes: string;
+  preload?: boolean;
 };
 
 type HeroProps = {
@@ -16,6 +26,7 @@ type HeroProps = {
   highlights: readonly string[];
   compact?: boolean;
   variant?: "default" | "editorial" | "trust" | "contact";
+  visual?: HeroVisual;
 };
 
 export function Hero({
@@ -28,6 +39,7 @@ export function Hero({
   highlights,
   compact = false,
   variant = "default",
+  visual,
 }: HeroProps) {
   const labels =
     locale === "nl"
@@ -46,35 +58,53 @@ export function Hero({
     return (
       <section className="section-space-tight">
         <div className="content-shell">
-          <div className="hero-editorial mx-auto max-w-4xl py-2 sm:py-4">
-            <p className="eyebrow eyebrow-muted">{eyebrow}</p>
-            <h1
-              className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
-                compact
-                  ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
-                  : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
+          <div
+            className={
+              visual
+                ? "grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center"
+                : ""
+            }
+          >
+            <div
+              className={`hero-editorial py-2 sm:py-4 ${
+                visual ? "max-w-3xl" : "mx-auto max-w-4xl"
               }`}
             >
-              {title}
-            </h1>
-            <p className="mt-6 max-w-3xl text-base leading-8 text-muted sm:text-lg">
-              {intro}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href={primaryAction.href} className="button-primary px-6 py-3">
-                {primaryAction.label}
-              </a>
-              <a href={secondaryAction.href} className="button-secondary px-6 py-3">
-                {secondaryAction.label}
-              </a>
+              <p className="eyebrow eyebrow-muted">{eyebrow}</p>
+              <h1
+                className={`mt-5 text-balance font-semibold tracking-tight text-foreground ${
+                  compact
+                    ? "text-[2.35rem] leading-[1.12] sm:text-5xl sm:leading-tight"
+                    : "text-[2.55rem] leading-[1.1] sm:text-6xl sm:leading-tight"
+                }`}
+              >
+                {title}
+              </h1>
+              <p className="mt-6 max-w-3xl text-base leading-8 text-muted sm:text-lg">
+                {intro}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a href={primaryAction.href} className="button-primary px-6 py-3">
+                  {primaryAction.label}
+                </a>
+                <a href={secondaryAction.href} className="button-secondary px-6 py-3">
+                  {secondaryAction.label}
+                </a>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {highlights.map((highlight) => (
+                  <span key={highlight} className="chip">
+                    {highlight}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {highlights.map((highlight) => (
-                <span key={highlight} className="chip">
-                  {highlight}
-                </span>
-              ))}
-            </div>
+            {visual ? (
+              <BrandImage
+                {...visual}
+                className="brand-image--editorial w-full lg:max-w-md"
+              />
+            ) : null}
           </div>
         </div>
       </section>
@@ -110,6 +140,12 @@ export function Hero({
               </div>
             </div>
             <aside className="hero-trust-panel panel-soft p-6 lg:p-7">
+              {visual ? (
+                <BrandImage
+                  {...visual}
+                  className="brand-image--trust mb-6"
+                />
+              ) : null}
               <p className="eyebrow eyebrow-muted">
                 {labels.trust}
               </p>
@@ -211,6 +247,12 @@ export function Hero({
           </div>
 
           <aside className="brand-panel-dark px-6 py-6">
+            {visual ? (
+              <BrandImage
+                {...visual}
+                className="brand-image--hero mb-6"
+              />
+            ) : null}
             <p className="eyebrow eyebrow-inverse">
               {labels.available}
             </p>

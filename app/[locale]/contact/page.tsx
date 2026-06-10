@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { BrandImage } from "@/components/site/brand-image";
 import { ContactForm } from "@/components/site/contact-form";
 import { CtaBand } from "@/components/site/cta-band";
 import { Hero } from "@/components/site/hero";
@@ -84,12 +85,26 @@ export default async function ContactPage({ params }: PageProps) {
         className="section-surface section-space-tight scroll-mt-28"
       >
         <div className="content-shell">
-          <SectionHeading
-            eyebrow={content.contact.form.eyebrow}
-            title={content.contact.form.title}
-            description={content.contact.form.description}
-            align="left"
-          />
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
+            <SectionHeading
+              eyebrow={content.contact.form.eyebrow}
+              title={content.contact.form.title}
+              description={content.contact.form.description}
+              align="left"
+            />
+            <BrandImage
+              src="/visuals/contact-intake-documents.webp"
+              alt={
+                locale === "nl"
+                  ? "Tolkaanvraagformulier met pen op een bureau"
+                  : "نموذج طلب ترجمة شفهية مع قلم على مكتب"
+              }
+              width={507}
+              height={507}
+              sizes="(max-width: 1023px) calc(100vw - 2.5rem), 18rem"
+              className="brand-image--section w-full lg:max-w-72"
+            />
+          </div>
           <div className="mt-10 max-w-5xl">
             <ContactForm
               locale={locale}

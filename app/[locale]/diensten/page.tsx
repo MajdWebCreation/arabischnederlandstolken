@@ -59,6 +59,16 @@ export default async function ServicesPage({ params }: PageProps) {
         highlights={content.services.highlights}
         compact
         variant="editorial"
+        visual={{
+          src: "/visuals/legal-justice-context.webp",
+          alt:
+            locale === "nl"
+              ? "Weegschaal en documenten als symbool voor zorgvuldige tolkondersteuning"
+              : "ميزان ووثائق كرمز للدعم اللغوي الدقيق",
+          width: 502,
+          height: 507,
+          sizes: "(max-width: 1023px) calc(100vw - 2.5rem), 28rem",
+        }}
       />
 
       <section className="section-space-tight">

@@ -64,6 +64,16 @@ export default async function TeamPage({ params }: PageProps) {
         highlights={content.hero.highlights}
         compact
         variant="trust"
+        visual={{
+          src: "/visuals/confidential-documents.webp",
+          alt:
+            locale === "nl"
+              ? "Vertrouwelijk document met pen als symbool voor zorgvuldige omgang met informatie"
+              : "وثيقة سرية مع قلم كرمز للتعامل بعناية مع المعلومات",
+          width: 502,
+          height: 507,
+          sizes: "(max-width: 1023px) calc(100vw - 5rem), 27rem",
+        }}
       />
 
       <section className="section-space-tight">

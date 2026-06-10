@@ -68,6 +68,17 @@ export default async function HomePage({ params }: PageProps) {
           href: localizedPath(locale, "diensten"),
         }}
         highlights={content.home.highlights}
+        visual={{
+          src: "/visuals/remote-translation-laptop.webp",
+          alt:
+            locale === "nl"
+              ? "Laptop met Arabisch-Nederlandse taalondersteuning op een bureau"
+              : "حاسوب محمول يعرض دعماً لغوياً بين العربية والهولندية",
+          width: 507,
+          height: 507,
+          sizes: "(max-width: 1023px) calc(100vw - 5rem), 34rem",
+          preload: true,
+        }}
       />
 
       <section className="section-surface">
