@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageShell } from "@/components/site/page-shell";
-import { baseFontVariables } from "@/lib/fonts";
+import { arabicFontVariable, baseFontVariables } from "@/lib/fonts";
 import {
   absoluteUrl,
   createPageMetadata,
@@ -59,6 +59,10 @@ export default async function LocaleLayout({
   }
 
   const localeDefinition = getLocaleDefinition(locale);
+  const localeFontVariables =
+    locale === "ar"
+      ? `${baseFontVariables} ${arabicFontVariable}`
+      : baseFontVariables;
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -88,7 +92,7 @@ export default async function LocaleLayout({
     <html
       lang={localeDefinition.lang}
       dir={localeDefinition.dir}
-      className={`${baseFontVariables} antialiased`}
+      className={`${localeFontVariables} antialiased`}
     >
       <body className="bg-background text-foreground">
         <JsonLd data={organizationJsonLd} />
