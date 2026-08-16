@@ -125,9 +125,15 @@ function getEmailConfiguration() {
   };
 }
 
-function buildEmailText(data: ContactFormData, locale: Locale) {
+function buildEmailText(
+  data: ContactFormData,
+  locale: Locale,
+  booking: { id: string; number: string },
+) {
   const lines = [
     "Nieuwe tolkaanvraag via arabischnederlandstolken.nl",
+    `Boekingnummer: ${booking.number} (opgeslagen in de database)`,
+    `Beheer deze aanvraag: ${absoluteUrl(`/admin/bookings/${booking.id}`)}`,
     "",
     `Naam: ${singleLine(data.name)}`,
     `E-mail: ${singleLine(data.email)}`,
@@ -210,6 +216,7 @@ function buildConfirmationHtml(locale: Locale) {
 export async function sendContactEmail(
   data: ContactFormData,
   locale: Locale,
+  booking: { id: string; number: string },
 ) {
   const configuration = getEmailConfiguration();
 
@@ -217,7 +224,7 @@ export async function sendContactEmail(
     return false;
   }
 
-  const subject = `[Website] ${requestTypeLabels[data.requestType]} | ${
+  const subject = `[Website] ${booking.number} · ${requestTypeLabels[data.requestType]} | ${
     languageDirectionLabels[data.languageDirection]
   }`;
 
@@ -227,7 +234,66 @@ export async function sendContactEmail(
       to: configuration.to,
       replyTo: data.email,
       subject,
-      text: buildEmailText(data, locale),
+      text: buildEmailText(data, locale, booking),
+    });
+
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Best-effort break-glass alert for when the booking could not be saved to
+ * the database. This is not a substitute system of record - it exists so a
+ * genuine customer enquiry is never silently lost to a transient database
+ * problem. Clearly labelled as a failure, unlike the normal notification.
+ */
+export async function sendBookingSaveFailedAlertEmail(
+  data: ContactFormData,
+  locale: Locale,
+  errorDetail: string,
+) {
+  const configuration = getEmailConfiguration();
+
+  if (!configuration) {
+    return false;
+  }
+
+  const lines = [
+    "LET OP: deze aanvraag kon NIET worden opgeslagen in de database.",
+    "Onderstaande gegevens komen alleen uit deze e-mail - controleer en verwerk handmatig.",
+    `Foutdetail: ${singleLine(errorDetail)}`,
+    "",
+    `Naam: ${singleLine(data.name)}`,
+    `E-mail: ${singleLine(data.email)}`,
+    data.phone ? `Telefoon: ${singleLine(data.phone)}` : undefined,
+    data.organization
+      ? `Organisatie: ${singleLine(data.organization)}`
+      : undefined,
+    `Soort aanvraag: ${requestTypeLabels[data.requestType]}`,
+    `Context: ${contextLabels[data.context]}`,
+    `Taalrichting: ${languageDirectionLabels[data.languageDirection]}`,
+    data.deliveryMode
+      ? `Inzetvorm: ${deliveryModeLabels[data.deliveryMode]}`
+      : undefined,
+    data.desiredDateTime
+      ? `Gewenste datum/tijd: ${singleLine(data.desiredDateTime)}`
+      : undefined,
+    `Taal van het formulier: ${locale}`,
+    `Ingediend op: ${new Date().toISOString()}`,
+    "",
+    "Bericht:",
+    data.message.replace(/\r\n?/g, "\n").trim(),
+  ];
+
+  try {
+    const { error } = await getResend(configuration.apiKey).emails.send({
+      from: configuration.from,
+      to: configuration.to,
+      replyTo: data.email,
+      subject: `[Website] LET OP: opslaan mislukt - ${requestTypeLabels[data.requestType]}`,
+      text: lines.filter((line): line is string => line !== undefined).join("\n"),
     });
 
     return !error;
