@@ -165,6 +165,301 @@ const siteContent = {
         },
       ],
     },
+    terms: {
+      metaTitle:
+        "Algemene voorwaarden | Arabisch Nederlands Tolken",
+      metaDescription:
+        "Lees de algemene voorwaarden van Arabisch Nederlands Tolken voor het aanvragen en afnemen van tolkdiensten, inclusief betaling, annulering en het herroepingsrecht voor consumenten.",
+      eyebrow: "Algemene voorwaarden",
+      title: "Algemene voorwaarden",
+      intro:
+        "Deze voorwaarden zijn geschreven in begrijpelijke taal en leggen uit hoe een tolkopdracht via Arabisch Nederlands Tolken tot stand komt, wat u van ons mag verwachten en wat wij van u nodig hebben. Ze gelden voor iedere opdracht die via ons wordt aangevraagd of uitgevoerd.",
+      versionLabel: "Versie 2026-08",
+      lastUpdatedLabel: "Laatst bijgewerkt: 18 augustus 2026",
+      overviewTitle: "In het kort",
+      overviewItems: [
+        "Arabisch Nederlands Tolken is uw contractpartij; wij schakelen voor de uitvoering een zelfstandige, professionele tolk in.",
+        "Particuliere klanten betalen doorgaans vooraf; voor zakelijke klanten kan een betalingstermijn na de opdracht worden afgesproken.",
+        "Valt de toegewezen tolk onverwacht uit, dan zoeken wij eerst naar een vervangende tolk die aan dezelfde eisen voldoet; lukt dat niet, dan krijgt u het betaalde bedrag voor de niet-geleverde dienst terug.",
+        "Consumenten hebben in beginsel 14 dagen bedenktijd om een op afstand gesloten overeenkomst kosteloos te herroepen.",
+      ],
+      navigationLabel: "Artikelen in deze voorwaarden",
+      contactCta: "Neem contact met ons op",
+      sections: [
+        {
+          id: "definities",
+          title: "1. Definities",
+          body: [
+            "In deze algemene voorwaarden wordt verstaan onder: Arabisch Nederlands Tolken (ook “wij”, “ons” of “ANT”): de opdrachtnemer die tolkdiensten organiseert en de contractpartij van de klant is.",
+            "Klant: de natuurlijke persoon of rechtspersoon die een tolkopdracht aanvraagt of laat uitvoeren via Arabisch Nederlands Tolken.",
+            "Consument: een klant die de overeenkomst aangaat voor doeleinden buiten zijn bedrijfs- of beroepsactiviteit.",
+            "Tolk: de zelfstandige, professionele tolk die door Arabisch Nederlands Tolken wordt ingeschakeld om de daadwerkelijke tolkdienst te verrichten.",
+            "Opdracht: de specifieke tolkopdracht zoals tussen klant en Arabisch Nederlands Tolken overeengekomen, inclusief datum, tijd, taalcombinatie, inzetvorm en eventuele bijzondere vereisten.",
+            "Rbtv: het Register beëdigde tolken en vertalers, het officiële register voor beëdigde tolken en vertalers in Nederland.",
+            "Overeenkomst: de overeenkomst tussen klant en Arabisch Nederlands Tolken met betrekking tot het verzorgen van een of meer tolkdiensten.",
+            "Website: arabischnederlandstolken.nl.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "toepasselijkheid",
+          title: "2. Toepasselijkheid",
+          body: [
+            "Deze algemene voorwaarden zijn van toepassing op iedere aanvraag, offerte en overeenkomst tussen Arabisch Nederlands Tolken en een klant met betrekking tot tolkdiensten, tenzij schriftelijk anders is overeengekomen.",
+            "Afwijkingen van deze voorwaarden gelden alleen wanneer deze uitdrukkelijk en schriftelijk tussen partijen zijn afgesproken, bijvoorbeeld in een offerte, opdrachtbevestiging of e-mailwisseling.",
+            "Eigen inkoop- of andere algemene voorwaarden van de klant worden uitdrukkelijk van de hand gewezen, tenzij Arabisch Nederlands Tolken deze schriftelijk heeft aanvaard.",
+            "Mocht een bepaling uit deze voorwaarden nietig of vernietigbaar blijken, dan blijven de overige bepalingen onverminderd van kracht. Partijen spannen zich in om een vervangende bepaling af te spreken die zo dicht mogelijk aansluit bij de strekking van de oorspronkelijke bepaling.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "totstandkoming",
+          title: "3. Totstandkoming van de overeenkomst",
+          body: [
+            "Een overeenkomst komt pas tot stand nadat Arabisch Nederlands Tolken de opdracht schriftelijk heeft bevestigd, bijvoorbeeld per e-mail, of nadat wij met medeweten van de klant zijn begonnen met de uitvoering van de opdracht.",
+            "Een aanvraag via het contactformulier op de website is een aanvraag tot het verkrijgen van een tolk, en dus nog geen bindende overeenkomst. Wij beoordelen de aanvraag, stemmen beschikbaarheid en eventuele aanvullende gegevens af, en bevestigen daarna de opdracht.",
+            "Arabisch Nederlands Tolken kan een aanvraag afwijzen of aanvullende informatie vragen, bijvoorbeeld wanneer geen geschikte tolk beschikbaar is voor de gevraagde taalcombinatie, datum of vereiste kwalificatie.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "aanvragen-bevestiging",
+          title: "4. Aanvragen en bevestiging van opdrachten",
+          body: [
+            "De klant verstrekt bij de aanvraag juiste en volledige informatie over onder meer datum, tijd, locatie of inzetvorm (telefonisch, video of op locatie), de gewenste taalcombinatie, de context van het gesprek en of een beëdigde tolk vereist is.",
+            "Voor zover redelijkerwijs mogelijk bevestigt Arabisch Nederlands Tolken voorafgaand aan de uitvoering de relevante details van de opdracht, zoals datum en tijd, inzetvorm, verwachte duur en het geldende tarief, inclusief eventuele reiskosten.",
+            "Bij spoedaanvragen kan de bevestiging vanwege de beperkte tijd kort voor of zelfs tijdens het regelen van de opdracht volgen. Wij informeren de klant in dat geval zo snel mogelijk over de relevante details.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "inzet-tolken-derden",
+          title: "5. Inzet van tolken / derden",
+          body: [
+            "Arabisch Nederlands Tolken is en blijft de contractpartij van de klant voor de overeenkomst. Voor de daadwerkelijke uitvoering van een opdracht schakelen wij een zelfstandige, professionele tolk in, die als externe partij voor de opdracht wordt ingezet.",
+            "Het inschakelen van een externe tolk ontslaat Arabisch Nederlands Tolken niet van haar verplichtingen jegens de klant uit hoofde van de overeenkomst.",
+            "Wij selecteren een tolk op basis van de voor de opdracht opgegeven vereisten, zoals taalcombinatie, de eis van beëdiging of Rbtv-registratie, relevante specialisatie en beschikbaarheid.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "beedigde-tolken-rbtv",
+          title: "6. Beëdigde tolken en Rbtv-informatie",
+          body: [
+            "Wanneer een opdracht een beëdigde tolk vereist, zetten wij een tolk in die aangeeft in het Rbtv geregistreerd te staan voor de betreffende taalcombinatie, op basis van de gegevens die bij ons bekend zijn en/of van openbaar beschikbare registerinformatie.",
+            "Op verzoek kan aan de klant de naam en het Rbtv-registratienummer van de ingezette tolk worden verstrekt, zodat de klant dit zelfstandig kan verifiëren in het officiële register.",
+            "Arabisch Nederlands Tolken verifieert de registratiestatus niet bij elke afzonderlijke opdracht opnieuw anders dan aan de hand van de bij ons bekende gegevens en/of het openbare register. Mocht een klant bij eigen verificatie een afwijking constateren, dan wordt de klant verzocht dit direct aan ons te melden.",
+            "Arabisch Nederlands Tolken presenteert zichzelf, haar eigenaar of medewerkers niet als persoonlijk beëdigd tolk. De daadwerkelijke tolkdienst wordt verricht door de voor de opdracht ingezette, zelfstandige tolk.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "tarieven-bijkomende-kosten",
+          title: "7. Tarieven en bijkomende kosten",
+          body: [
+            "Het voor een opdracht geldende tarief wordt voorafgaand aan de uitvoering in een offerte, opdrachtbevestiging of anderszins schriftelijk aan de klant kenbaar gemaakt.",
+            "Tenzij anders vermeld, zijn alle tarieven exclusief btw.",
+            "Bijkomende kosten, zoals reiskosten en kosten voor uitloop boven de gereserveerde duur, worden afzonderlijk in rekening gebracht conform de artikelen 8 en 9.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "reistijd-reiskosten",
+          title: "8. Reistijd en reiskosten",
+          body: [
+            "Voor opdrachten op locatie kunnen reiskosten en, indien dit voor de opdracht is afgesproken, reistijd in rekening worden gebracht, tegen het tarief dat voor die specifieke opdracht is gecommuniceerd in de offerte of opdrachtbevestiging.",
+            "Kosten voor bijvoorbeeld parkeren, openbaar vervoer of andere aan de locatie gebonden kosten worden alleen in rekening gebracht wanneer dit voor de betreffende opdracht is afgesproken of gecommuniceerd.",
+            "Er geldt geen vast, voor alle opdrachten identiek reistarief; het toepasselijke bedrag hangt af van de specifieke opdracht en wordt vooraf kenbaar gemaakt.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "gereserveerde-duur-uitloop",
+          title: "9. Gereserveerde duur en uitloop",
+          body: [
+            "Voor een opdracht wordt een verwachte duur gereserveerd, zoals gecommuniceerd of overeengekomen bij de bevestiging van de opdracht.",
+            "Duurt de opdracht langer dan de gereserveerde duur, dan kan de extra tijd in rekening worden gebracht tegen het uurtarief voor uitloop dat in de offerte, opdrachtbevestiging of andere schriftelijke afspraak voor die opdracht is vermeld.",
+            "De klant, of de contactpersoon ter plaatse, wordt gevraagd Arabisch Nederlands Tolken of de tolk zo mogelijk tijdig te laten weten wanneer verwacht wordt dat de gereserveerde duur zal worden overschreden.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "betaling",
+          title: "10. Betaling",
+          body: [
+            "Facturen dienen te worden voldaan binnen de betalingstermijn die op de factuur of in de (schriftelijke) opdrachtbevestiging is vermeld.",
+            "De artikelen 11 en 12 hieronder beschrijven de gebruikelijke betaalafspraken voor particuliere respectievelijk zakelijke klanten. In een individuele, schriftelijk vastgelegde afspraak kan hiervan worden afgeweken.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "betaling-particulier",
+          title: "11. Betalingsvoorwaarden particuliere klanten",
+          body: [
+            "Voor particuliere klanten geldt in beginsel dat betaling plaatsvindt voordat de tolkopdracht wordt uitgevoerd, tenzij schriftelijk anders is overeengekomen.",
+            "De uiterste betaaldatum wordt vermeld in de opdrachtbevestiging en/of op de factuur.",
+            "Arabisch Nederlands Tolken kan de uitvoering van de opdracht afhankelijk stellen van tijdige betaling. Bij het uitblijven van tijdige betaling kunnen wij de opdracht uitstellen of annuleren; wij informeren de klant hierover zo mogelijk voorafgaand aan een dergelijke stap.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "betaling-zakelijk",
+          title: "12. Betalingsvoorwaarden zakelijke klanten",
+          body: [
+            "Voor zakelijke klanten kan, indien dit is afgesproken, na levering van de dienst worden gefactureerd. Dit is geen automatisch recht van iedere zakelijke klant, maar wordt per klant of opdracht afgesproken.",
+            "De op de factuur of in de schriftelijke opdrachtbevestiging vermelde betalingstermijn is van toepassing. Is voor een specifieke opdracht geen afwijkende termijn overeengekomen, dan geldt de standaardtermijn zoals op de factuur vermeld.",
+            "Arabisch Nederlands Tolken kan, ook bij zakelijke klanten, voor specifieke opdrachten vooruitbetaling of een aanbetaling vragen, indien dit voor die opdracht is afgesproken.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "annulering-klant",
+          title: "13. Annulering door de klant",
+          body: [
+            "De klant kan een bevestigde opdracht schriftelijk annuleren, bijvoorbeeld per e-mail, voorafgaand aan de afgesproken datum en tijd.",
+            "Voor zover in verband met een late annulering annuleringskosten in rekening worden gebracht, hangt de hoogte daarvan af van hoe kort voor de opdracht wordt geannuleerd. De toepasselijke staffel of het toepasselijke percentage wordt in de offerte of opdrachtbevestiging van de betreffende opdracht vermeld, omdat dit per opdracht en per tolk kan verschillen.",
+            "Dit artikel betreft de contractuele annulering van een opdracht. Voor het wettelijke herroepingsrecht van consumenten bij overeenkomsten op afstand, zie artikel 17.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "annulering-uitval-tolk",
+          title: "14. Annulering of uitval van een tolk",
+          body: [
+            "Wanneer de voor een opdracht ingezette tolk onverwacht niet beschikbaar blijkt, bijvoorbeeld door ziekte of een noodsituatie, zoekt Arabisch Nederlands Tolken voor zover redelijkerwijs mogelijk naar een geschikte vervangende tolk.",
+            "Vereist de opdracht een beëdigde tolk, dan voldoet ook de vervangende tolk aan die eis.",
+            "Kan redelijkerwijs geen geschikte vervanger op tijd worden geregeld en kan de afgesproken dienst daardoor niet worden geleverd, dan worden reeds betaalde bedragen voor het niet-geleverde deel van de dienst aan de klant terugbetaald.",
+            "Wij informeren de klant zo snel mogelijk wanneer zich een dergelijke situatie voordoet.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "vervangende-tolk",
+          title: "15. Vervangende tolk",
+          body: [
+            "Wanneer Arabisch Nederlands Tolken conform artikel 14 een vervangende tolk inzet, gelden voor die vervangende tolk dezelfde voor de opdracht overeengekomen eisen als voor de oorspronkelijk ingezette tolk, waaronder de taalcombinatie, de eventuele eis van beëdiging of Rbtv-registratie en relevante specialisatie.",
+            "De klant wordt, voor zover redelijkerwijs mogelijk, voorafgaand aan de opdracht geïnformeerd over de inzet van een vervangende tolk.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "niet-leveren-dienst",
+          title: "16. Niet kunnen leveren van de dienst",
+          body: [
+            "Kan Arabisch Nederlands Tolken de overeengekomen dienst om welke reden dan ook niet leveren, bijvoorbeeld omdat geen geschikte of beschikbare tolk kan worden gevonden en ook geen vervanging als bedoeld in de artikelen 14 en 15 mogelijk blijkt, dan informeren wij de klant hierover zo snel mogelijk.",
+            "Reeds betaalde bedragen voor de niet-geleverde dienst worden aan de klant terugbetaald.",
+            "Onverminderd het bepaalde in artikel 21 (Aansprakelijkheid) is Arabisch Nederlands Tolken niet gehouden tot vergoeding van verdere schade die voortvloeit uit het niet kunnen leveren van de dienst.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "herroepingsrecht",
+          title: "17. Herroepingsrecht voor consumenten",
+          body: [
+            "Dit artikel geldt uitsluitend voor klanten die als consument handelen, dat wil zeggen voor doeleinden buiten hun bedrijfs- of beroepsactiviteit, en die de overeenkomst op afstand zijn aangegaan, bijvoorbeeld via de website, telefonisch of per e-mail.",
+            "Een consument heeft in beginsel het recht om de overeenkomst binnen 14 dagen na het sluiten daarvan, zonder opgave van redenen, kosteloos te herroepen.",
+            "Om het herroepingsrecht uit te oefenen, volstaat een duidelijke schriftelijke verklaring aan Arabisch Nederlands Tolken, bijvoorbeeld per e-mail, waaruit blijkt dat de consument de overeenkomst herroept. Een tijdige verzending van deze verklaring binnen de bedenktijd is voldoende om aan de termijn te voldoen.",
+            "De gevolgen van herroeping wanneer de dienstverlening al is gestart binnen de bedenktijd, zijn beschreven in artikel 18.",
+            "Voor zover de wet dit toelaat en de daarvoor geldende voorwaarden zijn vervuld, kan het herroepingsrecht in bepaalde gevallen niet (meer) van toepassing zijn, met name wanneer de dienst volledig is uitgevoerd binnen de bedenktijd en aan de voorwaarden van artikel 18 is voldaan.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "start-dienstverlening-bedenktijd",
+          title: "18. Start van dienstverlening binnen de bedenktijd",
+          body: [
+            "Interpretatieopdrachten vinden vaak plaats rond een concrete afspraak, zitting of ander moment op korte termijn, en kunnen daardoor al beginnen voordat de wettelijke bedenktijd van 14 dagen is verstreken.",
+            "Wanneer een consument uitdrukkelijk verzoekt of ermee instemt dat de uitvoering van de dienst al binnen de bedenktijd start, en de consument vervolgens toch gebruikmaakt van het herroepingsrecht, kan de consument een bedrag verschuldigd zijn dat evenredig is aan het deel van de dienst dat op het moment van herroeping al is geleverd, berekend over de totaal overeengekomen prijs, voor zover dit wettelijk is toegestaan.",
+            "Is de dienst volledig uitgevoerd binnen de bedenktijd, dan vervalt het herroepingsrecht alleen wanneer de uitvoering is gestart met voorafgaande uitdrukkelijke instemming van de consument, en de consument daarbij heeft erkend dat hij zijn herroepingsrecht verliest zodra de dienst volledig is uitgevoerd.",
+            "Arabisch Nederlands Tolken vraagt deze uitdrukkelijke instemming en erkenning waar praktisch mogelijk voorafgaand aan een opdracht die binnen de bedenktijd start. Zolang deze instemming niet op een controleerbare manier is vastgelegd, gaan wij er niet van uit dat het herroepingsrecht om deze reden is vervallen.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "verplichtingen-klant",
+          title: "19. Verplichtingen van de klant",
+          body: [
+            "De klant verstrekt juiste en volledige informatie die nodig is voor het uitvoeren van de opdracht, en meldt wijzigingen in datum, tijd of locatie zo spoedig mogelijk.",
+            "Bij opdrachten op locatie zorgt de klant voor toegang tot de afgesproken locatie; bij telefonische of video-opdrachten zorgt de klant voor een bruikbare telefoon- of videoverbinding.",
+            "De klant verstrekt relevante praktische informatie voor de uitvoering van de opdracht, zoals een contactpersoon ter plaatse indien van toepassing.",
+            "De klant meldt Arabisch Nederlands Tolken zo spoedig mogelijk wanneer een zitting, afspraak of ander onderliggend moment waarvoor de tolk is ingepland, wordt geannuleerd of verzet.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "vertrouwelijkheid-privacy",
+          title: "20. Vertrouwelijkheid en privacy",
+          body: [
+            "Van tolken wordt verwacht dat zij een opdracht professioneel en vertrouwelijk uitvoeren en, voor zover van toepassing, gebonden zijn aan relevante beroepsverplichtingen, zoals die voor in het Rbtv geregistreerde tolken gelden.",
+            "Arabisch Nederlands Tolken kan absolute vertrouwelijkheid niet garanderen verder dan wat wettelijk en beroepsmatig van haar en de ingezette tolken kan worden verlangd.",
+            "Voor de manier waarop Arabisch Nederlands Tolken zelf persoonsgegevens verwerkt, verwijzen wij naar onze privacyverklaring.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "aansprakelijkheid",
+          title: "21. Aansprakelijkheid",
+          body: [
+            "Arabisch Nederlands Tolken is aansprakelijk voor schade die het rechtstreekse gevolg is van een toerekenbare tekortkoming in de uitvoering van de overeenkomst, voor zover die tekortkoming aan haar kan worden toegerekend en er een aantoonbaar oorzakelijk verband bestaat tussen de tekortkoming en de gestelde schade.",
+            "Aansprakelijkheid voor indirecte schade, waaronder gevolgschade, gederfde winst, gemiste besparingen of schade door bedrijfsstagnatie, is uitgesloten, tenzij sprake is van opzet of bewuste roekeloosheid van Arabisch Nederlands Tolken.",
+            "Niets in deze voorwaarden beperkt de aansprakelijkheid van Arabisch Nederlands Tolken voor schade als gevolg van opzet of bewuste roekeloosheid, voor schade door dood of letsel, of in andere gevallen waarin de wet een beperking of uitsluiting van aansprakelijkheid niet toestaat. Voor consumenten worden geen verdergaande beperkingen gehanteerd dan wettelijk is toegestaan.",
+            "Deze bepaling laat wettelijke rechten van consumenten die niet bij overeenkomst kunnen worden uitgesloten of beperkt, onverlet.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "overmacht",
+          title: "22. Overmacht",
+          body: [
+            "In geval van overmacht, waaronder in ieder geval wordt verstaan omstandigheden die de uitvoering van de opdracht redelijkerwijs onmogelijk maken en die niet aan Arabisch Nederlands Tolken kunnen worden toegerekend, is Arabisch Nederlands Tolken niet gehouden tot nakoming van de overeenkomst gedurende de periode dat de overmacht voortduurt.",
+            "Duurt de overmachtsituatie langer dan redelijk kan worden verwacht, dan hebben beide partijen het recht de overeenkomst voor het niet-uitgevoerde deel te ontbinden, zonder dat een van beide partijen daardoor schadeplichtig wordt jegens de andere partij.",
+            "Voor het reeds niet-geleverde deel van de dienst worden vooruitbetaalde bedragen aan de klant terugbetaald.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "klachten",
+          title: "23. Klachten",
+          body: [
+            "Heeft de klant een klacht over de dienstverlening of de uitvoering van een opdracht, dan verzoeken wij de klant dit zo spoedig mogelijk, en voorzien van een duidelijke omschrijving, aan Arabisch Nederlands Tolken kenbaar te maken via de contactgegevens op de website.",
+            "Wij streven ernaar klachten zorgvuldig te onderzoeken en binnen een redelijke termijn te reageren.",
+            "Arabisch Nederlands Tolken is niet aangesloten bij een externe geschillencommissie. Komen klant en Arabisch Nederlands Tolken er onderling niet uit, dan geldt het bepaalde in artikel 25.",
+          ],
+          showContact: true,
+        },
+        {
+          id: "wijziging-voorwaarden",
+          title: "24. Wijziging van de voorwaarden",
+          body: [
+            "Arabisch Nederlands Tolken kan deze algemene voorwaarden van tijd tot tijd wijzigen. Gewijzigde voorwaarden gelden voor overeenkomsten die worden gesloten vanaf de datum waarop de gewijzigde versie op de website is gepubliceerd.",
+            "Op een overeenkomst die vóór een wijziging tot stand is gekomen, blijven de voorwaarden van toepassing zoals die golden op het moment van totstandkoming van die overeenkomst, tenzij dwingend recht anders voorschrijft of partijen schriftelijk iets anders afspreken.",
+            "Elke versie van deze voorwaarden is voorzien van een versie-aanduiding en een datum van laatste wijziging, zoals bovenaan deze pagina vermeld.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "toepasselijk-recht-geschillen",
+          title: "25. Toepasselijk recht en geschillen",
+          body: [
+            "Op deze algemene voorwaarden en op iedere overeenkomst tussen Arabisch Nederlands Tolken en een klant is Nederlands recht van toepassing.",
+            "Geschillen worden zo mogelijk in onderling overleg opgelost. Kan een geschil niet in onderling overleg worden opgelost, dan is de bevoegde Nederlandse rechter bevoegd hiervan kennis te nemen, met inachtneming van de wettelijke regels die de bevoegde rechter voor consumenten beschermen.",
+          ],
+          showContact: false,
+        },
+        {
+          id: "contactgegevens",
+          title: "26. Contactgegevens",
+          body: [
+            "Arabisch Nederlands Tolken",
+            "Patrijzenweg 1, 1121 EX Landsmeer, Nederland",
+            "KVK-nummer: 96175354",
+            "Btw-identificatienummer: NL005193483B19",
+            "Website: arabischnederlandstolken.nl",
+          ],
+          showContact: true,
+        },
+      ],
+    },
     home: {
       metaTitle:
         "Arabisch-Nederlandse tolk voor zorg, gemeente, recht en migratie",
@@ -670,6 +965,9 @@ const siteContent = {
           "Stuur geen medische dossiers, BSN’s, processtukken of andere onnodige gevoelige gegevens mee. Wij gebruiken uw gegevens alleen om uw aanvraag te beoordelen en contact met u op te nemen. Uw ingevulde gegevens blijven tijdelijk in deze browsertab bewaard zolang het formulier niet is verzonden.",
         privacyLinkLabel:
           "Lees hoe wij met uw gegevens omgaan in onze privacyverklaring.",
+        termsText:
+          "Op de opdracht die mogelijk uit uw aanvraag volgt, zijn onze algemene voorwaarden van toepassing.",
+        termsLinkLabel: "Bekijk onze algemene voorwaarden.",
         messages: {
           success:
             "Dank u. Uw aanvraag is verzonden en wordt beoordeeld.",
@@ -1468,6 +1766,9 @@ const siteContent = {
           "يرجى عدم إرسال ملفات طبية أو أرقام BSN أو مستندات قضائية أو أي بيانات حساسة غير ضرورية. نستخدم بياناتكم فقط لتقييم الطلب والتواصل معكم. تُحفظ البيانات التي أدخلتموها مؤقتاً في علامة تبويب المتصفح هذه ما دام النموذج لم يُرسل.",
         privacyLinkLabel:
           "اقرؤوا في بيان الخصوصية كيف نتعامل مع بياناتكم.",
+        termsText:
+          "تسري على المهمة التي قد تنتج عن طلبكم شروطنا وأحكامنا العامة (متوفرة باللغة الهولندية).",
+        termsLinkLabel: "اطّلعوا على الشروط والأحكام العامة.",
         messages: {
           success: "شكراً لكم. تم إرسال الطلب وسيجري تقييمه.",
           invalidSubmission:
@@ -1600,6 +1901,12 @@ const siteContent = {
   },
 } as const;
 
-export function getSiteContent(locale: Locale) {
+// Generic rather than `(locale: Locale)`: lets callers that have already
+// narrowed locale to a literal (e.g. after an `if (locale !== "nl")
+// notFound()` guard) get a correspondingly narrowed return type - needed
+// for content.terms, which only the "nl" branch of siteContent has. Every
+// existing call site passing a plain `Locale` variable infers L = Locale
+// and gets the exact same union return type as before.
+export function getSiteContent<L extends Locale>(locale: L): (typeof siteContent)[L] {
   return siteContent[locale];
 }

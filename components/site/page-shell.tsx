@@ -20,6 +20,7 @@ export function PageShell({ children, locale }: PageShellProps) {
     faq: locale === "nl" ? "FAQ" : "الأسئلة الشائعة",
     team: locale === "nl" ? "Team" : "الفريق",
     privacy: locale === "nl" ? "Privacy" : "الخصوصية",
+    terms: locale === "nl" ? "Algemene voorwaarden" : "الشروط والأحكام",
   };
   const navItems = [
     {
@@ -181,6 +182,14 @@ export function PageShell({ children, locale }: PageShellProps) {
                 <a className="footer-link" href={localizedPath(locale, "privacy")}>
                   {navLabels.privacy}
                 </a>
+                {locale === "nl" ? (
+                  <a
+                    className="footer-link"
+                    href={localizedPath("nl", "algemene-voorwaarden")}
+                  >
+                    {navLabels.terms}
+                  </a>
+                ) : null}
               </div>
             </div>
             <div>

@@ -3,8 +3,34 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getBookingById, getBookingEvents } from "@/lib/bookings/queries";
 import { listInterpreters } from "@/lib/interpreters/queries";
+import {
+  listInterpretersForMatching,
+  listCapabilityTags,
+  matchInterpreters,
+  findSchedulingConflicts,
+  type SchedulingConflict,
+} from "@/lib/interpreters/matching";
+import { listAssignmentsForBooking } from "@/lib/assignments/queries";
+import { OPEN_ASSIGNMENT_STATUSES, type AssignmentStatus } from "@/lib/assignments/constants";
+import { listInvoicesForBooking } from "@/lib/invoices/queries";
+import {
+  listCancellationRequestsForBooking,
+  listUnavailabilityReportsForBooking,
+} from "@/lib/cancellation/queries";
+import {
+  CancellationRequestsSection,
+  UnavailabilityReportsSection,
+} from "@/app/admin/(dashboard)/bookings/[id]/cancellation-forms";
+import { InvoiceList } from "@/components/admin/invoice-list";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { formatNumberAsCurrency, calculateMarginCents, numberToCents, formatCentsAsCurrency } from "@/lib/money";
+import {
+  formatNumberAsCurrency,
+  calculateMarginCents,
+  numberToCents,
+  formatCentsAsCurrency,
+  calculateInvoiceLineTotalsCents,
+  sumInvoiceLineTotalsCents,
+} from "@/lib/money";
 import {
   BOOKING_CONTEXT_LABELS,
   BOOKING_MODALITY_LABELS,
@@ -23,6 +49,12 @@ import {
   BookingInterpreterForm,
   BookingStatusForm,
 } from "@/app/admin/(dashboard)/bookings/[id]/booking-forms";
+import {
+  CandidatesTable,
+  PublishOpenAssignmentForm,
+  SuitableInterpretersSection,
+} from "@/app/admin/(dashboard)/bookings/[id]/assignment-forms";
+import { createDraftInvoiceFromBooking } from "@/app/admin/(dashboard)/bookings/[id]/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +70,27 @@ const eventTypeLabels: Record<string, string> = {
   financials_updated: "Financiën bijgewerkt",
   booking_completed: "Boeking afgerond",
   note_added: "Notitie toegevoegd",
+  open_assignment_published: "Gepubliceerd als open opdracht",
+  interpreter_invited: "Tolk uitgenodigd",
+  interpreter_interested: "Tolk toonde interesse",
+  interpreter_declined: "Tolk wees af",
+  interpreter_selected: "Tolk geselecteerd",
+  invitation_withdrawn: "Uitnodiging ingetrokken",
+  assignment_closed: "Kandidatuur afgesloten",
+  customer_request_created: "Aanvraag ontvangen via klantportaal",
+  customer_offer_sent: "Opdrachtvoorstel verstuurd",
+  customer_accepted: "Klant is akkoord gegaan",
+  customer_change_requested: "Klant heeft wijziging aangevraagd",
+  terms_accepted: "Algemene voorwaarden geaccepteerd",
+  consumer_early_performance_consent: "Toestemming vroege uitvoering (bedenktijd)",
+  customer_withdrawn_request: "Klant heeft aanvraag ingetrokken",
+  cancellation_requested: "Annulering/herroeping aangevraagd",
+  cancellation_approved: "Annulering goedgekeurd",
+  cancellation_rejected: "Annuleringsverzoek afgewezen",
+  interpreter_unavailability_reported: "Tolk meldde zich verhinderd",
+  replacement_search_started: "Zoeken naar vervangende tolk gestart",
+  replacement_interpreter_selected: "Vervangende tolk toegewezen",
+  customer_confirmation_sent: "Bevestiging naar klant verstuurd",
 };
 
 function formatDateTime(value: string) {
@@ -62,15 +115,60 @@ export default async function AdminBookingDetailPage({
   }
 
   const supabase = await createClient();
-  const [booking, events, interpreters] = await Promise.all([
+  const [
+    booking,
+    events,
+    interpreters,
+    interpretersForMatching,
+    capabilityTags,
+    assignments,
+    invoices,
+    cancellationRequests,
+    unavailabilityReports,
+  ] = await Promise.all([
     getBookingById(supabase, id),
     getBookingEvents(supabase, id),
     listInterpreters(supabase),
+    listInterpretersForMatching(supabase),
+    listCapabilityTags(supabase),
+    listAssignmentsForBooking(supabase, id),
+    listInvoicesForBooking(supabase, id),
+    listCancellationRequestsForBooking(supabase, id),
+    listUnavailabilityReportsForBooking(supabase, id),
   ]);
 
   if (!booking) {
     notFound();
   }
+
+  const dialectTags = capabilityTags.filter((tag) => tag.category === "dialect" && tag.active);
+  const requiredDialectTag =
+    capabilityTags.find((tag) => tag.id === booking.required_dialect_tag_id) ?? null;
+
+  const invitedInterpreterIds = new Set(assignments.map((a) => a.interpreter_id));
+  const matches = matchInterpreters(booking, interpretersForMatching, requiredDialectTag).filter(
+    (match) => !invitedInterpreterIds.has(match.interpreter.id),
+  );
+
+  const canScheduleCheck = Boolean(booking.requested_date && booking.requested_start_time);
+  const activeCandidates = assignments.filter((a) =>
+    OPEN_ASSIGNMENT_STATUSES.includes(a.status as AssignmentStatus),
+  );
+  const conflictEntries = canScheduleCheck
+    ? await Promise.all(
+        activeCandidates.map(async (assignment) => {
+          const conflicts = await findSchedulingConflicts(supabase, {
+            interpreterId: assignment.interpreter_id,
+            requestedDate: booking.requested_date as string,
+            requestedStartTime: booking.requested_start_time as string,
+            expectedDurationMinutes: booking.expected_duration_minutes,
+            excludeBookingId: booking.id,
+          });
+          return [assignment.id, conflicts] as [string, SchedulingConflict[]];
+        }),
+      )
+    : [];
+  const conflictsByAssignmentId = Object.fromEntries(conflictEntries);
 
   const marginCents = calculateMarginCents({
     customerPriceCents: numberToCents(booking.customer_price_ex_vat),
@@ -80,6 +178,27 @@ export default async function AdminBookingDetailPage({
       booking.interpreter_travel_cost_ex_vat,
     ),
   });
+
+  const invoicePreviewLines =
+    booking.customer_price_ex_vat !== null
+      ? [
+          calculateInvoiceLineTotalsCents({
+            quantity: 1,
+            unitPriceExVatCents: numberToCents(booking.customer_price_ex_vat) ?? 0,
+            vatRatePercent: booking.vat_rate,
+          }),
+          ...(booking.customer_travel_fee_ex_vat
+            ? [
+                calculateInvoiceLineTotalsCents({
+                  quantity: 1,
+                  unitPriceExVatCents: numberToCents(booking.customer_travel_fee_ex_vat) ?? 0,
+                  vatRatePercent: booking.vat_rate,
+                }),
+              ]
+            : []),
+        ]
+      : [];
+  const invoicePreviewTotals = sumInvoiceLineTotalsCents(invoicePreviewLines);
 
   return (
     <div className="space-y-8">
@@ -213,15 +332,40 @@ export default async function AdminBookingDetailPage({
                 contact met de klant bevestigd.
               </p>
               <div className="mt-4">
-                <BookingDetailsForm bookingId={booking.id} booking={booking} />
+                <BookingDetailsForm bookingId={booking.id} booking={booking} dialectTags={dialectTags} />
               </div>
             </div>
           </section>
 
+          {cancellationRequests.length > 0 || unavailabilityReports.length > 0 ? (
+            <section className="panel px-6 py-6">
+              {cancellationRequests.length > 0 ? (
+                <>
+                  <h2 className="text-base font-semibold text-foreground">
+                    Annulerings-/herroepingsverzoeken
+                  </h2>
+                  <div className="mt-4">
+                    <CancellationRequestsSection bookingId={booking.id} requests={cancellationRequests} />
+                  </div>
+                </>
+              ) : null}
+              {unavailabilityReports.length > 0 ? (
+                <div className={cancellationRequests.length > 0 ? "mt-6 border-t border-line pt-6" : ""}>
+                  <UnavailabilityReportsSection reports={unavailabilityReports} />
+                </div>
+              ) : null}
+            </section>
+          ) : null}
+
           <section className="panel px-6 py-6">
             <h2 className="text-base font-semibold text-foreground">
-              Tolktoewijzing
+              Tolktoewijzing (snel, direct)
             </h2>
+            <p className="mt-1 text-xs text-muted">
+              Wijst direct toe zonder uitnodiging/reactie - gebruik dit als u al
+              weet wie de opdracht doet. Voor het werven en vergelijken van
+              kandidaten, zie &ldquo;Tolken werven&rdquo; hieronder.
+            </p>
             <div className="mt-4">
               <BookingInterpreterForm
                 bookingId={booking.id}
@@ -230,6 +374,67 @@ export default async function AdminBookingDetailPage({
                 swornRequired={booking.sworn_required}
               />
             </div>
+          </section>
+
+          <section className="panel px-6 py-6">
+            <h2 className="text-base font-semibold text-foreground">
+              Tolken werven
+            </h2>
+
+            {!canScheduleCheck ? (
+              <p className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs leading-6 text-amber-900">
+                Stel eerst een datum en tijd in bij de boekingsgegevens hierboven.
+                Deze boeking kan pas als opdracht gepubliceerd worden zodra dat
+                bekend is.
+              </p>
+            ) : null}
+
+            {assignments.length > 0 ? (
+              <div className="mt-4">
+                <h3 className="text-sm font-semibold text-foreground">Kandidaten</h3>
+                <div className="mt-2">
+                  <CandidatesTable
+                    bookingId={booking.id}
+                    assignments={assignments}
+                    conflictsByAssignmentId={conflictsByAssignmentId}
+                  />
+                </div>
+              </div>
+            ) : null}
+
+            {!booking.interpreter_id && canScheduleCheck ? (
+              <>
+                <div className="mt-6 border-t border-line pt-6">
+                  <h3 className="text-sm font-semibold text-foreground">
+                    Geschikte tolken uitnodigen
+                  </h3>
+                  <p className="mt-1 text-xs text-muted">
+                    Gebaseerd op taalcombinatie, beëdiging/Rbtv, dialect en
+                    specialisatie. Rbtv-gegevens zijn handmatig bijgehouden en
+                    niet onafhankelijk geverifieerd.
+                  </p>
+                  <div className="mt-4">
+                    <SuitableInterpretersSection bookingId={booking.id} matches={matches} />
+                  </div>
+                </div>
+
+                <div className="mt-6 border-t border-line pt-6">
+                  <h3 className="text-sm font-semibold text-foreground">
+                    Of publiceer als open opdracht
+                  </h3>
+                  <p className="mt-1 text-xs text-muted">
+                    Wordt zichtbaar voor alle op dit moment geschikte tolken in
+                    hun portaal, die zelf interesse kunnen tonen.
+                    {booking.is_open_assignment
+                      ? " Deze boeking is al eerder gepubliceerd; opnieuw publiceren nodigt alleen nieuw geschikte tolken uit die nog geen kandidaat zijn."
+                      : ""}
+                  </p>
+                  <div className="mt-4">
+                    <PublishOpenAssignmentForm bookingId={booking.id} />
+                  </div>
+                </div>
+              </>
+            ) : null}
           </section>
 
           <section className="panel px-6 py-6">
@@ -268,6 +473,68 @@ export default async function AdminBookingDetailPage({
             <div className="mt-6">
               <BookingFinancialsForm bookingId={booking.id} booking={booking} />
             </div>
+          </section>
+
+          <section className="panel px-6 py-6">
+            <h2 className="text-base font-semibold text-foreground">Facturatie</h2>
+
+            {booking.customer_price_ex_vat !== null ? (
+              <>
+                <div className="mt-4 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4">
+                  <dl className="space-y-2 text-sm">
+                    <div className="flex items-center justify-between">
+                      <dt className="text-muted">Tolkdienst</dt>
+                      <dd className="tabular-nums text-foreground">
+                        {formatNumberAsCurrency(booking.customer_price_ex_vat)}
+                      </dd>
+                    </div>
+                    {booking.customer_travel_fee_ex_vat ? (
+                      <div className="flex items-center justify-between">
+                        <dt className="text-muted">Reiskosten</dt>
+                        <dd className="tabular-nums text-foreground">
+                          {formatNumberAsCurrency(booking.customer_travel_fee_ex_vat)}
+                        </dd>
+                      </div>
+                    ) : null}
+                    <div className="flex items-center justify-between border-t border-line pt-2">
+                      <dt className="text-muted">Subtotaal excl. btw</dt>
+                      <dd className="tabular-nums text-foreground">
+                        {formatCentsAsCurrency(invoicePreviewTotals.subtotalExVatCents)}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <dt className="text-muted">Btw {Number(booking.vat_rate)}%</dt>
+                      <dd className="tabular-nums text-foreground">
+                        {formatCentsAsCurrency(invoicePreviewTotals.totalVatCents)}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-line pt-2 text-base">
+                      <dt className="font-semibold text-brand-strong">Totaal incl. btw</dt>
+                      <dd className="font-semibold tabular-nums text-brand-strong">
+                        {formatCentsAsCurrency(invoicePreviewTotals.totalIncVatCents)}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+                <form action={createDraftInvoiceFromBooking.bind(null, booking.id)} className="mt-4">
+                  <button type="submit" className="button-primary px-5 py-2.5">
+                    {invoices.length > 0 ? "Nieuwe conceptfactuur maken" : "Conceptfactuur maken"}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <p className="mt-3 text-sm text-muted">
+                Stel eerst een klantprijs in bij Financiën om een factuur te kunnen
+                maken.
+              </p>
+            )}
+
+            {invoices.length > 0 ? (
+              <div className="mt-6 border-t border-line pt-6">
+                <h3 className="text-sm font-semibold text-foreground">Facturen</h3>
+                <InvoiceList invoices={invoices} emptyText="Nog geen facturen." />
+              </div>
+            ) : null}
           </section>
         </div>
 

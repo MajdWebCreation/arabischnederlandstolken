@@ -583,6 +583,16 @@ export function ContactForm({
           </a>
         </p>
 
+        <p className="form-note mt-3 px-4 py-3 text-sm leading-7 text-muted">
+          {content.termsText}{" "}
+          <a
+            href={localizedPath("nl", "algemene-voorwaarden")}
+            className="font-semibold text-brand-strong underline decoration-brand/30 underline-offset-4 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {content.termsLinkLabel}
+          </a>
+        </p>
+
         <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
           <button
             type="submit"

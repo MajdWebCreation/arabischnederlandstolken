@@ -7,6 +7,7 @@ import type {
   BookingModality,
   BookingStatus,
 } from "@/lib/bookings/constants";
+import { assertNonNull } from "@/lib/supabase/invariants";
 
 type TypedClient = SupabaseClient<Database>;
 
@@ -22,8 +23,65 @@ export type BookingListFilters = {
   pageSize?: number;
 };
 
-export type BookingListRow =
-  Database["public"]["Views"]["booking_admin_rows"]["Row"];
+type RawBookingListRow = Database["public"]["Views"]["booking_admin_rows"]["Row"];
+
+// booking_admin_rows joins bookings (inner) with customers (inner) and
+// interpreters (left). Every field below traces back through only inner
+// joins to a `not null` column on bookings/customers, so it is always
+// present whenever a row exists at all - only Postgres's inability to carry
+// view-column not-null metadata makes the generated type say otherwise (see
+// lib/supabase/invariants.ts). interpreter_first_name/last_name and every
+// *_ex_vat/requested_date/requested_start_time/modality field stay nullable
+// here: those are either behind the left join or nullable on bookings itself.
+export type BookingListRow = Omit<
+  RawBookingListRow,
+  | "id"
+  | "booking_number"
+  | "status"
+  | "source"
+  | "request_type"
+  | "context"
+  | "language_from"
+  | "language_to"
+  | "sworn_required"
+  | "created_at"
+  | "customer_id"
+  | "customer_name"
+  | "customer_email"
+> & {
+  id: string;
+  booking_number: string;
+  status: string;
+  source: string;
+  request_type: string;
+  context: string;
+  language_from: string;
+  language_to: string;
+  sworn_required: boolean;
+  created_at: string;
+  customer_id: string;
+  customer_name: string;
+  customer_email: string;
+};
+
+function toBookingListRow(row: RawBookingListRow): BookingListRow {
+  return {
+    ...row,
+    id: assertNonNull(row.id, "booking_admin_rows.id"),
+    booking_number: assertNonNull(row.booking_number, "booking_admin_rows.booking_number"),
+    status: assertNonNull(row.status, "booking_admin_rows.status"),
+    source: assertNonNull(row.source, "booking_admin_rows.source"),
+    request_type: assertNonNull(row.request_type, "booking_admin_rows.request_type"),
+    context: assertNonNull(row.context, "booking_admin_rows.context"),
+    language_from: assertNonNull(row.language_from, "booking_admin_rows.language_from"),
+    language_to: assertNonNull(row.language_to, "booking_admin_rows.language_to"),
+    sworn_required: assertNonNull(row.sworn_required, "booking_admin_rows.sworn_required"),
+    created_at: assertNonNull(row.created_at, "booking_admin_rows.created_at"),
+    customer_id: assertNonNull(row.customer_id, "booking_admin_rows.customer_id"),
+    customer_name: assertNonNull(row.customer_name, "booking_admin_rows.customer_name"),
+    customer_email: assertNonNull(row.customer_email, "booking_admin_rows.customer_email"),
+  };
+}
 
 export type BookingListResult = {
   rows: BookingListRow[];
@@ -84,7 +142,12 @@ export async function listBookings(
     throw error;
   }
 
-  return { rows: data ?? [], total: count ?? 0, page, pageSize };
+  return {
+    rows: (data ?? []).map(toBookingListRow),
+    total: count ?? 0,
+    page,
+    pageSize,
+  };
 }
 
 export type BookingDetail = Database["public"]["Tables"]["bookings"]["Row"] & {
@@ -225,5 +288,5 @@ export async function listUpcomingBookings(
     throw error;
   }
 
-  return data ?? [];
+  return (data ?? []).map(toBookingListRow);
 }

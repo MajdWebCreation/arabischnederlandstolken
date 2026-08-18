@@ -5,6 +5,8 @@ import {
   listUpcomingBookings,
   listBookings,
 } from "@/lib/bookings/queries";
+import { getAssignmentDashboardCounts } from "@/lib/assignments/queries";
+import { getCustomerPortalAttentionCounts } from "@/lib/cancellation/queries";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { languageLabel } from "@/lib/bookings/constants";
 
@@ -22,8 +24,10 @@ function formatDate(value: string | null) {
 export default async function AdminDashboardPage() {
   const supabase = await createClient();
 
-  const [counts, upcoming, actionable] = await Promise.all([
+  const [counts, assignmentCounts, portalCounts, upcoming, actionable] = await Promise.all([
     getDashboardCounts(supabase),
+    getAssignmentDashboardCounts(supabase),
+    getCustomerPortalAttentionCounts(supabase),
     listUpcomingBookings(supabase, 6),
     listBookings(supabase, {
       status: undefined,
@@ -38,6 +42,12 @@ export default async function AdminDashboardPage() {
   const stats = [
     { label: "Nieuwe aanvragen", value: counts.newRequests, href: "/admin/bookings?status=new" },
     { label: "Tolk zoeken", value: counts.interpreterSearch, href: "/admin/bookings?status=interpreter_search" },
+    { label: "Open opdrachten", value: assignmentCounts.openAssignments, href: "/admin/bookings?status=interpreter_search" },
+    { label: "Uitnodigingen in afwachting", value: assignmentCounts.invitationsAwaitingResponse, href: "/admin/bookings?status=interpreter_search" },
+    { label: "Interesse, wacht op keuze", value: assignmentCounts.interestedAwaitingDecision, href: "/admin/bookings?status=interpreter_search" },
+    { label: "Wacht op klantbevestiging", value: portalCounts.awaitingCustomerAcceptance, href: "/admin/bookings?status=quoted" },
+    { label: "Annulerings-/herroepingsverzoeken", value: portalCounts.cancellationRequestsPending, href: "/admin/bookings" },
+    { label: "Tolk verhinderd, vervanging nodig", value: portalCounts.interpreterUnavailableOpen, href: "/admin/bookings" },
     { label: "Aankomend bevestigd", value: counts.upcomingConfirmed, href: "/admin/bookings?status=confirmed" },
     { label: "Totaal nog te gaan", value: counts.totalUpcoming, href: "/admin/bookings" },
     { label: "Afgerond (totaal)", value: counts.completed, href: "/admin/bookings?status=completed" },

@@ -5,7 +5,17 @@ import { createClient } from "@/lib/supabase/server";
 import { formString } from "@/lib/forms";
 import type { SignInState } from "@/lib/auth/sign-in-state";
 
+/**
+ * Shared by both the admin and interpreter login forms - Supabase Auth
+ * itself has no notion of "admin" vs "interpreter" (that is a profiles.role
+ * concept checked afterwards, by each portal's own layout), so the sign-in
+ * mechanics are identical and only the post-login destination differs.
+ * Each login form binds its own `redirectTo` with .bind(), the same
+ * pattern used throughout the admin/interpreter Server Actions for
+ * per-record ids.
+ */
 export async function signIn(
+  redirectTo: string,
   _previousState: SignInState,
   formData: FormData,
 ): Promise<SignInState> {
@@ -32,11 +42,11 @@ export async function signIn(
     };
   }
 
-  redirect("/admin");
+  redirect(redirectTo);
 }
 
-export async function signOut() {
+export async function signOut(redirectTo: string) {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect("/admin/login");
+  redirect(redirectTo);
 }

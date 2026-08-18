@@ -135,6 +135,8 @@ export type ContactFormCopy = {
   fallbackLabel: string;
   privacyText: string;
   privacyLinkLabel: string;
+  termsText: string;
+  termsLinkLabel: string;
   messages: {
     success: string;
     invalidSubmission: string;

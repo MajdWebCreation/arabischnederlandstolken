@@ -25,7 +25,7 @@ export default async function AdminDashboardLayout({
             eigenaar van dit systeem als u hier toegang toe zou moeten
             hebben.
           </p>
-          <form action={signOut} className="mt-6">
+          <form action={signOut.bind(null, "/admin/login")} className="mt-6">
             <button type="submit" className="button-secondary w-full px-6 py-3">
               Uitloggen
             </button>
@@ -55,7 +55,7 @@ export default async function AdminDashboardLayout({
                 Beheer
               </span>
             </Link>
-            <form action={signOut} className="lg:hidden">
+            <form action={signOut.bind(null, "/admin/login")} className="lg:hidden">
               <button
                 type="submit"
                 className="rounded-full border border-line px-4 py-2 text-xs font-semibold text-muted-strong"
@@ -73,7 +73,7 @@ export default async function AdminDashboardLayout({
               <span className="max-w-48 truncate text-xs text-muted">
                 {session.user.email}
               </span>
-              <form action={signOut}>
+              <form action={signOut.bind(null, "/admin/login")}>
                 <button
                   type="submit"
                   className="rounded-full border border-line px-4 py-2 text-xs font-semibold text-muted-strong transition hover:border-brand/40 hover:text-brand-strong"

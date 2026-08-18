@@ -18,6 +18,7 @@ import {
 import { centsToInputValue, numberToCents } from "@/lib/money";
 import type { BookingDetail } from "@/lib/bookings/queries";
 import type { InterpreterListRow } from "@/lib/interpreters/queries";
+import type { CapabilityTagRow } from "@/lib/interpreters/matching";
 
 const fieldLabel = "text-xs font-semibold uppercase tracking-wide text-muted";
 
@@ -255,9 +256,11 @@ export function BookingInternalNotesForm({
 export function BookingDetailsForm({
   bookingId,
   booking,
+  dialectTags,
 }: {
   bookingId: string;
   booking: BookingDetail;
+  dialectTags: CapabilityTagRow[];
 }) {
   const action = updateBookingDetails.bind(null, bookingId);
 
@@ -367,7 +370,7 @@ export function BookingDetailsForm({
             className="form-control mt-1.5"
           />
         </div>
-        <div className="sm:col-span-2">
+        <div>
           <label htmlFor="languageNotes" className={fieldLabel}>
             Opmerkingen over taal/dialect
           </label>
@@ -377,6 +380,67 @@ export function BookingDetailsForm({
             type="text"
             defaultValue={booking.language_notes ?? ""}
             className="form-control mt-1.5"
+          />
+        </div>
+        <div>
+          <label htmlFor="requiredDialectTagId" className={fieldLabel}>
+            Vereist dialect (voor matching)
+          </label>
+          <select
+            id="requiredDialectTagId"
+            name="requiredDialectTagId"
+            defaultValue={booking.required_dialect_tag_id ?? ""}
+            className="form-control mt-1.5"
+          >
+            <option value="">Geen specifiek dialect vereist</option>
+            {dialectTags.map((tag) => (
+              <option key={tag.id} value={tag.id}>
+                {tag.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="onsiteContactName" className={fieldLabel}>
+            Contactpersoon ter plaatse
+          </label>
+          <input
+            id="onsiteContactName"
+            name="onsiteContactName"
+            type="text"
+            placeholder="Bijv. balie, receptie, casemanager"
+            defaultValue={booking.onsite_contact_name ?? ""}
+            className="form-control mt-1.5"
+          />
+        </div>
+        <div>
+          <label htmlFor="onsiteContactPhone" className={fieldLabel}>
+            Telefoonnummer ter plaatse
+          </label>
+          <input
+            id="onsiteContactPhone"
+            name="onsiteContactPhone"
+            type="tel"
+            dir="ltr"
+            defaultValue={booking.onsite_contact_phone ?? ""}
+            className="form-control mt-1.5"
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label htmlFor="interpreterBrief" className={fieldLabel}>
+            Omschrijving/instructies voor de tolk
+          </label>
+          <p className="mt-1 text-xs text-muted">
+            Zichtbaar voor kandidaat-tolken (om te beslissen) en voor de
+            geselecteerde tolk (als instructie). Nooit het volledige bericht
+            van de klant - dat blijft admin-only.
+          </p>
+          <textarea
+            id="interpreterBrief"
+            name="interpreterBrief"
+            rows={3}
+            defaultValue={booking.interpreter_brief ?? ""}
+            className="form-control mt-1.5 resize-y"
           />
         </div>
       </div>

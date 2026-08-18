@@ -109,17 +109,76 @@ export function CustomerForm({ customer }: { customer: CustomerRow }) {
             />
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="billingAddress" className={fieldLabel}>
-              Factuuradres
+            <label htmlFor="billingStreet" className={fieldLabel}>
+              Straatnaam
             </label>
             <input
-              id="billingAddress"
-              name="billingAddress"
+              id="billingStreet"
+              name="billingStreet"
               type="text"
-              defaultValue={customer.billing_address ?? ""}
+              defaultValue={customer.billing_street ?? ""}
               className="form-control mt-1.5"
             />
           </div>
+          <div>
+            <label htmlFor="billingHouseNumber" className={fieldLabel}>
+              Huisnummer
+            </label>
+            <input
+              id="billingHouseNumber"
+              name="billingHouseNumber"
+              type="text"
+              dir="ltr"
+              defaultValue={customer.billing_house_number ?? ""}
+              className="form-control mt-1.5"
+            />
+          </div>
+          <div>
+            <label htmlFor="billingHouseNumberAddition" className={fieldLabel}>
+              Toevoeging (optioneel)
+            </label>
+            <input
+              id="billingHouseNumberAddition"
+              name="billingHouseNumberAddition"
+              type="text"
+              dir="ltr"
+              defaultValue={customer.billing_house_number_addition ?? ""}
+              className="form-control mt-1.5"
+            />
+          </div>
+          <div>
+            <label htmlFor="billingPostalCode" className={fieldLabel}>
+              Postcode
+            </label>
+            <input
+              id="billingPostalCode"
+              name="billingPostalCode"
+              type="text"
+              dir="ltr"
+              defaultValue={customer.billing_postal_code ?? ""}
+              className="form-control mt-1.5"
+            />
+          </div>
+          <div>
+            <label htmlFor="billingCity" className={fieldLabel}>
+              Plaats
+            </label>
+            <input
+              id="billingCity"
+              name="billingCity"
+              type="text"
+              defaultValue={customer.billing_city ?? ""}
+              className="form-control mt-1.5"
+            />
+          </div>
+          {customer.billing_address ? (
+            <div className="sm:col-span-2 rounded-xl border border-dashed border-line-strong bg-surface-alt/60 px-3 py-2.5">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+                Vorig vrij-tekstadres (alleen ter referentie)
+              </p>
+              <p className="mt-1 text-sm text-muted-strong">{customer.billing_address}</p>
+            </div>
+          ) : null}
           <div>
             <label htmlFor="kvkNumber" className={fieldLabel}>
               KVK-nummer

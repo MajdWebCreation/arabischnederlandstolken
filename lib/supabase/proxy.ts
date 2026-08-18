@@ -4,26 +4,27 @@ import type { Database } from "@/lib/supabase/database.types";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
 /**
- * Refreshes the Supabase auth session cookie on every /admin request and
- * bounces anonymous visitors to the login page early, before any page
- * rendering happens.
+ * Refreshes the Supabase auth session cookie on every /admin or /tolk
+ * request and bounces anonymous visitors to the relevant login page early,
+ * before any page rendering happens.
  *
  * This is a UX/performance optimisation, not the security boundary: Server
  * Components can't write cookies, so without this, sessions would appear to
- * randomly expire. The actual authorization check (is this user an admin?)
- * happens again, authoritatively, in app/admin/(dashboard)/layout.tsx and in
- * every admin Server Action - proxy matchers are easy to misconfigure or
- * bypass (see the Next.js Proxy docs), so nothing here is trusted alone.
+ * randomly expire. The actual authorization check (is this user an admin,
+ * or an active interpreter?) happens again, authoritatively, in each
+ * section's own protected layout and in every Server Action - proxy
+ * matchers are easy to misconfigure or bypass (see the Next.js Proxy
+ * docs), so nothing here is trusted alone.
  */
-export async function updateAdminSession(request: NextRequest) {
+export async function updatePortalSession(request: NextRequest, loginPath: string) {
   let response = NextResponse.next({ request });
 
   const env = getSupabaseEnv();
 
   if (!env) {
     // Supabase isn't configured yet. Let the request through; the
-    // (dashboard) layout will fail closed once it tries to read the
-    // session and finds no configuration.
+    // protected layout will fail closed once it tries to read the session
+    // and finds no configuration.
     return response;
   }
 
@@ -50,11 +51,11 @@ export async function updateAdminSession(request: NextRequest) {
   const isLoggedIn = Boolean(data?.claims);
 
   const { pathname } = request.nextUrl;
-  const isLoginRoute = pathname === "/admin/login";
+  const isLoginRoute = pathname === loginPath;
 
   if (!isLoggedIn && !isLoginRoute) {
     const url = request.nextUrl.clone();
-    url.pathname = "/admin/login";
+    url.pathname = loginPath;
     return NextResponse.redirect(url);
   }
 

@@ -4,9 +4,9 @@ import { useActionState } from "react";
 import { signIn } from "@/lib/auth/actions";
 import { initialSignInState } from "@/lib/auth/sign-in-state";
 
-export function LoginForm() {
+export function LoginForm({ redirectTo }: { redirectTo: string }) {
   const [state, formAction, pending] = useActionState(
-    signIn,
+    signIn.bind(null, redirectTo),
     initialSignInState,
   );
 

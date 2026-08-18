@@ -53,6 +53,11 @@ export function centsToNumber(cents: number | null): number | null {
   return Math.round(cents) / 100;
 }
 
+/** Same conversion for a value already known to be non-null (e.g. a required money field's parsed result), so callers writing to a NOT NULL column don't have to fight centsToNumber's nullable signature. */
+export function requiredCentsToNumber(cents: number): number {
+  return Math.round(cents) / 100;
+}
+
 const currencyFormatter = new Intl.NumberFormat("nl-NL", {
   style: "currency",
   currency: "EUR",
@@ -112,4 +117,61 @@ export function calculateMarginCents({
   const cost = interpreterCostCents + (interpreterTravelCostCents ?? 0);
 
   return revenue - cost;
+}
+
+export type InvoiceLineInputCents = {
+  quantity: number;
+  unitPriceExVatCents: number;
+  vatRatePercent: number;
+};
+
+export type InvoiceLineTotalsCents = {
+  subtotalExVatCents: number;
+  vatAmountCents: number;
+  totalIncVatCents: number;
+};
+
+/**
+ * Mirrors invoice_items' generated columns exactly (see
+ * supabase/migrations/20260818100200_invoices.sql): round(qty*price) for
+ * the subtotal, round(subtotal*rate/100) for VAT, and the total as the SUM
+ * of those two already-rounded values - never an independently rounded
+ * third figure, which is what guarantees subtotal + vat = total for every
+ * line with no possibility of a stray rounding cent. Used only to render a
+ * live preview as the admin edits a draft; the database recomputes and
+ * stores the authoritative values itself the moment the row is saved.
+ */
+export function calculateInvoiceLineTotalsCents({
+  quantity,
+  unitPriceExVatCents,
+  vatRatePercent,
+}: InvoiceLineInputCents): InvoiceLineTotalsCents {
+  const subtotalExVatCents = Math.round(quantity * unitPriceExVatCents);
+  const vatAmountCents = Math.round((subtotalExVatCents * vatRatePercent) / 100);
+
+  return {
+    subtotalExVatCents,
+    vatAmountCents,
+    totalIncVatCents: subtotalExVatCents + vatAmountCents,
+  };
+}
+
+export type InvoiceTotalsCents = {
+  subtotalExVatCents: number;
+  totalVatCents: number;
+  totalIncVatCents: number;
+};
+
+/** Sums already-calculated line totals into invoice-level totals - same sum-of-parts principle as recalculate_invoice_totals() in the database. */
+export function sumInvoiceLineTotalsCents(
+  lines: InvoiceLineTotalsCents[],
+): InvoiceTotalsCents {
+  const subtotalExVatCents = lines.reduce((sum, l) => sum + l.subtotalExVatCents, 0);
+  const totalVatCents = lines.reduce((sum, l) => sum + l.vatAmountCents, 0);
+
+  return {
+    subtotalExVatCents,
+    totalVatCents,
+    totalIncVatCents: subtotalExVatCents + totalVatCents,
+  };
 }

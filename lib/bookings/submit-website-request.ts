@@ -65,28 +65,41 @@ export async function submitWebsiteBookingRequest(
 ): Promise<WebsiteBookingSubmissionResult> {
   const supabase = await createClient();
   const languagePair = languageDirectionToPair[data.languageDirection];
+  const modality = data.deliveryMode
+    ? deliveryModeToModality[data.deliveryMode]
+    : null;
+  const languageNotes =
+    data.languageDirection === "both_or_unknown"
+      ? languageNotesByLocale[locale]
+      : null;
 
+  // p_phone/p_organisation/p_language_notes/p_modality/p_desired_date_time_text
+  // are genuinely optional (the RPC defaults each to null - see
+  // 20260817110000_website_booking_request_optional_args.sql), which Postgres
+  // can only express by making the parameter itself optional, not nullable.
+  // So an absent value is left out of this object entirely rather than sent
+  // as an explicit `null`, which the generated Args type wouldn't accept for
+  // an optional-but-still-`string`-typed key. The RPC's own
+  // `nullif(btrim(...), '')` already treats "absent" and "blank string"
+  // identically, so this is not a behaviour change from Phase 1.
   const { data: rows, error } = await supabase.rpc(
     "submit_website_booking_request",
     {
       p_name: data.name,
       p_email: data.email,
-      p_phone: data.phone ?? null,
-      p_organisation: data.organization ?? null,
       p_request_type: data.requestType,
       p_context: data.context,
       p_language_from: languagePair.from,
       p_language_to: languagePair.to,
-      p_language_notes:
-        data.languageDirection === "both_or_unknown"
-          ? languageNotesByLocale[locale]
-          : null,
-      p_modality: data.deliveryMode
-        ? deliveryModeToModality[data.deliveryMode]
-        : null,
-      p_desired_date_time_text: data.desiredDateTime ?? null,
       p_message: buildCustomerMessage(data.desiredDateTime, data.message, locale),
       p_form_language: locale,
+      ...(data.phone ? { p_phone: data.phone } : {}),
+      ...(data.organization ? { p_organisation: data.organization } : {}),
+      ...(languageNotes ? { p_language_notes: languageNotes } : {}),
+      ...(modality ? { p_modality: modality } : {}),
+      ...(data.desiredDateTime
+        ? { p_desired_date_time_text: data.desiredDateTime }
+        : {}),
     },
   );
 

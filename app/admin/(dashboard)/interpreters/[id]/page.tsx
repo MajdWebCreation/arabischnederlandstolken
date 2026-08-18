@@ -12,7 +12,12 @@ import {
 } from "@/app/admin/(dashboard)/interpreters/actions";
 import { InterpreterForm } from "@/app/admin/(dashboard)/interpreters/interpreter-form";
 import { AddLanguageForm } from "@/app/admin/(dashboard)/interpreters/[id]/add-language-form";
+import {
+  CapabilitiesSection,
+  PortalAccountSection,
+} from "@/app/admin/(dashboard)/interpreters/[id]/portal-forms";
 import { languageLabel } from "@/lib/bookings/constants";
+import { getInterpreterCapabilities, listCapabilityTags } from "@/lib/interpreters/matching";
 
 export const dynamic = "force-dynamic";
 
@@ -35,10 +40,13 @@ export default async function InterpreterDetailPage({
   }
 
   const supabase = await createClient();
-  const [interpreter, openBookingCount] = await Promise.all([
-    getInterpreterById(supabase, id),
-    countOpenBookingsForInterpreter(supabase, id),
-  ]);
+  const [interpreter, openBookingCount, allCapabilityTags, assignedCapabilities] =
+    await Promise.all([
+      getInterpreterById(supabase, id),
+      countOpenBookingsForInterpreter(supabase, id),
+      listCapabilityTags(supabase),
+      getInterpreterCapabilities(supabase, id),
+    ]);
 
   if (!interpreter) {
     notFound();
@@ -151,6 +159,35 @@ export default async function InterpreterDetailPage({
         )}
 
         <AddLanguageForm interpreterId={id} />
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">
+          Dialecten en specialisaties
+        </h2>
+        <p className="mt-1 text-xs text-muted">
+          Wordt gebruikt om geschikte tolken te tonen bij het werven voor een
+          boeking. Alleen door de beheerder in te stellen.
+        </p>
+        <div className="mt-4">
+          <CapabilitiesSection
+            interpreterId={id}
+            allTags={allCapabilityTags}
+            assigned={assignedCapabilities}
+          />
+        </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Portaalaccount</h2>
+        <p className="mt-1 text-xs text-muted">
+          Met een gekoppeld account kan deze tolk inloggen op{" "}
+          <span className="font-mono">/tolk</span> om opdrachten te bekijken
+          en erop te reageren.
+        </p>
+        <div className="mt-4">
+          <PortalAccountSection interpreter={interpreter} />
+        </div>
       </section>
     </div>
   );

@@ -10,6 +10,7 @@ import type {
 } from "@/lib/contact/types";
 import {
   absoluteUrl,
+  localizedPath,
   organizationName,
   type Locale,
 } from "@/lib/site";
@@ -55,6 +56,8 @@ const confirmationCopy: Record<
     received: string;
     review: string;
     privacy: string;
+    terms: string;
+    termsLinkLabel: string;
     automatic: string;
     lang: string;
     dir: "ltr" | "rtl";
@@ -69,6 +72,9 @@ const confirmationCopy: Record<
       "We bekijken de aanvraag en nemen contact met u op wanneer er voldoende informatie beschikbaar is om deze verder te beoordelen.",
     privacy:
       "Stuur geen aanvullende gevoelige documenten via e-mail, zoals medische dossiers, BSN’s of processtukken, tenzij wij daar specifiek om vragen.",
+    terms:
+      "Op de opdracht die mogelijk uit uw aanvraag volgt, zijn onze algemene voorwaarden van toepassing.",
+    termsLinkLabel: "Bekijk onze algemene voorwaarden",
     automatic: "Deze ontvangstbevestiging is automatisch verzonden.",
     lang: "nl",
     dir: "ltr",
@@ -82,6 +88,9 @@ const confirmationCopy: Record<
       "سنراجع الطلب ونتواصل معكم عندما تكون المعلومات المتاحة كافية لمتابعة تقييمه.",
     privacy:
       "يرجى عدم إرسال مستندات حساسة إضافية عبر البريد الإلكتروني، مثل الملفات الطبية أو أرقام BSN أو مستندات القضايا، إلا إذا طلبنا ذلك منكم صراحةً.",
+    terms:
+      "تسري على المهمة التي قد تنتج عن طلبكم شروطنا وأحكامنا العامة (متوفرة باللغة الهولندية).",
+    termsLinkLabel: "اطّلعوا على الشروط والأحكام العامة",
     automatic: "تم إرسال رسالة التأكيد هذه تلقائياً.",
     lang: "ar",
     dir: "rtl",
@@ -172,6 +181,8 @@ function buildConfirmationText(locale: Locale) {
     "",
     copy.privacy,
     "",
+    `${copy.terms} ${absoluteUrl(localizedPath("nl", "algemene-voorwaarden"))}`,
+    "",
     copy.automatic,
     organizationName,
   ].join("\n");
@@ -201,6 +212,7 @@ function buildConfirmationHtml(locale: Locale) {
                 <p style="margin:0 0 16px;font-size:16px;line-height:1.75;color:#3d4c63;">${copy.received}</p>
                 <p style="margin:0 0 16px;font-size:16px;line-height:1.75;color:#3d4c63;">${copy.review}</p>
                 <p style="margin:24px 0;padding:16px;border-${copy.dir === "rtl" ? "right" : "left"}:4px solid #b88a4a;background:#f8f3eb;font-size:15px;line-height:1.7;color:#3d4c63;">${copy.privacy}</p>
+                <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#5e6b80;">${copy.terms} <a href="${absoluteUrl(localizedPath("nl", "algemene-voorwaarden"))}" style="color:#0c2444;font-weight:600;">${copy.termsLinkLabel}</a></p>
                 <p style="margin:0;font-size:13px;line-height:1.65;color:#5e6b80;">${copy.automatic}</p>
                 <p style="margin:6px 0 0;font-size:13px;line-height:1.65;color:#5e6b80;">${organizationName}</p>
               </td>

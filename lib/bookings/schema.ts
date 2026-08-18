@@ -97,6 +97,15 @@ export const bookingDetailsSchema = z.object({
         (BOOKING_MODALITIES as readonly string[]).includes(value),
       { message: "Kies een geldige inzetvorm." },
     ),
+  requiredDialectTagId: z
+    .string()
+    .trim()
+    .refine((value) => value === "" || /^[0-9a-f-]{36}$/i.test(value), {
+      message: "Ongeldig dialect.",
+    }),
+  onsiteContactName: optionalTrimmed(160, "Maximaal 160 tekens."),
+  onsiteContactPhone: optionalTrimmed(40, "Maximaal 40 tekens."),
+  interpreterBrief: optionalTrimmed(2000, "Maximaal 2000 tekens."),
   // swornRequired is a checkbox: read directly with formCheckbox() in the
   // action rather than validated here, since unchecked checkboxes are
   // simply absent from FormData rather than present with an empty value.

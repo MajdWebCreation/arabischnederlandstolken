@@ -5,7 +5,14 @@ import {
   getCustomerBookingHistory,
   getCustomerById,
 } from "@/lib/customers/queries";
+import { listInvoicesForCustomer } from "@/lib/invoices/queries";
+import { listCustomerPortalMemberships } from "@/lib/customers/portal-queries";
+import { InvoiceList } from "@/components/admin/invoice-list";
 import { CustomerForm } from "@/app/admin/(dashboard)/customers/customer-form";
+import {
+  CustomerBookingDefaultsForm,
+  CustomerPortalSection,
+} from "@/app/admin/(dashboard)/customers/[id]/portal-forms";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { languageLabel } from "@/lib/bookings/constants";
 
@@ -25,9 +32,11 @@ export default async function CustomerDetailPage({
   }
 
   const supabase = await createClient();
-  const [customer, history] = await Promise.all([
+  const [customer, history, invoices, memberships] = await Promise.all([
     getCustomerById(supabase, id),
     getCustomerBookingHistory(supabase, id),
+    listInvoicesForCustomer(supabase, id),
+    listCustomerPortalMemberships(supabase, id),
   ]);
 
   if (!customer) {
@@ -56,6 +65,31 @@ export default async function CustomerDetailPage({
         <div className="mt-4">
           <CustomerForm customer={customer} />
         </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Klantportaal</h2>
+        <p className="mt-1 text-xs text-muted">
+          Toegang tot /klant voor deze klant. Zie ook: standaardwaarden voor
+          nieuwe aanvragen hieronder.
+        </p>
+        <div className="mt-4">
+          <CustomerPortalSection customerId={customer.id} memberships={memberships} />
+        </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">
+          Standaardwaarden voor nieuwe aanvragen
+        </h2>
+        <div className="mt-4">
+          <CustomerBookingDefaultsForm customer={customer} />
+        </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Facturen</h2>
+        <InvoiceList invoices={invoices} emptyText="Nog geen facturen." />
       </section>
 
       <section className="panel px-6 py-6">

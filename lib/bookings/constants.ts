@@ -48,6 +48,7 @@ export const BOOKING_SOURCES = [
   "referral",
   "admin",
   "other",
+  "customer_portal",
 ] as const;
 export type BookingSource = (typeof BOOKING_SOURCES)[number];
 
@@ -58,6 +59,7 @@ export const BOOKING_SOURCE_LABELS: Record<BookingSource, string> = {
   referral: "Doorverwijzing",
   admin: "Handmatig door beheerder",
   other: "Anders",
+  customer_portal: "Klantportaal",
 };
 
 export const BOOKING_STATUSES = [
