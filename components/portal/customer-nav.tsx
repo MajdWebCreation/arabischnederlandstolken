@@ -27,8 +27,8 @@ export function CustomerNav() {
             aria-current={isActive ? "page" : undefined}
             className={`min-h-11 flex-1 rounded-full px-3 py-2.5 text-center text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
               isActive
-                ? "bg-brand-strong text-white"
-                : "text-muted-strong hover:bg-brand-soft hover:text-brand-strong"
+                ? "bg-brand-strong text-white!"
+                : "text-muted-strong! hover:bg-brand-soft hover:text-brand-strong!"
             }`}
           >
             {item.label}
