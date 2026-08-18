@@ -9,6 +9,7 @@ import { getInvoiceById } from "@/lib/invoices/queries";
 import { getBusinessSettings } from "@/lib/business-settings/queries";
 import { getIssuedInvoicePdfBuffer } from "@/lib/invoices/pdf-storage";
 import { sendInvoiceEmail } from "@/lib/invoices/notifications";
+import { getOrCreateInvoicePaymentLink } from "@/lib/invoices/mollie";
 import { requiredCentsToNumber, formatNumberAsCurrency } from "@/lib/money";
 import type { FormActionState } from "@/components/admin/admin-action-form";
 
@@ -235,6 +236,22 @@ export async function issueInvoiceAction(
   return { status: "success", message: "Factuur is definitief gemaakt." };
 }
 
+/**
+ * "Factuur verzenden" (Phase 3B: Mollie Payment Links). Order matches the
+ * brief exactly: ensure issued -> create/reuse Mollie payment link ->
+ * fetch the immutable stored invoice PDF -> send via Resend (branded
+ * email, invoice PDF, Tarieven en Algemene Voorwaarden PDF, payment
+ * button) -> only then mark the invoice sent. Every step that can fail
+ * stops the flow before anything after it runs, so the invoice never ends
+ * up marked "sent" without an email actually having gone out, and a
+ * Mollie failure never gets masked by a subsequent send.
+ *
+ * The Phase 3A/4 invoice system remains the only source of truth for the
+ * amount: getOrCreateInvoicePaymentLink() reads total_inc_vat straight off
+ * this server-fetched, already-issued (and therefore immutable - see
+ * enforce_invoice_immutability()) invoice row. Nothing here ever accepts an
+ * amount from the browser.
+ */
 export async function sendInvoiceAction(
   invoiceId: string,
 ): Promise<FormActionState> {
@@ -254,6 +271,16 @@ export async function sendInvoiceAction(
     return { status: "error", message: "Deze factuur kan niet worden verzonden." };
   }
 
+  const paymentLinkResult = await getOrCreateInvoicePaymentLink(
+    supabase,
+    invoice,
+    businessSettings.company_name,
+  );
+
+  if (paymentLinkResult.status === "error") {
+    return { status: "error", message: paymentLinkResult.message };
+  }
+
   const destinationEmail =
     invoice.customer.billing_email?.trim() || invoice.customer.email;
 
@@ -261,18 +288,22 @@ export async function sendInvoiceAction(
 
   const sent = await sendInvoiceEmail({
     to: destinationEmail,
+    contactName: invoice.customer.name,
     invoiceNumber: invoice.invoice_number ?? "-",
-    totalIncVatLabel: formatNumberAsCurrency(invoice.total_inc_vat),
+    invoiceDateLabel: formatDateLabel(invoice.invoice_date),
     dueDateLabel: formatDateLabel(invoice.due_date),
+    totalIncVatLabel: formatNumberAsCurrency(invoice.total_inc_vat),
+    iban: businessSettings.iban,
     companyName: businessSettings.company_name,
-    pdfBuffer,
+    invoicePdfBuffer: pdfBuffer,
+    paymentUrl: paymentLinkResult.status === "ready" ? paymentLinkResult.url : null,
   });
 
   if (!sent) {
     return {
       status: "error",
       message:
-        "Verzenden is niet gelukt. Controleer de e-mailconfiguratie en probeer het opnieuw.",
+        "Verzenden is niet gelukt. Controleer de e-mailconfiguratie en probeer het opnieuw. Een eventuele Mollie-betaallink blijft bewaard en wordt hergebruikt bij een nieuwe poging.",
     };
   }
 

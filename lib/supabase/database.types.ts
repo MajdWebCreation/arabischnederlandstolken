@@ -7,30 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.15"
   }
   public: {
     Tables: {
@@ -1052,6 +1032,10 @@ export type Database = {
           id: string
           invoice_date: string | null
           invoice_number: string | null
+          mollie_payment_link_amount_cents: number | null
+          mollie_payment_link_created_at: string | null
+          mollie_payment_link_id: string | null
+          mollie_payment_url: string | null
           paid_at: string | null
           payment_term_days: number
           pdf_storage_path: string | null
@@ -1077,6 +1061,10 @@ export type Database = {
           id?: string
           invoice_date?: string | null
           invoice_number?: string | null
+          mollie_payment_link_amount_cents?: number | null
+          mollie_payment_link_created_at?: string | null
+          mollie_payment_link_id?: string | null
+          mollie_payment_url?: string | null
           paid_at?: string | null
           payment_term_days?: number
           pdf_storage_path?: string | null
@@ -1102,6 +1090,10 @@ export type Database = {
           id?: string
           invoice_date?: string | null
           invoice_number?: string | null
+          mollie_payment_link_amount_cents?: number | null
+          mollie_payment_link_created_at?: string | null
+          mollie_payment_link_id?: string | null
+          mollie_payment_url?: string | null
           paid_at?: string | null
           payment_term_days?: number
           pdf_storage_path?: string | null
@@ -1615,6 +1607,10 @@ export type Database = {
           id: string
           invoice_date: string | null
           invoice_number: string | null
+          mollie_payment_link_amount_cents: number | null
+          mollie_payment_link_created_at: string | null
+          mollie_payment_link_id: string | null
+          mollie_payment_url: string | null
           paid_at: string | null
           payment_term_days: number
           pdf_storage_path: string | null
@@ -1787,11 +1783,7 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },
 } as const
-

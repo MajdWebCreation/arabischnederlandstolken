@@ -379,6 +379,22 @@ export default async function AdminInvoiceDetailPage({
         {invoice.paid_at ? (
           <p className="mt-1 text-xs text-muted">Betaald op {formatDateTime(invoice.paid_at)}.</p>
         ) : null}
+        {invoice.mollie_payment_url ? (
+          <p className="mt-1 text-xs text-muted">
+            Mollie-betaallink:{" "}
+            <a
+              href={invoice.mollie_payment_url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-brand-strong underline decoration-brand/30 underline-offset-4"
+            >
+              {invoice.mollie_payment_url}
+            </a>
+            {invoice.mollie_payment_link_created_at
+              ? ` (aangemaakt op ${formatDateTime(invoice.mollie_payment_link_created_at)})`
+              : ""}
+          </p>
+        ) : null}
       </section>
 
       <section className="panel px-6 py-6">

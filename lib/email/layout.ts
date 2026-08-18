@@ -26,6 +26,7 @@ export function renderBrandedEmailHtml({
   calloutHtml,
   action,
   footerNote,
+  logoSrc,
 }: {
   subject: string;
   heading: string;
@@ -33,8 +34,10 @@ export function renderBrandedEmailHtml({
   calloutHtml?: string;
   action?: EmailAction;
   footerNote?: string;
+  /** Overrides the default absolute-URL logo - pass e.g. "cid:logo" to reference an inline attachment (see lib/invoices/notifications.ts) instead of depending on the app being reachable over HTTP. Defaults to the existing behaviour for every other caller. */
+  logoSrc?: string;
 }): string {
-  const logoUrl = absoluteUrl("/brand/logo-email.png");
+  const logoUrl = logoSrc ?? absoluteUrl("/brand/logo-email.png");
   const paragraphs = bodyParagraphsHtml
     .map(
       (paragraph) =>
