@@ -7,6 +7,7 @@ const navItems = [
   { href: "/admin", label: "Overzicht", exact: true },
   { href: "/admin/bookings", label: "Boekingen" },
   { href: "/admin/invoices", label: "Facturen" },
+  { href: "/admin/interpreter-invoices", label: "Tolkenfacturen" },
   { href: "/admin/interpreters", label: "Tolken" },
   { href: "/admin/customers", label: "Klanten" },
   { href: "/admin/capabilities", label: "Dialecten/specialisaties" },

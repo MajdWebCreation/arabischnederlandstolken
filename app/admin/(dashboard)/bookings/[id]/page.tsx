@@ -13,6 +13,11 @@ import {
 import { listAssignmentsForBooking } from "@/lib/assignments/queries";
 import { OPEN_ASSIGNMENT_STATUSES, type AssignmentStatus } from "@/lib/assignments/constants";
 import { listInvoicesForBooking } from "@/lib/invoices/queries";
+import { getInterpreterInvoiceForBooking } from "@/lib/interpreter-invoices/queries";
+import {
+  INTERPRETER_INVOICE_STATUS_LABELS,
+  isInterpreterInvoiceStatus,
+} from "@/lib/interpreter-invoices/constants";
 import {
   listCancellationRequestsForBooking,
   listUnavailabilityReportsForBooking,
@@ -55,6 +60,7 @@ import {
   SuitableInterpretersSection,
 } from "@/app/admin/(dashboard)/bookings/[id]/assignment-forms";
 import { createDraftInvoiceFromBooking } from "@/app/admin/(dashboard)/bookings/[id]/actions";
+import { createInterpreterSettlementDraft } from "@/app/admin/(dashboard)/interpreter-invoices/[id]/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -154,6 +160,7 @@ export default async function AdminBookingDetailPage({
     invoices,
     cancellationRequests,
     unavailabilityReports,
+    interpreterInvoice,
   ] = await Promise.all([
     getBookingById(supabase, id),
     getBookingEvents(supabase, id),
@@ -164,6 +171,7 @@ export default async function AdminBookingDetailPage({
     listInvoicesForBooking(supabase, id),
     listCancellationRequestsForBooking(supabase, id),
     listUnavailabilityReportsForBooking(supabase, id),
+    getInterpreterInvoiceForBooking(supabase, id),
   ]);
 
   if (!booking) {
@@ -662,6 +670,50 @@ export default async function AdminBookingDetailPage({
                 <InvoiceList invoices={invoices} emptyText="Nog geen facturen." />
               </div>
             ) : null}
+          </section>
+
+          <section className="panel px-6 py-6">
+            <h2 className="text-base font-semibold text-foreground">
+              Tolkafrekening (self-billing)
+            </h2>
+            <p className="mt-1 text-xs text-muted">
+              Aparte boekhoudstroom: de tolk factureert Arabisch Nederlands
+              Tolken (self-billing) voor de uitgevoerde dienst - dit is nooit
+              afgeleid van de klantprijs hierboven.
+            </p>
+
+            {interpreterInvoice ? (
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4">
+                <div>
+                  <Link
+                    href={`/admin/interpreter-invoices/${interpreterInvoice.id}`}
+                    className="text-sm font-semibold text-brand-strong hover:underline"
+                  >
+                    {interpreterInvoice.invoice_number ?? "Conceptafrekening"}
+                  </Link>
+                  <p className="mt-0.5 text-xs text-muted">
+                    {formatNumberAsCurrency(interpreterInvoice.total_inc_vat)}
+                  </p>
+                </div>
+                <span className="chip">
+                  {isInterpreterInvoiceStatus(interpreterInvoice.status)
+                    ? INTERPRETER_INVOICE_STATUS_LABELS[interpreterInvoice.status]
+                    : interpreterInvoice.status}
+                </span>
+              </div>
+            ) : booking.status === "completed" && booking.interpreter_id ? (
+              <form action={createInterpreterSettlementDraft.bind(null, booking.id)} className="mt-4">
+                <button type="submit" className="button-primary px-5 py-2.5">
+                  Afrekening maken
+                </button>
+              </form>
+            ) : (
+              <p className="mt-3 text-sm text-muted">
+                {booking.interpreter_id
+                  ? "Rond eerst de boeking af (status 'Afgerond') om een afrekening te kunnen maken."
+                  : "Wijs eerst definitief een tolk toe om een afrekening te kunnen maken."}
+              </p>
+            )}
           </section>
         </div>
 

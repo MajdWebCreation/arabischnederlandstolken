@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.15"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -717,6 +737,285 @@ export type Database = {
           },
           {
             foreignKeyName: "interpreter_capabilities_interpreter_id_fkey"
+            columns: ["interpreter_id"]
+            isOneToOne: false
+            referencedRelation: "interpreters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interpreter_invoice_events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          event_type: string
+          id: string
+          interpreter_invoice_id: string
+          metadata: Json
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          event_type: string
+          id?: string
+          interpreter_invoice_id: string
+          metadata?: Json
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          event_type?: string
+          id?: string
+          interpreter_invoice_id?: string
+          metadata?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interpreter_invoice_events_interpreter_invoice_id_fkey"
+            columns: ["interpreter_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "interpreter_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoice_events_interpreter_invoice_id_fkey"
+            columns: ["interpreter_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "my_interpreter_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interpreter_invoice_items: {
+        Row: {
+          amount_ex_vat: number | null
+          created_at: string
+          description: string
+          id: string
+          interpreter_invoice_id: string
+          quantity: number
+          sort_order: number
+          unit: string | null
+          unit_price_ex_vat: number
+          updated_at: string
+        }
+        Insert: {
+          amount_ex_vat?: number | null
+          created_at?: string
+          description: string
+          id?: string
+          interpreter_invoice_id: string
+          quantity?: number
+          sort_order?: number
+          unit?: string | null
+          unit_price_ex_vat: number
+          updated_at?: string
+        }
+        Update: {
+          amount_ex_vat?: number | null
+          created_at?: string
+          description?: string
+          id?: string
+          interpreter_invoice_id?: string
+          quantity?: number
+          sort_order?: number
+          unit?: string | null
+          unit_price_ex_vat?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interpreter_invoice_items_interpreter_invoice_id_fkey"
+            columns: ["interpreter_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "interpreter_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoice_items_interpreter_invoice_id_fkey"
+            columns: ["interpreter_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "my_interpreter_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interpreter_invoice_number_counters: {
+        Row: {
+          last_value: number
+          year: number
+        }
+        Insert: {
+          last_value?: number
+          year: number
+        }
+        Update: {
+          last_value?: number
+          year?: number
+        }
+        Relationships: []
+      }
+      interpreter_invoices: {
+        Row: {
+          booking_id: string
+          booking_snapshot: Json | null
+          buyer_address: string | null
+          buyer_kvk: string | null
+          buyer_name: string | null
+          buyer_vat_id: string | null
+          cancelled_at: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          fiscal_note: string | null
+          id: string
+          interpreter_approved_at: string | null
+          interpreter_approved_by: string | null
+          interpreter_id: string
+          invoice_number: string | null
+          issued_at: string | null
+          last_change_request_message: string | null
+          paid_at: string | null
+          paid_by: string | null
+          pdf_storage_path: string | null
+          self_billing_terms_version: string | null
+          status: string
+          subtotal_ex_vat: number
+          supplier_account_holder_name: string | null
+          supplier_city: string | null
+          supplier_house_number: string | null
+          supplier_house_number_addition: string | null
+          supplier_iban: string | null
+          supplier_kvk_number: string | null
+          supplier_legal_name: string | null
+          supplier_postal_code: string | null
+          supplier_street: string | null
+          supplier_trade_name: string | null
+          supplier_vat_id: string | null
+          total_inc_vat: number
+          updated_at: string
+          vat_amount: number
+          vat_rate: number | null
+          vat_treatment_snapshot: string | null
+        }
+        Insert: {
+          booking_id: string
+          booking_snapshot?: Json | null
+          buyer_address?: string | null
+          buyer_kvk?: string | null
+          buyer_name?: string | null
+          buyer_vat_id?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          fiscal_note?: string | null
+          id?: string
+          interpreter_approved_at?: string | null
+          interpreter_approved_by?: string | null
+          interpreter_id: string
+          invoice_number?: string | null
+          issued_at?: string | null
+          last_change_request_message?: string | null
+          paid_at?: string | null
+          paid_by?: string | null
+          pdf_storage_path?: string | null
+          self_billing_terms_version?: string | null
+          status?: string
+          subtotal_ex_vat?: number
+          supplier_account_holder_name?: string | null
+          supplier_city?: string | null
+          supplier_house_number?: string | null
+          supplier_house_number_addition?: string | null
+          supplier_iban?: string | null
+          supplier_kvk_number?: string | null
+          supplier_legal_name?: string | null
+          supplier_postal_code?: string | null
+          supplier_street?: string | null
+          supplier_trade_name?: string | null
+          supplier_vat_id?: string | null
+          total_inc_vat?: number
+          updated_at?: string
+          vat_amount?: number
+          vat_rate?: number | null
+          vat_treatment_snapshot?: string | null
+        }
+        Update: {
+          booking_id?: string
+          booking_snapshot?: Json | null
+          buyer_address?: string | null
+          buyer_kvk?: string | null
+          buyer_name?: string | null
+          buyer_vat_id?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          fiscal_note?: string | null
+          id?: string
+          interpreter_approved_at?: string | null
+          interpreter_approved_by?: string | null
+          interpreter_id?: string
+          invoice_number?: string | null
+          issued_at?: string | null
+          last_change_request_message?: string | null
+          paid_at?: string | null
+          paid_by?: string | null
+          pdf_storage_path?: string | null
+          self_billing_terms_version?: string | null
+          status?: string
+          subtotal_ex_vat?: number
+          supplier_account_holder_name?: string | null
+          supplier_city?: string | null
+          supplier_house_number?: string | null
+          supplier_house_number_addition?: string | null
+          supplier_iban?: string | null
+          supplier_kvk_number?: string | null
+          supplier_legal_name?: string | null
+          supplier_postal_code?: string | null
+          supplier_street?: string | null
+          supplier_trade_name?: string | null
+          supplier_vat_id?: string | null
+          total_inc_vat?: number
+          updated_at?: string
+          vat_amount?: number
+          vat_rate?: number | null
+          vat_treatment_snapshot?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "booking_admin_rows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "my_assigned_bookings"
+            referencedColumns: ["booking_id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "my_customer_bookings"
+            referencedColumns: ["booking_id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_interpreter_id_fkey"
             columns: ["interpreter_id"]
             isOneToOne: false
             referencedRelation: "interpreters"
@@ -1534,6 +1833,65 @@ export type Database = {
           },
         ]
       }
+      my_interpreter_invoices: {
+        Row: {
+          actual_duration_minutes: number | null
+          booking_id: string | null
+          booking_number: string | null
+          booking_snapshot: Json | null
+          created_at: string | null
+          currency: string | null
+          expected_duration_minutes: number | null
+          fiscal_note: string | null
+          id: string | null
+          interpreter_approved_at: string | null
+          invoice_number: string | null
+          issued_at: string | null
+          language_from: string | null
+          language_to: string | null
+          last_change_request_message: string | null
+          modality: string | null
+          paid_at: string | null
+          pdf_storage_path: string | null
+          requested_date: string | null
+          status: string | null
+          subtotal_ex_vat: number | null
+          total_inc_vat: number | null
+          vat_amount: number | null
+          vat_rate: number | null
+          vat_treatment_snapshot: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "booking_admin_rows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "my_assigned_bookings"
+            referencedColumns: ["booking_id"]
+          },
+          {
+            foreignKeyName: "interpreter_invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "my_customer_bookings"
+            referencedColumns: ["booking_id"]
+          },
+        ]
+      }
     }
     Functions: {
       admin_link_customer_account: {
@@ -1623,6 +1981,10 @@ export type Database = {
         Args: { p_terms_version: string }
         Returns: undefined
       }
+      interpreter_approve_settlement: {
+        Args: { p_invoice_id: string }
+        Returns: undefined
+      }
       interpreter_mark_assignment_viewed: {
         Args: { p_assignment_id: string }
         Returns: undefined
@@ -1630,6 +1992,10 @@ export type Database = {
       interpreter_report_unavailable: {
         Args: { p_booking_id: string; p_reason?: string }
         Returns: string
+      }
+      interpreter_request_settlement_change: {
+        Args: { p_invoice_id: string; p_message: string }
+        Returns: undefined
       }
       interpreter_respond_to_assignment: {
         Args: { p_assignment_id: string; p_response: string }
@@ -1643,6 +2009,61 @@ export type Database = {
       is_my_customer_invoice_pdf: {
         Args: { p_object_name: string }
         Returns: boolean
+      }
+      is_my_interpreter_invoice_pdf: {
+        Args: { p_object_name: string }
+        Returns: boolean
+      }
+      issue_interpreter_invoice: {
+        Args: { p_invoice_id: string }
+        Returns: {
+          booking_id: string
+          booking_snapshot: Json | null
+          buyer_address: string | null
+          buyer_kvk: string | null
+          buyer_name: string | null
+          buyer_vat_id: string | null
+          cancelled_at: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          fiscal_note: string | null
+          id: string
+          interpreter_approved_at: string | null
+          interpreter_approved_by: string | null
+          interpreter_id: string
+          invoice_number: string | null
+          issued_at: string | null
+          last_change_request_message: string | null
+          paid_at: string | null
+          paid_by: string | null
+          pdf_storage_path: string | null
+          self_billing_terms_version: string | null
+          status: string
+          subtotal_ex_vat: number
+          supplier_account_holder_name: string | null
+          supplier_city: string | null
+          supplier_house_number: string | null
+          supplier_house_number_addition: string | null
+          supplier_iban: string | null
+          supplier_kvk_number: string | null
+          supplier_legal_name: string | null
+          supplier_postal_code: string | null
+          supplier_street: string | null
+          supplier_trade_name: string | null
+          supplier_vat_id: string | null
+          total_inc_vat: number
+          updated_at: string
+          vat_amount: number
+          vat_rate: number | null
+          vat_treatment_snapshot: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "interpreter_invoices"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       issue_invoice: {
         Args: { p_invoice_id: string }
@@ -1686,6 +2107,57 @@ export type Database = {
       select_interpreter_for_booking: {
         Args: { p_assignment_id: string; p_booking_id: string }
         Returns: undefined
+      }
+      submit_interpreter_settlement_for_review: {
+        Args: { p_invoice_id: string }
+        Returns: {
+          booking_id: string
+          booking_snapshot: Json | null
+          buyer_address: string | null
+          buyer_kvk: string | null
+          buyer_name: string | null
+          buyer_vat_id: string | null
+          cancelled_at: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          fiscal_note: string | null
+          id: string
+          interpreter_approved_at: string | null
+          interpreter_approved_by: string | null
+          interpreter_id: string
+          invoice_number: string | null
+          issued_at: string | null
+          last_change_request_message: string | null
+          paid_at: string | null
+          paid_by: string | null
+          pdf_storage_path: string | null
+          self_billing_terms_version: string | null
+          status: string
+          subtotal_ex_vat: number
+          supplier_account_holder_name: string | null
+          supplier_city: string | null
+          supplier_house_number: string | null
+          supplier_house_number_addition: string | null
+          supplier_iban: string | null
+          supplier_kvk_number: string | null
+          supplier_legal_name: string | null
+          supplier_postal_code: string | null
+          supplier_street: string | null
+          supplier_trade_name: string | null
+          supplier_vat_id: string | null
+          total_inc_vat: number
+          updated_at: string
+          vat_amount: number
+          vat_rate: number | null
+          vat_treatment_snapshot: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "interpreter_invoices"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       submit_website_booking_request: {
         Args: {
@@ -1836,7 +2308,11 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
 } as const
+

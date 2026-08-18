@@ -31,10 +31,22 @@ export const CANCELLATION_TERMS_REFERENCE =
  * Tolken raises on their behalf) from the customer-facing Algemene
  * Voorwaarden, with its own text and its own revision timeline. The exact
  * legal wording of this agreement has not been drafted/reviewed yet -
- * SELF_BILLING_AGREEMENT_SUMMARY is a short, functional consent statement
+ * SELF_BILLING_AGREEMENT_SUMMARY is a clear, functional consent statement
  * only, not a substitute for that. See the Phase 4 interpreter-onboarding
  * report for this caveat.
+ *
+ * Bumped from "2026-08" to "2026-08-2" when SELF_BILLING_AGREEMENT_SUMMARY's
+ * wording was expanded (self-billing settlements/invoices phase) -
+ * interpreters.self_billing_terms_version records an interpreter's
+ * acceptance of *this exact wording*, so a text change must never be
+ * published under the same version string an earlier interpreter may
+ * already have accepted (see interpreters.self_billing_accepted_at - once
+ * production has real acceptances, changing the text again must bump this
+ * again, never overwrite in place). issue_interpreter_invoice() requires a
+ * non-null self_billing_accepted_at, so this bump also means any interpreter
+ * who only accepted the old short wording must re-accept before their first
+ * official self-billing invoice can be issued.
  */
-export const CURRENT_SELF_BILLING_TERMS_VERSION = "2026-08";
+export const CURRENT_SELF_BILLING_TERMS_VERSION = "2026-08-2";
 export const SELF_BILLING_AGREEMENT_SUMMARY =
-  "Ik ga ermee akkoord dat Arabisch Nederlands Tolken namens mij facturen opstelt (self-billing) voor de tolkdiensten die ik verricht, op basis van de bedrijfs- en betaalgegevens die ik zelf heb opgegeven.";
+  "Ik ga ermee akkoord dat Arabisch Nederlands Tolken namens mij facturen opstelt voor door mij uitgevoerde tolkdiensten (self-billing). Ik controleer de juistheid van de afrekening en factuur en meld eventuele onjuistheden of bezwaren tijdig. Ik ben verantwoordelijk voor de juistheid van mijn zakelijke en fiscale gegevens. Deze toestemming geldt voor de self-billing facturen die via dit systeem worden opgesteld.";

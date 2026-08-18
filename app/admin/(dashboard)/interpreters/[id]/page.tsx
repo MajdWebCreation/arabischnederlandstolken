@@ -19,6 +19,12 @@ import {
 import { languageLabel } from "@/lib/bookings/constants";
 import { getInterpreterCapabilities, listCapabilityTags } from "@/lib/interpreters/matching";
 import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
+import { listInterpreterInvoicesForInterpreter } from "@/lib/interpreter-invoices/queries";
+import {
+  INTERPRETER_INVOICE_STATUS_LABELS,
+  isInterpreterInvoiceStatus,
+} from "@/lib/interpreter-invoices/constants";
+import { formatNumberAsCurrency } from "@/lib/money";
 
 export const dynamic = "force-dynamic";
 
@@ -73,12 +79,13 @@ export default async function InterpreterDetailPage({
   }
 
   const supabase = await createClient();
-  const [interpreter, openBookingCount, allCapabilityTags, assignedCapabilities] =
+  const [interpreter, openBookingCount, allCapabilityTags, assignedCapabilities, interpreterInvoices] =
     await Promise.all([
       getInterpreterById(supabase, id),
       countOpenBookingsForInterpreter(supabase, id),
       listCapabilityTags(supabase),
       getInterpreterCapabilities(supabase, id),
+      listInterpreterInvoicesForInterpreter(supabase, id),
     ]);
 
   if (!interpreter) {
@@ -249,6 +256,40 @@ export default async function InterpreterDetailPage({
             assigned={assignedCapabilities}
           />
         </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Self-billing facturen</h2>
+        <p className="mt-1 text-xs text-muted">
+          Recente afrekeningen/facturen van deze tolk aan Arabisch Nederlands
+          Tolken.
+        </p>
+        {interpreterInvoices.length === 0 ? (
+          <p className="mt-3 text-sm text-muted">Nog geen afrekeningen.</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-line">
+            {interpreterInvoices.slice(0, 10).map((invoice) => (
+              <li key={invoice.id} className="flex items-center justify-between gap-3 py-3">
+                <div>
+                  <Link
+                    href={`/admin/interpreter-invoices/${invoice.id}`}
+                    className="text-sm font-semibold text-brand-strong hover:underline"
+                  >
+                    {invoice.invoice_number ?? "Concept"}
+                  </Link>
+                  <p className="mt-0.5 text-xs text-muted">
+                    {formatNumberAsCurrency(invoice.total_inc_vat)}
+                  </p>
+                </div>
+                <span className="chip">
+                  {isInterpreterInvoiceStatus(invoice.status)
+                    ? INTERPRETER_INVOICE_STATUS_LABELS[invoice.status]
+                    : invoice.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="panel px-6 py-6">

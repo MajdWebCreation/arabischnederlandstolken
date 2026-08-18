@@ -6,6 +6,7 @@ import { getInterpreterById } from "@/lib/interpreters/queries";
 import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
 import { OfferCard, BookingCard } from "@/components/portal/assignment-card";
 import { OnboardingCard } from "@/components/portal/onboarding-card";
+import { getMyInterpreterInvoiceDashboardCounts } from "@/lib/interpreter-invoices/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -38,10 +39,11 @@ export default async function InterpreterDashboardPage() {
     return null;
   }
 
-  const [offers, assignedBookings, interpreter] = await Promise.all([
+  const [offers, assignedBookings, interpreter, invoiceCounts] = await Promise.all([
     listMyAssignmentOffers(supabase),
     listMyAssignedBookings(supabase),
     getInterpreterById(supabase, session.interpreter.id),
+    getMyInterpreterInvoiceDashboardCounts(supabase),
   ]);
 
   const completeness = interpreter
@@ -66,6 +68,29 @@ export default async function InterpreterDashboardPage() {
       </div>
 
       {completeness ? <OnboardingCard completeness={completeness} /> : null}
+
+      <section className="panel px-5 py-5">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-semibold text-foreground">Afrekeningen / facturen</h2>
+          <Link href="/tolk/facturen" className="text-sm font-semibold text-brand-strong">
+            Bekijk facturen
+          </Link>
+        </div>
+        <dl className="mt-3 grid grid-cols-3 gap-3 text-center">
+          <div className="rounded-xl border border-line px-3 py-3">
+            <dt className="text-xs text-muted">Te controleren</dt>
+            <dd className="mt-1 text-lg font-semibold text-foreground">{invoiceCounts.pendingReview}</dd>
+          </div>
+          <div className="rounded-xl border border-line px-3 py-3">
+            <dt className="text-xs text-muted">Openstaand</dt>
+            <dd className="mt-1 text-lg font-semibold text-foreground">{invoiceCounts.outstanding}</dd>
+          </div>
+          <div className="rounded-xl border border-line px-3 py-3">
+            <dt className="text-xs text-muted">Betaald</dt>
+            <dd className="mt-1 text-lg font-semibold text-foreground">{invoiceCounts.paid}</dd>
+          </div>
+        </dl>
+      </section>
 
       <Section title="Nieuwe uitnodigingen" emptyText="Geen nieuwe uitnodigingen.">
         {newInvitations.map((offer) => (
