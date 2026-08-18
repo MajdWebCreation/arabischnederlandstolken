@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.15"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -1423,6 +1443,7 @@ export type Database = {
       my_customer_invoices: {
         Row: {
           booking_id: string | null
+          booking_number: string | null
           created_at: string | null
           currency: string | null
           customer_id: string | null
@@ -1434,34 +1455,6 @@ export type Database = {
           subtotal_ex_vat: number | null
           total_inc_vat: number | null
           total_vat: number | null
-        }
-        Insert: {
-          booking_id?: string | null
-          created_at?: string | null
-          currency?: string | null
-          customer_id?: string | null
-          due_date?: string | null
-          id?: string | null
-          invoice_date?: string | null
-          invoice_number?: string | null
-          status?: string | null
-          subtotal_ex_vat?: number | null
-          total_inc_vat?: number | null
-          total_vat?: number | null
-        }
-        Update: {
-          booking_id?: string | null
-          created_at?: string | null
-          currency?: string | null
-          customer_id?: string | null
-          due_date?: string | null
-          id?: string | null
-          invoice_date?: string | null
-          invoice_number?: string | null
-          status?: string | null
-          subtotal_ex_vat?: number | null
-          total_inc_vat?: number | null
-          total_vat?: number | null
         }
         Relationships: [
           {
@@ -1579,6 +1572,13 @@ export type Database = {
         Args: { p_booking_id: string; p_reason?: string }
         Returns: undefined
       }
+      get_my_issued_invoice_pdf_path: {
+        Args: { p_invoice_id: string }
+        Returns: {
+          invoice_number: string
+          pdf_storage_path: string
+        }[]
+      }
       interpreter_mark_assignment_viewed: {
         Args: { p_assignment_id: string }
         Returns: undefined
@@ -1594,6 +1594,10 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
       is_my_customer_booking: {
         Args: { p_booking_id: string }
+        Returns: boolean
+      }
+      is_my_customer_invoice_pdf: {
+        Args: { p_object_name: string }
         Returns: boolean
       }
       issue_invoice: {
@@ -1783,7 +1787,11 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
 } as const
+

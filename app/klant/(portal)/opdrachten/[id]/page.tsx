@@ -210,22 +210,34 @@ export default async function CustomerBookingDetailPage({
 
       {invoices.length > 0 ? (
         <section className="panel px-6 py-6">
-          <h2 className="text-base font-semibold text-foreground">Facturen</h2>
-          <ul className="mt-3 divide-y divide-line">
+          <h2 className="text-base font-semibold text-foreground">
+            {invoices.length === 1 ? "Factuur" : "Facturen"}
+          </h2>
+          <div className="mt-3 space-y-3">
             {invoices.map((invoice) => (
-              <li key={invoice.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
-                <span className="font-medium text-foreground">{invoice.invoice_number ?? "In voorbereiding"}</span>
-                <span className="flex items-center gap-3">
-                  {invoice.total_inc_vat !== null ? (
-                    <span className="tabular-nums text-muted">{formatNumberAsCurrency(invoice.total_inc_vat)}</span>
-                  ) : null}
+              <div key={invoice.id} className="rounded-xl border border-line px-4 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-foreground">{invoice.invoice_number ?? "In voorbereiding"}</span>
                   <span className="chip">
                     {INVOICE_STATUS_LABELS[invoice.status as InvoiceStatus] ?? invoice.status}
                   </span>
-                </span>
-              </li>
+                </div>
+                {invoice.total_inc_vat !== null ? (
+                  <p className="mt-1 text-lg font-semibold text-brand-strong">
+                    {formatNumberAsCurrency(invoice.total_inc_vat)}
+                  </p>
+                ) : null}
+                <a
+                  href={`/klant/facturen/${invoice.id}/pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-tertiary mt-3 inline-flex px-4 py-2 text-sm"
+                >
+                  Bekijk factuur
+                </a>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       ) : null}
 

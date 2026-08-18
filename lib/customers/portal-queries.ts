@@ -127,6 +127,31 @@ export async function listMyCustomerInvoicesForBooking(
   return data ?? [];
 }
 
+/**
+ * The one authorized path to "where is the stored PDF for one of my own
+ * invoices" - see get_my_issued_invoice_pdf_path() in
+ * 20260818120900_customer_invoice_pdf_access.sql. Returns null for
+ * anything not found/not theirs/still a draft (never distinguishable),
+ * and separately null for pdf_storage_path when the invoice is real and
+ * theirs but genuinely has no stored document yet - callers must not
+ * regenerate one in that case, only report "not yet available".
+ */
+export async function getMyIssuedInvoicePdfPath(
+  supabase: TypedClient,
+  invoiceId: string,
+): Promise<{ pdfStoragePath: string | null; invoiceNumber: string } | null> {
+  const { data, error } = await supabase.rpc("get_my_issued_invoice_pdf_path", {
+    p_invoice_id: invoiceId,
+  });
+
+  if (error || !data || data.length === 0) {
+    return null;
+  }
+
+  const row = data[0];
+  return { pdfStoragePath: row.pdf_storage_path, invoiceNumber: row.invoice_number };
+}
+
 export type CancellationRequestRow =
   Database["public"]["Tables"]["cancellation_requests"]["Row"];
 

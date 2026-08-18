@@ -7,6 +7,7 @@ const navItems = [
   { href: "/klant", label: "Overzicht", exact: true },
   { href: "/klant/aanvragen/nieuw", label: "Nieuwe aanvraag" },
   { href: "/klant/opdrachten", label: "Opdrachten" },
+  { href: "/klant/facturen", label: "Facturen" },
   { href: "/klant/profiel", label: "Profiel" },
 ];
 

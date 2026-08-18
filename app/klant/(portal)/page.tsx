@@ -5,6 +5,9 @@ import { listMyCustomerBookings } from "@/lib/customers/portal-queries";
 import { listCancellationRequestsForMyBooking } from "@/lib/customers/portal-queries";
 import { getCustomerBookingGroup, getCustomerFacingStatusLabel, canRebookFrom } from "@/lib/customers/portal-status";
 import { languageLabel } from "@/lib/bookings/constants";
+import { listMyCustomerInvoices } from "@/lib/customers/portal-queries";
+import { INVOICE_STATUS_LABELS, type InvoiceStatus } from "@/lib/invoices/constants";
+import { formatNumberAsCurrency } from "@/lib/money";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +28,12 @@ export default async function CustomerDashboardPage() {
   }
 
   const supabase = await createClient();
-  const bookings = await listMyCustomerBookings(supabase);
+  const [bookings, invoices] = await Promise.all([
+    listMyCustomerBookings(supabase),
+    listMyCustomerInvoices(supabase),
+  ]);
+  const openInvoiceCount = invoices.filter((invoice) => ["issued", "sent"].includes(invoice.status ?? "")).length;
+  const latestInvoices = invoices.slice(0, 2);
 
   // Pending cancellation requests only ever exist on a small handful of
   // recent bookings - fetching them per-row here (rather than a bulk view)
@@ -139,6 +147,41 @@ export default async function CustomerDashboardPage() {
           </div>
         )}
       </section>
+
+      {invoices.length > 0 ? (
+        <section>
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-semibold text-foreground">Facturen</h2>
+            <Link href="/klant/facturen" className="text-sm font-semibold text-brand-strong">
+              Alle facturen
+            </Link>
+          </div>
+          <div className="content-card mt-3 px-5 py-4">
+            {openInvoiceCount > 0 ? (
+              <p className="text-sm font-medium text-foreground">
+                {openInvoiceCount} openstaande {openInvoiceCount === 1 ? "factuur" : "facturen"}
+              </p>
+            ) : (
+              <p className="text-sm font-medium text-foreground">Geen openstaande facturen</p>
+            )}
+            <ul className="mt-2 divide-y divide-line">
+              {latestInvoices.map((invoice) => (
+                <li key={invoice.id} className="flex items-center justify-between gap-3 py-2 text-sm">
+                  <span className="text-muted">{invoice.invoice_number ?? "In voorbereiding"}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="tabular-nums text-foreground">
+                      {formatNumberAsCurrency(invoice.total_inc_vat)}
+                    </span>
+                    <span className="chip">
+                      {INVOICE_STATUS_LABELS[invoice.status as InvoiceStatus] ?? invoice.status}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       {pending.length > 0 ? (
         <section>

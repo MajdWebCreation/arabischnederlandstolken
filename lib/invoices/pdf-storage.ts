@@ -44,10 +44,33 @@ async function uploadInvoicePdf(
 }
 
 /**
- * The single place an issued invoice's PDF bytes are obtained from -
- * called right after issue_invoice() succeeds, by the preview/download
- * route, and by the send-email action, so all three always agree on the
- * exact same document.
+ * Downloads the exact stored bytes at `path` in the private invoices
+ * bucket, or null if missing or unreadable by the caller's own
+ * RLS-scoped client. Never regenerates or falls back to anything - it is
+ * purely "what, if anything, is actually sitting in Storage right now".
+ * Shared by getIssuedInvoicePdfBuffer's own regeneration-fallback logic
+ * below and by the customer-portal PDF route
+ * (app/klant/(portal)/facturen/[id]/pdf/route.ts), which must never
+ * trigger that fallback - see that route's own comment for why.
+ */
+export async function downloadStoredInvoicePdf(
+  supabase: TypedClient,
+  path: string,
+): Promise<Buffer | null> {
+  const { data, error } = await supabase.storage.from(INVOICE_BUCKET).download(path);
+
+  if (error || !data) {
+    return null;
+  }
+
+  return Buffer.from(await data.arrayBuffer());
+}
+
+/**
+ * The single place an issued invoice's PDF bytes are obtained from for the
+ * admin environment - called right after issue_invoice() succeeds, by the
+ * preview/download route, and by the send-email action, so all three
+ * always agree on the exact same document.
  *
  * Storage upload is a separate HTTP call from the issue_invoice() database
  * transaction and can't be made perfectly atomic with it. If
@@ -57,7 +80,9 @@ async function uploadInvoicePdf(
  * business_settings/customer data - buildInvoicePdfViewModel already
  * guarantees that for any non-draft invoice) and persists it, so a
  * transient Storage failure at issue time can't permanently strand an
- * issued invoice without its document.
+ * issued invoice without its document. The customer-facing PDF route
+ * deliberately does not use this function - it must never regenerate a
+ * historical document, only ever serve what is already stored.
  */
 export async function getIssuedInvoicePdfBuffer(
   supabase: TypedClient,
@@ -69,12 +94,10 @@ export async function getIssuedInvoicePdfBuffer(
   }
 
   if (invoice.pdf_storage_path) {
-    const { data, error } = await supabase.storage
-      .from(INVOICE_BUCKET)
-      .download(invoice.pdf_storage_path);
+    const stored = await downloadStoredInvoicePdf(supabase, invoice.pdf_storage_path);
 
-    if (!error && data) {
-      return Buffer.from(await data.arrayBuffer());
+    if (stored) {
+      return stored;
     }
   }
 
