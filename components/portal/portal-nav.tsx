@@ -9,6 +9,19 @@ const navItems = [
   { href: "/tolk/profiel", label: "Profiel" },
 ];
 
+// The `!` (important) modifier is load-bearing, not decorative: globals.css
+// has an unlayered `a { color: inherit }` rule that otherwise beats a plain
+// Tailwind color utility regardless of specificity, silently turning the
+// active pill's white text back into the surrounding muted color - see the
+// matching fix in the customer portal nav (components/portal/customer-nav.tsx).
+function navLinkClassName(isActive: boolean) {
+  return `min-h-11 flex-1 rounded-full px-4 py-2.5 text-center text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+    isActive
+      ? "bg-brand-strong text-white!"
+      : "text-muted-strong! hover:bg-brand-soft hover:text-brand-strong!"
+  }`;
+}
+
 export function PortalNav() {
   const pathname = usePathname();
 
@@ -27,11 +40,7 @@ export function PortalNav() {
             key={item.href}
             href={item.href}
             aria-current={isActive ? "page" : undefined}
-            className={`min-h-11 flex-1 rounded-full px-4 py-2.5 text-center text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
-              isActive
-                ? "bg-brand-strong text-white"
-                : "text-muted-strong hover:bg-brand-soft hover:text-brand-strong"
-            }`}
+            className={navLinkClassName(isActive)}
           >
             {item.label}
           </Link>
