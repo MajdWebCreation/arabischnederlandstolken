@@ -2,7 +2,10 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { requireInterpreterLayoutSession } from "@/lib/auth/interpreter";
 import { listMyAssignmentOffers, listMyAssignedBookings } from "@/lib/assignments/queries";
+import { getInterpreterById } from "@/lib/interpreters/queries";
+import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
 import { OfferCard, BookingCard } from "@/components/portal/assignment-card";
+import { OnboardingCard } from "@/components/portal/onboarding-card";
 
 export const dynamic = "force-dynamic";
 
@@ -35,10 +38,15 @@ export default async function InterpreterDashboardPage() {
     return null;
   }
 
-  const [offers, assignedBookings] = await Promise.all([
+  const [offers, assignedBookings, interpreter] = await Promise.all([
     listMyAssignmentOffers(supabase),
     listMyAssignedBookings(supabase),
+    getInterpreterById(supabase, session.interpreter.id),
   ]);
+
+  const completeness = interpreter
+    ? getInterpreterCompleteness(interpreter, interpreter.interpreter_languages.length)
+    : null;
 
   const newInvitations = offers.filter((o) => o.status === "invited");
   const openForMe = offers.filter((o) => o.status === "viewed" && o.assignment_type === "open");
@@ -56,6 +64,8 @@ export default async function InterpreterDashboardPage() {
           Welkom, {session.interpreter.first_name}
         </h1>
       </div>
+
+      {completeness ? <OnboardingCard completeness={completeness} /> : null}
 
       <Section title="Nieuwe uitnodigingen" emptyText="Geen nieuwe uitnodigingen.">
         {newInvitations.map((offer) => (

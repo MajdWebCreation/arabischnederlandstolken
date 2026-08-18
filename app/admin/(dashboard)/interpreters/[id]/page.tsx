@@ -18,6 +18,7 @@ import {
 } from "@/app/admin/(dashboard)/interpreters/[id]/portal-forms";
 import { languageLabel } from "@/lib/bookings/constants";
 import { getInterpreterCapabilities, listCapabilityTags } from "@/lib/interpreters/matching";
+import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,38 @@ const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{
 function isRbtvExpired(expiryDate: string | null) {
   if (!expiryDate) return false;
   return new Date(expiryDate) < new Date(new Date().toDateString());
+}
+
+function AccountStatusRow({
+  label,
+  complete,
+  trueLabel = "Compleet",
+  falseLabel = "Incompleet",
+  emphasize = false,
+}: {
+  label: string;
+  complete: boolean;
+  trueLabel?: string;
+  falseLabel?: string;
+  emphasize?: boolean;
+}) {
+  return (
+    <div className={emphasize ? "rounded-xl border border-line bg-surface-alt/60 px-4 py-3" : undefined}>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{label}</dt>
+      <dd className="mt-1">
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${
+            complete
+              ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+              : "border-amber-300 bg-amber-50 text-amber-900"
+          }`}
+        >
+          <span aria-hidden>{complete ? "✓" : "○"}</span>
+          {complete ? trueLabel : falseLabel}
+        </span>
+      </dd>
+    </div>
+  );
 }
 
 export default async function InterpreterDetailPage({
@@ -55,6 +88,17 @@ export default async function InterpreterDetailPage({
   const rbtvExpired = isRbtvExpired(interpreter.rbtv_expiry_date);
   const rbtvMissing = interpreter.sworn_interpreter && !interpreter.rbtv_number;
   const toggleActive = setInterpreterActive.bind(null, id, !interpreter.active);
+
+  const completeness = getInterpreterCompleteness(
+    interpreter,
+    interpreter.interpreter_languages.length,
+  );
+  const profileComplete =
+    completeness.sections.persoonsgegevens &&
+    completeness.sections.tolkgegevens &&
+    completeness.sections.zakelijk;
+  const fiscalSettingsComplete = Boolean(interpreter.vat_treatment);
+  const selfBillingAccepted = Boolean(interpreter.self_billing_accepted_at);
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -115,6 +159,35 @@ export default async function InterpreterDetailPage({
             submitLabel="Wijzigingen opslaan"
           />
         </div>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Accountstatus</h2>
+        <p className="mt-1 text-xs text-muted">
+          Onboarding-voortgang zoals de tolk die zelf ziet op /tolk. Betaal-
+          en fiscale gegevens zelf worden hier niet getoond - alleen of ze
+          zijn ingevuld.
+        </p>
+        <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <AccountStatusRow label="Profiel" complete={profileComplete} />
+          <AccountStatusRow label="Betaalgegevens" complete={completeness.sections.betaalgegevens} />
+          <AccountStatusRow label="Facturatie-instellingen" complete={fiscalSettingsComplete} />
+          <AccountStatusRow
+            label="Self-billing akkoord"
+            complete={selfBillingAccepted}
+            trueLabel="Ja"
+            falseLabel="Nee"
+          />
+          <div className="sm:col-span-2">
+            <AccountStatusRow
+              label="Gereed voor uitbetaling"
+              complete={completeness.paymentReady}
+              trueLabel="Ja"
+              falseLabel="Nee"
+              emphasize
+            />
+          </div>
+        </dl>
       </section>
 
       <section className="panel px-6 py-6">

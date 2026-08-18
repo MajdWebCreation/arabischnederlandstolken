@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.15"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -849,52 +869,97 @@ export type Database = {
       }
       interpreters: {
         Row: {
+          account_holder_name: string | null
           active: boolean
+          business_city: string | null
+          business_house_number: string | null
+          business_house_number_addition: string | null
+          business_postal_code: string | null
+          business_street: string | null
           city: string | null
           created_at: string
           email: string
           first_name: string
+          iban: string | null
           id: string
           internal_notes: string | null
+          kvk_number: string | null
           last_name: string
+          legal_business_name: string | null
           phone: string | null
           rbtv_expiry_date: string | null
           rbtv_number: string | null
+          self_billing_accepted_at: string | null
+          self_billing_accepted_by: string | null
+          self_billing_terms_version: string | null
           sworn_interpreter: boolean
+          trade_name: string | null
           updated_at: string
           user_id: string | null
+          vat_id: string | null
+          vat_treatment: string | null
         }
         Insert: {
+          account_holder_name?: string | null
           active?: boolean
+          business_city?: string | null
+          business_house_number?: string | null
+          business_house_number_addition?: string | null
+          business_postal_code?: string | null
+          business_street?: string | null
           city?: string | null
           created_at?: string
           email: string
           first_name: string
+          iban?: string | null
           id?: string
           internal_notes?: string | null
+          kvk_number?: string | null
           last_name: string
+          legal_business_name?: string | null
           phone?: string | null
           rbtv_expiry_date?: string | null
           rbtv_number?: string | null
+          self_billing_accepted_at?: string | null
+          self_billing_accepted_by?: string | null
+          self_billing_terms_version?: string | null
           sworn_interpreter?: boolean
+          trade_name?: string | null
           updated_at?: string
           user_id?: string | null
+          vat_id?: string | null
+          vat_treatment?: string | null
         }
         Update: {
+          account_holder_name?: string | null
           active?: boolean
+          business_city?: string | null
+          business_house_number?: string | null
+          business_house_number_addition?: string | null
+          business_postal_code?: string | null
+          business_street?: string | null
           city?: string | null
           created_at?: string
           email?: string
           first_name?: string
+          iban?: string | null
           id?: string
           internal_notes?: string | null
+          kvk_number?: string | null
           last_name?: string
+          legal_business_name?: string | null
           phone?: string | null
           rbtv_expiry_date?: string | null
           rbtv_number?: string | null
+          self_billing_accepted_at?: string | null
+          self_billing_accepted_by?: string | null
+          self_billing_terms_version?: string | null
           sworn_interpreter?: boolean
+          trade_name?: string | null
           updated_at?: string
           user_id?: string | null
+          vat_id?: string | null
+          vat_treatment?: string | null
         }
         Relationships: []
       }
@@ -1574,6 +1639,10 @@ export type Database = {
           pdf_storage_path: string
         }[]
       }
+      interpreter_accept_self_billing_agreement: {
+        Args: { p_terms_version: string }
+        Returns: undefined
+      }
       interpreter_mark_assignment_viewed: {
         Args: { p_assignment_id: string }
         Returns: undefined
@@ -1787,7 +1856,11 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
 } as const
+
