@@ -208,6 +208,7 @@ export type Database = {
           customer_accepted_by_user_id: string | null
           customer_id: string
           customer_message: string | null
+          customer_offer_snapshot: Json | null
           customer_overtime_rate_ex_vat: number | null
           customer_price_ex_vat: number | null
           customer_travel_fee_ex_vat: number | null
@@ -259,6 +260,7 @@ export type Database = {
           customer_accepted_by_user_id?: string | null
           customer_id: string
           customer_message?: string | null
+          customer_offer_snapshot?: Json | null
           customer_overtime_rate_ex_vat?: number | null
           customer_price_ex_vat?: number | null
           customer_travel_fee_ex_vat?: number | null
@@ -310,6 +312,7 @@ export type Database = {
           customer_accepted_by_user_id?: string | null
           customer_id?: string
           customer_message?: string | null
+          customer_offer_snapshot?: Json | null
           customer_overtime_rate_ex_vat?: number | null
           customer_price_ex_vat?: number | null
           customer_travel_fee_ex_vat?: number | null
@@ -1551,6 +1554,7 @@ export type Database = {
       customer_accept_booking_offer: {
         Args: {
           p_booking_id: string
+          p_cancellation_terms_reference?: string
           p_early_performance_consent?: boolean
           p_early_performance_full_completion_ack?: boolean
           p_terms_version: string

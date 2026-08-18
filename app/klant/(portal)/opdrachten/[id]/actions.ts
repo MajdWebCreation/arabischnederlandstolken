@@ -8,7 +8,7 @@ import {
   cancellationReasonSchema,
   offerChangeRequestSchema,
 } from "@/lib/customers/portal-schema";
-import { CURRENT_TERMS_VERSION } from "@/lib/legal/terms";
+import { CANCELLATION_TERMS_REFERENCE, CURRENT_TERMS_VERSION } from "@/lib/legal/terms";
 import { getMyCustomerBooking } from "@/lib/customers/portal-queries";
 import { sendCustomerCancellationRequestReceivedEmail } from "@/lib/customers/notifications";
 import type { PortalActionState } from "@/components/portal/portal-action-form";
@@ -22,6 +22,7 @@ function revalidateBooking(bookingId: string) {
 const RPC_ERROR_MESSAGES: Record<string, string> = {
   not_authorized: "Deze opdracht is niet (meer) bij uw account bekend.",
   booking_not_awaiting_acceptance: "Deze opdracht wacht niet (meer) op uw bevestiging.",
+  offer_already_accepted: "Deze opdracht is al eerder geaccepteerd.",
   early_performance_consent_required:
     "Vink de toestemming voor start binnen de bedenktijd aan om akkoord te gaan.",
   terms_version_required: "Er ging iets mis met de algemene voorwaarden. Probeer het opnieuw.",
@@ -63,6 +64,7 @@ export async function acceptBookingOffer(
     p_terms_version: CURRENT_TERMS_VERSION,
     p_early_performance_consent: earlyPerformanceConsent,
     p_early_performance_full_completion_ack: earlyPerformanceFullCompletionAck,
+    p_cancellation_terms_reference: CANCELLATION_TERMS_REFERENCE,
   });
 
   if (error) {

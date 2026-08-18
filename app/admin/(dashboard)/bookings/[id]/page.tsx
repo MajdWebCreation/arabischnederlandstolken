@@ -103,6 +103,35 @@ function formatDateTime(value: string) {
   });
 }
 
+/**
+ * customer_offer_snapshot (jsonb) is written exactly once, at acceptance,
+ * by customer_accept_booking_offer() - see
+ * supabase/migrations/20260818120800_customer_offer_snapshot.sql. This is
+ * a read-only display type for that frozen shape, not a schema the
+ * database enforces column-by-column.
+ */
+type CustomerOfferSnapshot = {
+  customer_price_ex_vat: number | null;
+  customer_travel_fee_ex_vat: number | null;
+  customer_overtime_rate_ex_vat: number | null;
+  vat_rate: number;
+  expected_duration_minutes: number | null;
+  requested_date: string | null;
+  requested_start_time: string | null;
+  modality: string | null;
+  language_from: string;
+  language_to: string;
+  sworn_required: boolean;
+  cancellation_terms_reference: string | null;
+  terms_version: string;
+  accepted_at: string;
+  accepted_by_user_id: string | null;
+};
+
+function isCustomerOfferSnapshot(value: unknown): value is CustomerOfferSnapshot {
+  return Boolean(value) && typeof value === "object" && "accepted_at" in (value as object);
+}
+
 export default async function AdminBookingDetailPage({
   params,
 }: {
@@ -199,6 +228,10 @@ export default async function AdminBookingDetailPage({
         ]
       : [];
   const invoicePreviewTotals = sumInvoiceLineTotalsCents(invoicePreviewLines);
+
+  const acceptedOffer = isCustomerOfferSnapshot(booking.customer_offer_snapshot)
+    ? booking.customer_offer_snapshot
+    : null;
 
   return (
     <div className="space-y-8">
@@ -474,6 +507,100 @@ export default async function AdminBookingDetailPage({
               <BookingFinancialsForm bookingId={booking.id} booking={booking} />
             </div>
           </section>
+
+          {acceptedOffer ? (
+            <section className="panel px-6 py-6">
+              <h2 className="text-base font-semibold text-foreground">
+                Geaccepteerd opdrachtvoorstel
+              </h2>
+              <p className="mt-1 text-xs text-muted">
+                Vastgelegd op het moment dat de klant akkoord ging. Dit is een
+                onveranderlijk historisch bewijs van de destijds geaccepteerde
+                voorwaarden - latere aanpassingen aan de financiële velden
+                hierboven wijzigen dit overzicht nooit.
+              </p>
+              <dl className="mt-4 grid grid-cols-1 gap-3 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4 sm:grid-cols-2">
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                    Geaccepteerd op
+                  </dt>
+                  <dd className="mt-1 text-sm text-foreground">{formatDateTime(acceptedOffer.accepted_at)}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                    Voorwaarden-versie
+                  </dt>
+                  <dd className="mt-1 text-sm text-foreground">{acceptedOffer.terms_version}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                    Geaccepteerde klantprijs
+                  </dt>
+                  <dd className="mt-1 text-sm text-foreground">
+                    {formatNumberAsCurrency(acceptedOffer.customer_price_ex_vat)}
+                  </dd>
+                </div>
+                {acceptedOffer.customer_travel_fee_ex_vat ? (
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                      Geaccepteerde reiskosten
+                    </dt>
+                    <dd className="mt-1 text-sm text-foreground">
+                      {formatNumberAsCurrency(acceptedOffer.customer_travel_fee_ex_vat)}
+                    </dd>
+                  </div>
+                ) : null}
+                {acceptedOffer.customer_overtime_rate_ex_vat ? (
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                      Geaccepteerd overurentarief
+                    </dt>
+                    <dd className="mt-1 text-sm text-foreground">
+                      {formatNumberAsCurrency(acceptedOffer.customer_overtime_rate_ex_vat)}
+                    </dd>
+                  </div>
+                ) : null}
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">Btw-tarief</dt>
+                  <dd className="mt-1 text-sm text-foreground">{Number(acceptedOffer.vat_rate)}%</dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                    Geaccepteerde planning
+                  </dt>
+                  <dd className="mt-1 text-sm text-foreground">
+                    {acceptedOffer.requested_date
+                      ? new Date(`${acceptedOffer.requested_date}T00:00:00`).toLocaleDateString("nl-NL")
+                      : "—"}
+                    {acceptedOffer.requested_start_time ? ` · ${acceptedOffer.requested_start_time.slice(0, 5)}` : ""}
+                    {acceptedOffer.expected_duration_minutes ? ` · ${acceptedOffer.expected_duration_minutes} min.` : ""}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                    Geaccepteerde taal/inzetvorm
+                  </dt>
+                  <dd className="mt-1 text-sm text-foreground">
+                    {languageLabel(acceptedOffer.language_from)} → {languageLabel(acceptedOffer.language_to)}
+                    {acceptedOffer.modality
+                      ? ` · ${BOOKING_MODALITY_LABELS[acceptedOffer.modality as BookingModality] ?? acceptedOffer.modality}`
+                      : ""}
+                    {acceptedOffer.sworn_required ? " · beëdigd tolk vereist" : ""}
+                  </dd>
+                </div>
+                {acceptedOffer.cancellation_terms_reference ? (
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
+                      Annuleringsvoorwaarden bij acceptatie
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-foreground">
+                      {acceptedOffer.cancellation_terms_reference}
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
+            </section>
+          ) : null}
 
           <section className="panel px-6 py-6">
             <h2 className="text-base font-semibold text-foreground">Facturatie</h2>
