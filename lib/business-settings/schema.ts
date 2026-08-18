@@ -35,3 +35,20 @@ export const businessSettingsSchema = z.object({
 });
 
 export type BusinessSettingsInput = z.infer<typeof businessSettingsSchema>;
+
+/**
+ * Its own small schema/action (see updateInterpreterTargetMargin in
+ * app/admin/(dashboard)/settings/actions.ts), separate from
+ * businessSettingsSchema above, so saving this one admin-only planning
+ * value never requires resubmitting the entire company-profile form -
+ * matches the "one small independent form per concern" pattern used
+ * throughout the admin dashboard (e.g. updateInvoiceHeader).
+ */
+export const interpreterTargetMarginSchema = z.object({
+  defaultInterpreterTargetMarginPercent: z.coerce
+    .number()
+    .min(0, "Doelmarge kan niet negatief zijn.")
+    .max(100, "Doelmarge kan niet hoger dan 100% zijn."),
+});
+
+export type InterpreterTargetMarginInput = z.infer<typeof interpreterTargetMarginSchema>;

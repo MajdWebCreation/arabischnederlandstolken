@@ -1,7 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessSettings } from "@/lib/business-settings/queries";
 import { AdminActionForm } from "@/components/admin/admin-action-form";
-import { updateBusinessSettings } from "@/app/admin/(dashboard)/settings/actions";
+import {
+  updateBusinessSettings,
+  updateInterpreterTargetMargin,
+} from "@/app/admin/(dashboard)/settings/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -233,6 +236,44 @@ export default async function SettingsPage() {
             </div>
           </div>
         </AdminActionForm>
+      </section>
+
+      <section className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">
+          Tolkmarge (alleen zichtbaar voor beheerders)
+        </h2>
+        <p className="mt-1 text-sm leading-6 text-muted">
+          Hulpmiddel voor het inschatten van een tolkenvergoeding bij een
+          boeking. Nooit zichtbaar voor klanten of tolken, en nooit
+          automatisch de daadwerkelijk afgesproken tolkkosten - die worden
+          altijd apart en expliciet door de beheerder vastgelegd.
+        </p>
+        <div className="mt-4">
+          <AdminActionForm action={updateInterpreterTargetMargin} submitLabel="Opslaan">
+            <div className="max-w-xs">
+              <label
+                htmlFor="defaultInterpreterTargetMarginPercent"
+                className="text-xs font-semibold uppercase tracking-wide text-muted"
+              >
+                Standaard doelmarge tolkopdrachten
+              </label>
+              <div className="mt-1.5 flex items-center gap-2">
+                <input
+                  id="defaultInterpreterTargetMarginPercent"
+                  name="defaultInterpreterTargetMarginPercent"
+                  type="number"
+                  step="0.01"
+                  min={0}
+                  max={100}
+                  defaultValue={Number(settings.default_interpreter_target_margin_percent)}
+                  required
+                  className="form-control"
+                />
+                <span className="text-sm text-muted">%</span>
+              </div>
+            </div>
+          </AdminActionForm>
+        </div>
       </section>
     </div>
   );

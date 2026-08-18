@@ -15,7 +15,12 @@ import {
   BOOKING_STATUSES,
   BOOKING_STATUS_LABELS,
 } from "@/lib/bookings/constants";
-import { centsToInputValue, numberToCents } from "@/lib/money";
+import {
+  centsToInputValue,
+  numberToCents,
+  parseMoneyInputToCents,
+  formatCentsAsCurrency,
+} from "@/lib/money";
 import type { BookingDetail } from "@/lib/bookings/queries";
 import type { InterpreterListRow } from "@/lib/interpreters/queries";
 import type { CapabilityTagRow } from "@/lib/interpreters/matching";
@@ -144,11 +149,58 @@ export function BookingInterpreterForm({
 export function BookingFinancialsForm({
   bookingId,
   booking,
+  defaultTargetMarginPercent,
 }: {
   bookingId: string;
   booking: BookingDetail;
+  /** business_settings.default_interpreter_target_margin_percent - an admin-only planning default, never the agreed amount itself. See the margin helper block below. */
+  defaultTargetMarginPercent: number;
 }) {
   const action = updateBookingFinancials.bind(null, bookingId);
+
+  // Klantprijs/Tolkkosten are lifted into controlled state (unlike every
+  // other field on this form, still plain uncontrolled defaultValue inputs)
+  // purely so the margin helper block below can recalculate live as the
+  // admin types - see brief section 4 ("immediately recalculate"). Both
+  // still submit via their unchanged `name` attributes exactly as before;
+  // nothing about how this form saves has changed.
+  const [customerPriceInput, setCustomerPriceInput] = useState(
+    centsToInputValue(numberToCents(booking.customer_price_ex_vat)),
+  );
+  const [interpreterCostInput, setInterpreterCostInput] = useState(
+    centsToInputValue(numberToCents(booking.interpreter_cost_ex_vat)),
+  );
+  // Local-only "what if" input, deliberately never submitted with the form
+  // (no `name` attribute) - this is purely a planning helper, never
+  // persisted anywhere itself. See lib/business-settings for the stored
+  // default this starts from.
+  const [targetMarginPercent, setTargetMarginPercent] = useState(
+    String(defaultTargetMarginPercent),
+  );
+
+  const customerPriceCents = parseMoneyInputToCents(customerPriceInput);
+  const interpreterCostCents = parseMoneyInputToCents(interpreterCostInput);
+  const targetMarginValue = Number(targetMarginPercent);
+
+  const suggestedInterpreterCostCents =
+    customerPriceCents !== null &&
+    customerPriceCents !== undefined &&
+    Number.isFinite(targetMarginValue)
+      ? Math.round(customerPriceCents * (1 - targetMarginValue / 100))
+      : null;
+
+  const actualMarginCents =
+    customerPriceCents !== null &&
+    customerPriceCents !== undefined &&
+    interpreterCostCents !== null &&
+    interpreterCostCents !== undefined
+      ? customerPriceCents - interpreterCostCents
+      : null;
+
+  const actualMarginPercentLabel =
+    actualMarginCents !== null && customerPriceCents
+      ? `${((actualMarginCents / customerPriceCents) * 100).toFixed(2)}%`
+      : "—";
 
   const moneyInput = (
     name: string,
@@ -176,17 +228,105 @@ export function BookingFinancialsForm({
 
   return (
     <AdminActionForm action={action} submitLabel="Financiën opslaan">
+      <div className="mb-6 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+          Tolkmarge-hulpmiddel (alleen zichtbaar voor beheerders)
+        </p>
+        <p className="mt-1 text-xs leading-5 text-muted">
+          Marge op de tolkdienst zelf, exclusief reiskosten. Uitsluitend een
+          planningshulpmiddel - werkt de daadwerkelijk afgesproken
+          tolkkosten hieronder niet automatisch bij.
+        </p>
+
+        <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div>
+            <dt className="text-xs text-muted">Klantprijs excl. btw</dt>
+            <dd className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+              {formatCentsAsCurrency(customerPriceCents ?? null)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-muted">
+              <label htmlFor="targetMarginPercent">Doelmarge %</label>
+            </dt>
+            <div className="mt-0.5 flex items-center gap-1">
+              <input
+                id="targetMarginPercent"
+                type="number"
+                step="0.01"
+                min={0}
+                max={100}
+                value={targetMarginPercent}
+                onChange={(event) => setTargetMarginPercent(event.target.value)}
+                className="form-control w-20 py-1 text-sm"
+              />
+              <span className="text-sm text-muted">%</span>
+            </div>
+          </div>
+          <div>
+            <dt className="text-xs text-muted">Voorgestelde tolkenvergoeding</dt>
+            <dd className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+              {formatCentsAsCurrency(suggestedInterpreterCostCents)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-muted">Werkelijke tolkenvergoeding</dt>
+            <dd className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+              {formatCentsAsCurrency(interpreterCostCents ?? null)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-muted">Werkelijke marge €</dt>
+            <dd className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+              {formatCentsAsCurrency(actualMarginCents)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-muted">Werkelijke marge %</dt>
+            <dd className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+              {actualMarginPercentLabel}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
-        {moneyInput(
-          "customerPriceExVat",
-          "Klantprijs excl. btw",
-          numberToCents(booking.customer_price_ex_vat),
-        )}
-        {moneyInput(
-          "interpreterCostExVat",
-          "Tolkkosten excl. btw",
-          numberToCents(booking.interpreter_cost_ex_vat),
-        )}
+        <div>
+          <label htmlFor="customerPriceExVat" className={fieldLabel}>
+            Klantprijs excl. btw
+          </label>
+          <div className="mt-1.5 flex items-center gap-2">
+            <span className="text-sm text-muted">€</span>
+            <input
+              id="customerPriceExVat"
+              name="customerPriceExVat"
+              type="text"
+              inputMode="decimal"
+              value={customerPriceInput}
+              onChange={(event) => setCustomerPriceInput(event.target.value)}
+              placeholder="0,00"
+              className="form-control"
+            />
+          </div>
+        </div>
+        <div>
+          <label htmlFor="interpreterCostExVat" className={fieldLabel}>
+            Tolkkosten excl. btw
+          </label>
+          <div className="mt-1.5 flex items-center gap-2">
+            <span className="text-sm text-muted">€</span>
+            <input
+              id="interpreterCostExVat"
+              name="interpreterCostExVat"
+              type="text"
+              inputMode="decimal"
+              value={interpreterCostInput}
+              onChange={(event) => setInterpreterCostInput(event.target.value)}
+              placeholder="0,00"
+              className="form-control"
+            />
+          </div>
+        </div>
         {moneyInput(
           "customerTravelFeeExVat",
           "Reiskosten klant excl. btw",

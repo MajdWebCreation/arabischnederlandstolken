@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdminAction } from "@/lib/auth/admin";
 import { formString } from "@/lib/forms";
-import { businessSettingsSchema } from "@/lib/business-settings/schema";
+import { businessSettingsSchema, interpreterTargetMarginSchema } from "@/lib/business-settings/schema";
 import { getBusinessSettings } from "@/lib/business-settings/queries";
 import type { FormActionState } from "@/components/admin/admin-action-form";
 
@@ -69,4 +69,50 @@ export async function updateBusinessSettings(
     message:
       "Bedrijfsgegevens opgeslagen. Al uitgegeven facturen blijven ongewijzigd.",
   };
+}
+
+/**
+ * Admin-only planning helper (never the official interpreter compensation -
+ * see bookings.interpreter_cost_ex_vat, always explicitly confirmed by
+ * admin per booking). Its own small action/schema so this can be saved
+ * independently of the full company-profile form above.
+ */
+export async function updateInterpreterTargetMargin(
+  _previousState: FormActionState,
+  formData: FormData,
+): Promise<FormActionState> {
+  await requireAdminAction();
+
+  const parsed = interpreterTargetMarginSchema.safeParse({
+    defaultInterpreterTargetMarginPercent: formString(
+      formData,
+      "defaultInterpreterTargetMarginPercent",
+    ),
+  });
+
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message: parsed.error.issues[0]?.message ?? "Ongeldige invoer.",
+    };
+  }
+
+  const supabase = await createClient();
+  const current = await getBusinessSettings(supabase);
+
+  const { error } = await supabase
+    .from("business_settings")
+    .update({
+      default_interpreter_target_margin_percent:
+        parsed.data.defaultInterpreterTargetMarginPercent,
+    })
+    .eq("id", current.id);
+
+  if (error) {
+    return { status: "error", message: "Opslaan is niet gelukt." };
+  }
+
+  revalidatePath("/admin/settings");
+  revalidatePath("/admin/bookings");
+  return { status: "success", message: "Standaard doelmarge opgeslagen." };
 }

@@ -14,6 +14,7 @@ import { listAssignmentsForBooking } from "@/lib/assignments/queries";
 import { OPEN_ASSIGNMENT_STATUSES, type AssignmentStatus } from "@/lib/assignments/constants";
 import { listInvoicesForBooking } from "@/lib/invoices/queries";
 import { getInterpreterInvoiceForBooking } from "@/lib/interpreter-invoices/queries";
+import { getBusinessSettings } from "@/lib/business-settings/queries";
 import {
   INTERPRETER_INVOICE_STATUS_LABELS,
   isInterpreterInvoiceStatus,
@@ -161,6 +162,7 @@ export default async function AdminBookingDetailPage({
     cancellationRequests,
     unavailabilityReports,
     interpreterInvoice,
+    businessSettings,
   ] = await Promise.all([
     getBookingById(supabase, id),
     getBookingEvents(supabase, id),
@@ -172,6 +174,7 @@ export default async function AdminBookingDetailPage({
     listCancellationRequestsForBooking(supabase, id),
     listUnavailabilityReportsForBooking(supabase, id),
     getInterpreterInvoiceForBooking(supabase, id),
+    getBusinessSettings(supabase),
   ]);
 
   if (!booking) {
@@ -512,7 +515,13 @@ export default async function AdminBookingDetailPage({
               </div>
             </div>
             <div className="mt-6">
-              <BookingFinancialsForm bookingId={booking.id} booking={booking} />
+              <BookingFinancialsForm
+                bookingId={booking.id}
+                booking={booking}
+                defaultTargetMarginPercent={Number(
+                  businessSettings.default_interpreter_target_margin_percent,
+                )}
+              />
             </div>
           </section>
 
