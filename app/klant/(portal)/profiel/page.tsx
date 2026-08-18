@@ -1,5 +1,6 @@
 import { requireCustomerLayoutSession } from "@/lib/auth/customer";
 import { CustomerProfileForm } from "@/app/klant/(portal)/profiel/profile-form";
+import { CustomerPasswordForm } from "@/app/klant/(portal)/profiel/password-form";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,21 @@ export default async function CustomerProfilePage() {
 
       <div className="panel px-6 py-6">
         <CustomerProfileForm customer={session.customer} />
+      </div>
+
+      <div className="panel px-6 py-6">
+        <h2 className="text-base font-semibold text-foreground">Inloggegevens</h2>
+        <dl className="mt-4">
+          <dt className="text-xs font-semibold uppercase tracking-wide text-muted">E-mailadres</dt>
+          <dd className="mt-1 text-sm text-foreground">{session.user.email}</dd>
+        </dl>
+
+        <div className="mt-5 border-t border-line pt-5">
+          <h3 className="text-sm font-semibold text-foreground">Wachtwoord wijzigen</h3>
+          <div className="mt-3">
+            <CustomerPasswordForm />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -66,9 +66,7 @@ export default async function CustomerPortalLayout({
               </button>
             </form>
           </div>
-          <div className="overflow-x-auto">
-            <CustomerNav />
-          </div>
+          <CustomerNav />
         </div>
       </header>
 

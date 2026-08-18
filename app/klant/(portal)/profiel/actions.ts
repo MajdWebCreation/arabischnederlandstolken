@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireCustomerAction } from "@/lib/auth/customer";
 import { formString, nullIfBlank } from "@/lib/forms";
-import { customerProfileSchema } from "@/lib/customers/portal-schema";
+import { customerPasswordChangeSchema, customerProfileSchema } from "@/lib/customers/portal-schema";
 import type { FormActionState } from "@/components/admin/admin-action-form";
 
 /**
@@ -64,4 +64,47 @@ export async function updateCustomerProfile(
   revalidatePath("/klant/profiel");
   revalidatePath("/klant");
   return { status: "success", message: "Profiel opgeslagen." };
+}
+
+/**
+ * Changes the password of the currently authenticated portal user only.
+ * Uses Supabase Auth's own auth.updateUser() - there is no service role
+ * key anywhere in this app, and this call operates strictly on the caller's
+ * own cookie-bound session, so there is no code path (here or in Supabase's
+ * API itself) through which one customer could change another user's
+ * password. Never touches any public table, never logs the password value
+ * (the raw strings only ever appear as opaque form values passed straight
+ * to Supabase's SDK, never interpolated into a message or error we
+ * construct ourselves). Supabase keeps the current session valid after a
+ * same-session password update, so no re-login/redirect is needed here.
+ */
+export async function changeMyPassword(
+  _previousState: FormActionState,
+  formData: FormData,
+): Promise<FormActionState> {
+  await requireCustomerAction();
+
+  const parsed = customerPasswordChangeSchema.safeParse({
+    newPassword: formString(formData, "newPassword"),
+    confirmPassword: formString(formData, "confirmPassword"),
+  });
+
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message: parsed.error.issues[0]?.message ?? "Controleer de ingevulde gegevens.",
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.newPassword });
+
+  if (error) {
+    return {
+      status: "error",
+      message: "Wachtwoord wijzigen is niet gelukt. Probeer het opnieuw.",
+    };
+  }
+
+  return { status: "success", message: "Uw wachtwoord is gewijzigd." };
 }

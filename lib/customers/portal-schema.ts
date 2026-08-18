@@ -76,3 +76,26 @@ export const cancellationReasonSchema = z.object({
 export const offerChangeRequestSchema = z.object({
   message: z.string().trim().min(1, "Beschrijf kort welke wijziging u wilt.").max(1000, "Maximaal 1000 tekens."),
 });
+
+/**
+ * Password change for the currently authenticated portal user only - see
+ * changeMyPassword() in actions.ts, which calls Supabase Auth's own
+ * updateUser() and never touches any public table. No "current password"
+ * field: the brief's own field list is exactly these two, and Supabase
+ * Auth already requires a valid, currently-authenticated session before
+ * this can be called at all.
+ */
+export const customerPasswordChangeSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, "Wachtwoord moet minimaal 8 tekens bevatten.")
+      .max(72, "Wachtwoord mag maximaal 72 tekens bevatten."),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "De wachtwoorden komen niet overeen.",
+    path: ["confirmPassword"],
+  });
+
+export type CustomerPasswordChangeInput = z.infer<typeof customerPasswordChangeSchema>;
