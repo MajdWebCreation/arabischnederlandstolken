@@ -4,7 +4,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/database.types";
 import type { InvoiceWithDetails } from "@/lib/invoices/queries";
 import { numberToCents } from "@/lib/money";
-import { createMolliePaymentLink, getMollieMode, MollieApiError } from "@/lib/mollie/client";
+import {
+  createMolliePaymentLink,
+  getMollieMode,
+  MollieApiError,
+  type MollieErrorDetails,
+} from "@/lib/mollie/client";
 
 type TypedClient = SupabaseClient<Database>;
 
@@ -18,11 +23,32 @@ const MOLLIE_ERROR_MESSAGES: Record<string, string> = {
     "Mollie is niet geconfigureerd (MOLLIE_API_KEY ontbreekt op de server). Stel deze omgevingsvariabele in om facturen met een betaallink te kunnen versturen.",
 };
 
-function friendlyMollieError(message: string): string {
-  return (
-    MOLLIE_ERROR_MESSAGES[message] ??
-    "Het aanmaken van de Mollie-betaallink is niet gelukt. Probeer het later opnieuw."
-  );
+/**
+ * Admin-only messaging (this whole invoices section already requires
+ * requireAdminAction() - a customer/interpreter never sees any of this).
+ * HTTP 422 from POST /v2/payment-links is Mollie's own documented response
+ * for "no suitable [live] payment method is currently active for this
+ * profile/currency/amount" - an external Mollie Dashboard configuration
+ * matter, not something a retry or a code change here can fix, so this
+ * says so plainly instead of the previous generic "probeer het opnieuw."
+ * The raw title/detail/field never appear in this message - see the
+ * console.error in getOrCreateInvoicePaymentLink's catch block below for
+ * where those go instead.
+ */
+function friendlyMollieError(message: string, details?: MollieErrorDetails): string {
+  if (message === "mollie_not_configured") {
+    return MOLLIE_ERROR_MESSAGES.mollie_not_configured;
+  }
+
+  if (details?.httpStatus === 422) {
+    return "Mollie kon geen geschikte live betaalmethode vinden voor dit profiel, bedrag of valuta. Controleer de geactiveerde betaalmethoden in Mollie. (HTTP 422)";
+  }
+
+  if (details?.httpStatus) {
+    return `Het aanmaken van de Mollie-betaallink is niet gelukt (HTTP ${details.httpStatus}). Probeer het later opnieuw.`;
+  }
+
+  return "Het aanmaken van de Mollie-betaallink is niet gelukt. Probeer het later opnieuw.";
 }
 
 /**
@@ -103,6 +129,21 @@ export async function getOrCreateInvoicePaymentLink(
     return { status: "ready", url: link.url };
   } catch (err) {
     const message = err instanceof MollieApiError ? err.message : "mollie_request_failed";
-    return { status: "error", message: friendlyMollieError(message) };
+    const details = err instanceof MollieApiError ? err.details : undefined;
+
+    // Sanitized diagnostics only (status/title/detail/field) - never the
+    // API key or Authorization header, which never reach this catch block
+    // in the first place (lib/mollie/client.ts only ever throws the
+    // response's own error body, not the request). Server-side only
+    // (visible in Vercel function logs); the admin UI gets the friendly
+    // message from friendlyMollieError() below, not this raw data.
+    console.error("[mollie] payment-link creation failed", {
+      invoiceId: invoice.id,
+      invoiceNumber: invoice.invoice_number,
+      message,
+      ...details,
+    });
+
+    return { status: "error", message: friendlyMollieError(message, details) };
   }
 }

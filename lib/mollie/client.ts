@@ -51,7 +51,41 @@ export function getMollieMode(): MollieMode | null {
   return null;
 }
 
-export class MollieApiError extends Error {}
+/**
+ * The sanitized subset of Mollie's own error response body - status/title/
+ * detail/field only, exactly the fields the Mollie API problem-details
+ * format defines. Never anything from the request itself (no headers, no
+ * API key), so this is always safe to log server-side or show an admin,
+ * even though nothing here is currently rendered directly to a customer or
+ * interpreter.
+ */
+export type MollieErrorDetails = {
+  httpStatus: number;
+  title?: string;
+  detail?: string;
+  field?: string;
+};
+
+export class MollieApiError extends Error {
+  readonly details?: MollieErrorDetails;
+
+  constructor(message: string, details?: MollieErrorDetails) {
+    super(message);
+    this.name = "MollieApiError";
+    this.details = details;
+  }
+}
+
+function extractMollieErrorDetails(httpStatus: number, body: unknown): MollieErrorDetails {
+  const record = body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+
+  return {
+    httpStatus,
+    title: typeof record.title === "string" ? record.title : undefined,
+    detail: typeof record.detail === "string" ? record.detail : undefined,
+    field: typeof record.field === "string" ? record.field : undefined,
+  };
+}
 
 export type CreatePaymentLinkInput = {
   /** Decimal string with exactly two decimals, e.g. "360.58" - Mollie's own required format, never a float. */
@@ -103,7 +137,15 @@ export async function createMolliePaymentLink(
   }
 
   if (!response.ok) {
-    throw new MollieApiError(`mollie_request_failed_${response.status}`);
+    // Mollie's error responses are themselves a small, sanitized JSON
+    // problem-details body (status/title/detail/field) - reading it here is
+    // what lets the caller log/report something more useful than a bare
+    // HTTP status, without ever touching anything from the request itself.
+    const errorBody: unknown = await response.json().catch(() => null);
+    throw new MollieApiError(
+      `mollie_request_failed_${response.status}`,
+      extractMollieErrorDetails(response.status, errorBody),
+    );
   }
 
   const data: unknown = await response.json().catch(() => null);
