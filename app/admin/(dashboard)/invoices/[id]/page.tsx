@@ -381,7 +381,19 @@ export default async function AdminInvoiceDetailPage({
         ) : null}
         {invoice.mollie_payment_url ? (
           <p className="mt-1 text-xs text-muted">
-            Mollie-betaallink:{" "}
+            Mollie-betaallink
+            {invoice.mollie_payment_link_mode ? (
+              <span
+                className={`ms-1.5 inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                  invoice.mollie_payment_link_mode === "live"
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+                    : "border-amber-300 bg-amber-50 text-amber-900"
+                }`}
+              >
+                {invoice.mollie_payment_link_mode}
+              </span>
+            ) : null}
+            :{" "}
             <a
               href={invoice.mollie_payment_url}
               target="_blank"

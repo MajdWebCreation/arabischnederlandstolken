@@ -1035,6 +1035,7 @@ export type Database = {
           mollie_payment_link_amount_cents: number | null
           mollie_payment_link_created_at: string | null
           mollie_payment_link_id: string | null
+          mollie_payment_link_mode: string | null
           mollie_payment_url: string | null
           paid_at: string | null
           payment_term_days: number
@@ -1064,6 +1065,7 @@ export type Database = {
           mollie_payment_link_amount_cents?: number | null
           mollie_payment_link_created_at?: string | null
           mollie_payment_link_id?: string | null
+          mollie_payment_link_mode?: string | null
           mollie_payment_url?: string | null
           paid_at?: string | null
           payment_term_days?: number
@@ -1093,6 +1095,7 @@ export type Database = {
           mollie_payment_link_amount_cents?: number | null
           mollie_payment_link_created_at?: string | null
           mollie_payment_link_id?: string | null
+          mollie_payment_link_mode?: string | null
           mollie_payment_url?: string | null
           paid_at?: string | null
           payment_term_days?: number
@@ -1610,6 +1613,7 @@ export type Database = {
           mollie_payment_link_amount_cents: number | null
           mollie_payment_link_created_at: string | null
           mollie_payment_link_id: string | null
+          mollie_payment_link_mode: string | null
           mollie_payment_url: string | null
           paid_at: string | null
           payment_term_days: number

@@ -27,6 +27,30 @@ export function getMollieApiKey(): string | null {
   return isSafeConfigurationValue(key) ? key!.trim() : null;
 }
 
+export type MollieMode = "test" | "live";
+
+/**
+ * Mollie API keys are always prefixed test_ or live_ - this is the sole,
+ * authoritative source of "which mode are we actually running in" used
+ * throughout the invoice payment-link flow (see
+ * getOrCreateInvoicePaymentLink in lib/invoices/mollie.ts). Returns null
+ * when no key is configured, or when a configured key doesn't match either
+ * known prefix - callers must treat that exactly like "not configured"
+ * (refuse, never guess) rather than assuming a mode.
+ */
+export function getMollieMode(): MollieMode | null {
+  const apiKey = getMollieApiKey();
+
+  if (!apiKey) {
+    return null;
+  }
+
+  if (apiKey.startsWith("live_")) return "live";
+  if (apiKey.startsWith("test_")) return "test";
+
+  return null;
+}
+
 export class MollieApiError extends Error {}
 
 export type CreatePaymentLinkInput = {
@@ -38,6 +62,8 @@ export type CreatePaymentLinkInput = {
 export type MolliePaymentLink = {
   id: string;
   url: string;
+  /** The mode actually used for this specific call, derived from the same key at the moment of the request - never assumed separately by the caller, so a persisted record can never silently drift from what was really used to create it. */
+  mode: MollieMode;
 };
 
 /**
@@ -51,8 +77,9 @@ export async function createMolliePaymentLink(
   input: CreatePaymentLinkInput,
 ): Promise<MolliePaymentLink> {
   const apiKey = getMollieApiKey();
+  const mode = getMollieMode();
 
-  if (!apiKey) {
+  if (!apiKey || !mode) {
     throw new MollieApiError("mollie_not_configured");
   }
 
@@ -89,5 +116,5 @@ export async function createMolliePaymentLink(
     throw new MollieApiError("mollie_invalid_response");
   }
 
-  return { id, url: paymentLinkHref };
+  return { id, url: paymentLinkHref, mode };
 }
