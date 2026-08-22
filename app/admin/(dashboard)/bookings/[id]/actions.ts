@@ -15,6 +15,7 @@ import {
 import { inviteInterpreterSchema, publishOpenAssignmentSchema } from "@/lib/assignments/schema";
 import { centsToNumber, parseMoneyInputToCents, requiredCentsToNumber } from "@/lib/money";
 import { getBookingById } from "@/lib/bookings/queries";
+import { createSettlementDraftForBooking } from "@/lib/interpreter-invoices/settlement-draft";
 import { getBusinessSettings } from "@/lib/business-settings/queries";
 import { buildServiceLineDescription, TRAVEL_LINE_DESCRIPTION } from "@/lib/invoices/description";
 import { listInterpretersForMatching, matchInterpreters } from "@/lib/interpreters/matching";
@@ -161,6 +162,98 @@ export async function updateBookingStatus(
   return { status: "success", message: "Status bijgewerkt." };
 }
 
+/**
+ * "Opdracht afronden" - the controlled completion workflow (brief section
+ * 2), replacing a bare status dropdown for this one transition. Admin must
+ * confirm the actual operational/financial details (never assumes booked
+ * duration equals actual duration) before the booking is marked completed.
+ * If a final interpreter is assigned, this also prepares (never issues) a
+ * settlement draft using the just-confirmed figures - see
+ * createSettlementDraftForBooking(). Booking completion itself never
+ * issues an ANT-SB number, creates an immutable invoice, or marks anything
+ * paid (brief section 13) - only the existing, separately-controlled
+ * settlement workflow (Naar tolk sturen -> Akkoord -> Factuur uitgeven)
+ * can do that.
+ */
+export async function completeBookingWithSettlement(
+  bookingId: string,
+  _previousState: FormActionState,
+  formData: FormData,
+): Promise<FormActionState> {
+  await requireAdminAction();
+
+  const supabase = await createClient();
+  const booking = await getBookingById(supabase, bookingId);
+
+  if (!booking) {
+    return { status: "error", message: "Boeking niet gevonden." };
+  }
+
+  if (booking.status === "completed") {
+    return { status: "error", message: "Deze boeking is al afgerond." };
+  }
+
+  const actualDurationRaw = formString(formData, "actualDurationMinutes").trim();
+  const actualDurationMinutes = actualDurationRaw ? Number(actualDurationRaw) : null;
+
+  if (actualDurationRaw && (!Number.isFinite(actualDurationMinutes) || actualDurationMinutes! <= 0)) {
+    return { status: "error", message: "Vul een geldige werkelijke duur in minuten in." };
+  }
+
+  let interpreterCostExVat: number | null = null;
+  let interpreterTravelCostExVat: number | null = null;
+
+  if (booking.interpreter_id) {
+    const compensationCents = parseMoneyInputToCents(formString(formData, "interpreterCostExVat"));
+    const travelCents = parseMoneyInputToCents(formString(formData, "interpreterTravelCostExVat"));
+
+    if (compensationCents === undefined || travelCents === undefined) {
+      return { status: "error", message: "Vul geldige bedragen in voor de tolkvergoeding." };
+    }
+
+    interpreterCostExVat = centsToNumber(compensationCents);
+    interpreterTravelCostExVat = centsToNumber(travelCents);
+  }
+
+  const { error } = await supabase
+    .from("bookings")
+    .update(
+      booking.interpreter_id
+        ? {
+            status: "completed",
+            actual_duration_minutes: actualDurationMinutes,
+            interpreter_cost_ex_vat: interpreterCostExVat,
+            interpreter_travel_cost_ex_vat: interpreterTravelCostExVat,
+          }
+        : {
+            status: "completed",
+            actual_duration_minutes: actualDurationMinutes,
+          },
+    )
+    .eq("id", bookingId);
+
+  if (error) {
+    return { status: "error", message: "Afronden is niet gelukt." };
+  }
+
+  let settlementMessage = "";
+
+  if (booking.interpreter_id) {
+    const draftResult = await createSettlementDraftForBooking(supabase, bookingId);
+    if (draftResult.status === "created") {
+      settlementMessage = " Afrekening voorbereid.";
+    }
+    // A failure here (e.g. an active settlement already exists) is not
+    // surfaced as an error - the booking is still validly completed either
+    // way, and the Tolkenafrekening section on this page reflects whatever
+    // the actual state is.
+  }
+
+  revalidateBooking(bookingId);
+  revalidatePath("/admin/interpreter-invoices");
+  return { status: "success", message: `Opdracht afgerond.${settlementMessage}` };
+}
+
 export async function updateBookingInterpreter(
   bookingId: string,
   _previousState: FormActionState,
@@ -180,17 +273,37 @@ export async function updateBookingInterpreter(
   const before = await getBookingById(supabase, bookingId);
   const previousInterpreterId = before?.interpreter_id ?? null;
   const wasConfirmed = before ? ["interpreter_confirmed", "confirmed"].includes(before.status) : false;
+  const newInterpreterId = parsed.data.interpreterId || null;
+
+  // Bug fix: this "quick, direct" assignment path used to set interpreter_id
+  // without ever advancing status - select_interpreter_for_booking() (the
+  // structured candidates flow) always sets status = 'interpreter_confirmed'
+  // in the same atomic step, but this simpler dropdown didn't, so a booking
+  // assigned this way could stay at an earlier status (e.g. 'new'/'quoted')
+  // forever. /tolk/opdrachten only shows a confirmed assignment under
+  // bookings.status in ('interpreter_confirmed','confirmed') - the
+  // interpreter would receive the "Opdracht bevestigd" email below but the
+  // booking itself would never actually appear in their portal. Only bumps
+  // status forward from a genuinely pre-confirmation stage; never regresses
+  // an already-completed/invoiced/paid booking just because admin re-picks
+  // an interpreter for it.
+  const shouldAdvanceStatus =
+    Boolean(newInterpreterId) &&
+    newInterpreterId !== previousInterpreterId &&
+    Boolean(before) &&
+    ["new", "interpreter_search", "quoted", "customer_accepted"].includes(before!.status);
 
   const { error } = await supabase
     .from("bookings")
-    .update({ interpreter_id: parsed.data.interpreterId || null })
+    .update({
+      interpreter_id: newInterpreterId,
+      ...(shouldAdvanceStatus ? { status: "interpreter_confirmed" } : {}),
+    })
     .eq("id", bookingId);
 
   if (error) {
     return { status: "error", message: "Tolktoewijzing bijwerken is niet gelukt." };
   }
-
-  const newInterpreterId = parsed.data.interpreterId || null;
 
   if (newInterpreterId && newInterpreterId !== previousInterpreterId) {
     // Replacing a previously confirmed interpreter (Phase 4 brief section

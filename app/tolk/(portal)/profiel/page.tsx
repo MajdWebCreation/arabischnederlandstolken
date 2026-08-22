@@ -1,8 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { requireInterpreterLayoutSession } from "@/lib/auth/interpreter";
 import { getInterpreterById } from "@/lib/interpreters/queries";
-import { getInterpreterCapabilities } from "@/lib/interpreters/matching";
-import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
+import { getInterpreterCapabilities, listCapabilityTags } from "@/lib/interpreters/matching";
+import {
+  getInterpreterCompleteness,
+  getInterpreterMissingRequirements,
+  isSelfBillingCurrentlyAccepted,
+  type InterpreterCompletenessSection,
+} from "@/lib/interpreters/completeness";
 import {
   INTERPRETER_VAT_TREATMENTS,
   INTERPRETER_VAT_TREATMENT_LABELS,
@@ -16,8 +21,14 @@ import {
   updateMyBusinessDetails,
   updateMyPaymentDetails,
   updateMyFiscalDetails,
+  updateMyCredentials,
   acceptSelfBillingAgreement,
 } from "@/app/tolk/(portal)/profiel/actions";
+import {
+  AddMyLanguageForm,
+  RemoveMyLanguageButton,
+  MyCapabilityCheckbox,
+} from "@/app/tolk/(portal)/profiel/tolkgegevens-forms";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +54,32 @@ function SectionBadge({ done }: { done: boolean }) {
   );
 }
 
+/** "Nog nodig: X, Y" - the specific fields missing for one section, so the generic badge above is never the only feedback (brief section 11). */
+function MissingList({
+  section,
+  missing,
+}: {
+  section: InterpreterCompletenessSection;
+  missing: { section: InterpreterCompletenessSection; label: string }[];
+}) {
+  const labels = missing.filter((item) => item.section === section).map((item) => item.label);
+
+  if (labels.length === 0) {
+    return null;
+  }
+
+  return <p className="mt-1 text-xs text-amber-800">Nog nodig: {labels.join(", ")}.</p>;
+}
+
+function isCredentialsReviewPending(interpreter: {
+  credentials_changed_at: string | null;
+  credentials_verified_at: string | null;
+}) {
+  if (!interpreter.credentials_changed_at) return false;
+  if (!interpreter.credentials_verified_at) return true;
+  return new Date(interpreter.credentials_changed_at) > new Date(interpreter.credentials_verified_at);
+}
+
 export default async function InterpreterProfilePage() {
   const session = await requireInterpreterLayoutSession();
 
@@ -51,14 +88,21 @@ export default async function InterpreterProfilePage() {
   }
 
   const supabase = await createClient();
-  const [interpreter, capabilities] = await Promise.all([
+  const [interpreter, capabilities, allCapabilityTags] = await Promise.all([
     getInterpreterById(supabase, session.interpreter.id),
     getInterpreterCapabilities(supabase, session.interpreter.id),
+    listCapabilityTags(supabase),
   ]);
 
   if (!interpreter) {
     return null;
   }
+
+  const missingRequirements = getInterpreterMissingRequirements(
+    interpreter,
+    interpreter.interpreter_languages.length,
+  );
+  const credentialsReviewPending = isCredentialsReviewPending(interpreter);
 
   const completeness = getInterpreterCompleteness(
     interpreter,
@@ -98,9 +142,10 @@ export default async function InterpreterProfilePage() {
           <SectionBadge done={completeness.sections.persoonsgegevens} />
         </div>
         <p className="mt-1 text-xs text-muted">
-          Naam, e-mail en kwalificaties worden door de beheerder onderhouden.
-          Telefoon en stad kunt u zelf bijwerken.
+          Naam en e-mail worden door de beheerder onderhouden. Telefoon en
+          stad kunt u zelf bijwerken.
         </p>
+        <MissingList section="persoonsgegevens" missing={missingRequirements} />
 
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
@@ -147,29 +192,61 @@ export default async function InterpreterProfilePage() {
           <h2 className="text-base font-semibold text-foreground">Tolkgegevens</h2>
           <SectionBadge done={completeness.sections.tolkgegevens} />
         </div>
-        <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div>
-            <dt className={fieldLabel}>Beëdigd tolk</dt>
-            <dd className="mt-1 text-sm text-foreground">
-              {interpreter.sworn_interpreter ? "Ja" : "Nee"}
-            </dd>
-          </div>
-          <div>
-            <dt className={fieldLabel}>Rbtv-nummer</dt>
-            <dd className="mt-1 text-sm text-foreground">
-              {interpreter.rbtv_number || "Niet geregistreerd"}
-            </dd>
-          </div>
-          <div>
-            <dt className={fieldLabel}>Rbtv geldig tot</dt>
-            <dd className="mt-1 text-sm text-foreground">
-              {interpreter.rbtv_expiry_date || "Onbekend"}
-              {isRbtvExpired(interpreter.rbtv_expiry_date) ? (
-                <span className="ms-2 text-xs font-semibold text-red-700">Verlopen</span>
-              ) : null}
-            </dd>
-          </div>
-        </dl>
+        <MissingList section="tolkgegevens" missing={missingRequirements} />
+
+        {credentialsReviewPending ? (
+          <p className="mt-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-900">
+            Uw wijziging in beëdigde status/Rbtv-gegevens wordt nog door een
+            beheerder gecontroleerd. Tot die tijd telt de wijziging niet mee
+            voor opdrachten waarbij beëdiging vereist is.
+          </p>
+        ) : null}
+
+        <div className="mt-4">
+          <PortalActionForm action={updateMyCredentials} submitLabel="Opslaan">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+                  <input
+                    type="checkbox"
+                    name="swornInterpreter"
+                    defaultChecked={interpreter.sworn_interpreter}
+                    className="h-4 w-4 rounded border-line-strong"
+                  />
+                  Beëdigd tolk
+                </label>
+              </div>
+              <div>
+                <label htmlFor="rbtvNumber" className={fieldLabel}>
+                  Rbtv-nummer
+                </label>
+                <input
+                  id="rbtvNumber"
+                  name="rbtvNumber"
+                  type="text"
+                  dir="ltr"
+                  defaultValue={interpreter.rbtv_number ?? ""}
+                  className="form-control mt-1.5"
+                />
+              </div>
+              <div>
+                <label htmlFor="rbtvExpiryDate" className={fieldLabel}>
+                  Rbtv geldig tot
+                </label>
+                <input
+                  id="rbtvExpiryDate"
+                  name="rbtvExpiryDate"
+                  type="date"
+                  defaultValue={interpreter.rbtv_expiry_date ?? ""}
+                  className="form-control mt-1.5"
+                />
+                {isRbtvExpired(interpreter.rbtv_expiry_date) ? (
+                  <p className="mt-1 text-xs font-semibold text-red-700">Verlopen</p>
+                ) : null}
+              </div>
+            </div>
+          </PortalActionForm>
+        </div>
 
         <div className="mt-5 border-t border-line pt-5">
           <h3 className="text-sm font-semibold text-foreground">Taalcombinaties</h3>
@@ -178,45 +255,51 @@ export default async function InterpreterProfilePage() {
           ) : (
             <ul className="mt-2 space-y-1.5">
               {interpreter.interpreter_languages.map((language) => (
-                <li key={language.id} className="text-sm text-foreground">
-                  {languageLabel(language.language_from)} → {languageLabel(language.language_to)}
-                  {language.sworn_for_combination ? (
-                    <span className="ms-2 chip">Beëdigd</span>
-                  ) : null}
+                <li key={language.id} className="flex items-center justify-between gap-2 text-sm text-foreground">
+                  <span>
+                    {languageLabel(language.language_from)} → {languageLabel(language.language_to)}
+                    {language.sworn_for_combination ? (
+                      <span className="ms-2 chip">Beëdigd</span>
+                    ) : null}
+                  </span>
+                  <RemoveMyLanguageButton languageId={language.id} />
                 </li>
               ))}
             </ul>
           )}
+          <AddMyLanguageForm />
         </div>
 
         <div className="mt-5 border-t border-line pt-5">
           <h3 className="text-sm font-semibold text-foreground">Dialecten</h3>
-          {dialects.length === 0 ? (
-            <p className="mt-2 text-sm text-muted">Geen dialecten geregistreerd.</p>
-          ) : (
-            <p className="mt-2 flex flex-wrap gap-2">
-              {dialects.map((c) => (
-                <span key={c.id} className="chip">
-                  {c.capability_tags?.label}
-                </span>
+          <p className="mt-1 text-xs text-muted">Optioneel.</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            {allCapabilityTags
+              .filter((tag) => tag.category === "dialect" && tag.active)
+              .map((tag) => (
+                <MyCapabilityCheckbox
+                  key={tag.id}
+                  tag={tag}
+                  checked={dialects.some((c) => c.capability_tag_id === tag.id)}
+                />
               ))}
-            </p>
-          )}
+          </div>
         </div>
 
         <div className="mt-5 border-t border-line pt-5">
           <h3 className="text-sm font-semibold text-foreground">Specialisaties</h3>
-          {specialties.length === 0 ? (
-            <p className="mt-2 text-sm text-muted">Geen specialisaties geregistreerd.</p>
-          ) : (
-            <p className="mt-2 flex flex-wrap gap-2">
-              {specialties.map((c) => (
-                <span key={c.id} className="chip">
-                  {c.capability_tags?.label}
-                </span>
+          <p className="mt-1 text-xs text-muted">Optioneel.</p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            {allCapabilityTags
+              .filter((tag) => tag.category === "specialty" && tag.active)
+              .map((tag) => (
+                <MyCapabilityCheckbox
+                  key={tag.id}
+                  tag={tag}
+                  checked={specialties.some((c) => c.capability_tag_id === tag.id)}
+                />
               ))}
-            </p>
-          )}
+          </div>
         </div>
       </section>
 
@@ -225,6 +308,7 @@ export default async function InterpreterProfilePage() {
           <h2 className="text-base font-semibold text-foreground">Zakelijke gegevens</h2>
           <SectionBadge done={completeness.sections.zakelijk} />
         </div>
+        <MissingList section="zakelijk" missing={missingRequirements} />
         <p className="mt-1 text-xs text-muted">
           Nodig om facturen namens u op te kunnen stellen. KVK-nummer en
           btw-id zijn optioneel als deze niet van toepassing zijn.
@@ -353,6 +437,7 @@ export default async function InterpreterProfilePage() {
           <h2 className="text-base font-semibold text-foreground">Betaalgegevens</h2>
           <SectionBadge done={completeness.sections.betaalgegevens} />
         </div>
+        <MissingList section="betaalgegevens" missing={missingRequirements} />
         <p className="mt-1 text-xs text-muted">
           Het IBAN waarnaar uitbetalingen worden overgemaakt.
         </p>
@@ -395,6 +480,7 @@ export default async function InterpreterProfilePage() {
           <h2 className="text-base font-semibold text-foreground">Facturatie</h2>
           <SectionBadge done={completeness.sections.facturatie} />
         </div>
+        <MissingList section="facturatie" missing={missingRequirements} />
         <p className="mt-1 text-xs text-muted">
           Uw btw-status wordt door uzelf opgegeven en nooit automatisch
           afgeleid.
@@ -423,18 +509,27 @@ export default async function InterpreterProfilePage() {
 
         <div className="mt-6 border-t border-line pt-6">
           <h3 className="text-sm font-semibold text-foreground">Self-billing</h3>
-          {interpreter.self_billing_accepted_at ? (
+          {isSelfBillingCurrentlyAccepted(interpreter) ? (
             <p className="mt-2 text-sm leading-6 text-emerald-800">
               Akkoord gegeven op{" "}
-              {new Date(interpreter.self_billing_accepted_at).toLocaleDateString("nl-NL")}{" "}
+              {new Date(interpreter.self_billing_accepted_at!).toLocaleDateString("nl-NL")}{" "}
               (versie {interpreter.self_billing_terms_version}).
             </p>
           ) : (
-            <PortalActionForm
-              action={acceptSelfBillingAgreement}
-              submitLabel="Akkoord en activeren"
-              submitClassName="button-primary mt-3 px-5 py-3 disabled:cursor-wait disabled:opacity-65"
-            >
+            <>
+              {interpreter.self_billing_accepted_at ? (
+                <p className="mt-2 text-sm leading-6 text-amber-800">
+                  De self-billingvoorwaarden zijn gewijzigd sinds uw laatste
+                  akkoord (versie {interpreter.self_billing_terms_version}).
+                  U moet de huidige voorwaarden opnieuw accepteren voordat er
+                  nieuwe officiële facturen kunnen worden uitgegeven.
+                </p>
+              ) : null}
+              <PortalActionForm
+                action={acceptSelfBillingAgreement}
+                submitLabel="Akkoord en activeren"
+                submitClassName="button-primary mt-3 px-5 py-3 disabled:cursor-wait disabled:opacity-65"
+              >
               <label className="flex items-start gap-2.5 rounded-xl border border-line px-3.5 py-3 text-sm leading-6 has-[:checked]:border-brand/50 has-[:checked]:bg-brand-soft/40">
                 <input
                   type="checkbox"
@@ -448,7 +543,8 @@ export default async function InterpreterProfilePage() {
                 </a>
                 .
               </label>
-            </PortalActionForm>
+              </PortalActionForm>
+            </>
           )}
         </div>
       </section>

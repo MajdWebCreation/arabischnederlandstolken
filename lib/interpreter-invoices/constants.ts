@@ -48,6 +48,8 @@ export const INTERPRETER_INVOICE_ERROR_MESSAGES: Record<string, string> = {
   settlement_not_pending_review: "Deze afrekening staat niet (meer) open ter controle.",
   settlement_not_approved: "Deze afrekening is nog niet akkoord bevonden door de tolk.",
   self_billing_not_accepted: "De tolk heeft de self-billing overeenkomst nog niet geaccepteerd.",
+  self_billing_terms_outdated:
+    "De tolk moet de huidige self-billingvoorwaarden nog accepteren (eerdere acceptatie was van een oudere versie).",
   vat_treatment_missing: "Kies eerst een btw-behandeling voor deze afrekening.",
   vat_rate_missing: "Vul het te hanteren btw-tarief in.",
   fiscal_note_required: "Vul een fiscale toelichting in voordat u deze factuur uitgeeft.",

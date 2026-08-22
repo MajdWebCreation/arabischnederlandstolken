@@ -7,7 +7,9 @@ import { requireInterpreterAction } from "@/lib/auth/interpreter";
 import { formCheckbox, formString, nullIfBlank } from "@/lib/forms";
 import {
   interpreterBusinessDetailsSchema,
+  interpreterCredentialsSchema,
   interpreterFiscalDetailsSchema,
+  interpreterLanguageSchema,
   interpreterPaymentDetailsSchema,
 } from "@/lib/interpreters/schema";
 import { CURRENT_SELF_BILLING_TERMS_VERSION } from "@/lib/legal/terms";
@@ -230,4 +232,138 @@ export async function acceptSelfBillingAgreement(
   revalidatePath("/tolk/profiel");
   revalidatePath("/tolk");
   return { status: "success", message: "Self-billing akkoord vastgelegd." };
+}
+
+/**
+ * Section 9 of the assignment/settlement-tightening brief: an interpreter
+ * may now self-edit sworn status/Rbtv details, but never as a silently-
+ * trusted change - interpreter_update_credentials() (the sole write path,
+ * see 20260820100000_interpreter_credential_verification.sql) always
+ * clears credentials_verified_at/by, so the claim shows as "Te controleren"
+ * until admin reviews it. Never blocks saving the interpreter's own claim.
+ */
+export async function updateMyCredentials(
+  _previousState: PortalActionState,
+  formData: FormData,
+): Promise<PortalActionState> {
+  await requireInterpreterAction();
+
+  const parsed = interpreterCredentialsSchema.safeParse({
+    rbtvNumber: formString(formData, "rbtvNumber"),
+    rbtvExpiryDate: formString(formData, "rbtvExpiryDate"),
+  });
+
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message: parsed.error.issues[0]?.message ?? "Controleer de ingevulde gegevens.",
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("interpreter_update_credentials", {
+    p_sworn_interpreter: formCheckbox(formData, "swornInterpreter"),
+    p_rbtv_number: parsed.data.rbtvNumber,
+    p_rbtv_expiry_date: parsed.data.rbtvExpiryDate,
+  });
+
+  if (error) {
+    return { status: "error", message: "Bijwerken is niet gelukt." };
+  }
+
+  revalidatePath("/tolk/profiel");
+  revalidatePath("/tolk");
+  return {
+    status: "success",
+    message: "Tolkgegevens opgeslagen. Een beheerder controleert deze wijziging.",
+  };
+}
+
+/** Interpreters can now fully manage their own language combinations - see the RLS policies added alongside interpreter_update_credentials(). A newly self-claimed sworn combination is flagged for review by a database trigger, not here. */
+export async function addMyLanguage(
+  _previousState: PortalActionState,
+  formData: FormData,
+): Promise<PortalActionState> {
+  const { interpreter } = await requireInterpreterAction();
+
+  const parsed = interpreterLanguageSchema.safeParse({
+    languageFrom: formString(formData, "languageFrom"),
+    languageTo: formString(formData, "languageTo"),
+    notes: formString(formData, "notes"),
+  });
+
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message: parsed.error.issues[0]?.message ?? "Controleer de taalcombinatie.",
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("interpreter_languages").insert({
+    interpreter_id: interpreter.id,
+    language_from: parsed.data.languageFrom,
+    language_to: parsed.data.languageTo,
+    sworn_for_combination: formCheckbox(formData, "swornForCombination"),
+    notes: nullIfBlank(parsed.data.notes),
+  });
+
+  if (error) {
+    const message =
+      error.code === "23505"
+        ? "Deze taalcombinatie staat al geregistreerd."
+        : "Taalcombinatie toevoegen is niet gelukt.";
+    return { status: "error", message };
+  }
+
+  revalidatePath("/tolk/profiel");
+  revalidatePath("/tolk");
+  return { status: "success", message: "Taalcombinatie toegevoegd." };
+}
+
+export async function removeMyLanguage(languageId: string) {
+  const { interpreter } = await requireInterpreterAction();
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("interpreter_languages")
+    .delete()
+    .eq("id", languageId)
+    .eq("interpreter_id", interpreter.id);
+
+  if (error) {
+    throw new Error("Taalcombinatie verwijderen is niet gelukt.");
+  }
+
+  revalidatePath("/tolk/profiel");
+  revalidatePath("/tolk");
+}
+
+/** Dialects/specialisations are outside the verification model (brief section 9's list of sensitive fields does not include them) - freely self-managed, mirroring the admin toggle exactly. */
+export async function toggleMyCapability(capabilityTagId: string, enabled: boolean) {
+  const { interpreter } = await requireInterpreterAction();
+
+  const supabase = await createClient();
+
+  if (enabled) {
+    const { error } = await supabase
+      .from("interpreter_capabilities")
+      .insert({ interpreter_id: interpreter.id, capability_tag_id: capabilityTagId });
+
+    if (error && error.code !== "23505") {
+      throw new Error("Bijwerken is niet gelukt.");
+    }
+  } else {
+    const { error } = await supabase
+      .from("interpreter_capabilities")
+      .delete()
+      .eq("interpreter_id", interpreter.id)
+      .eq("capability_tag_id", capabilityTagId);
+
+    if (error) {
+      throw new Error("Bijwerken is niet gelukt.");
+    }
+  }
+
+  revalidatePath("/tolk/profiel");
 }

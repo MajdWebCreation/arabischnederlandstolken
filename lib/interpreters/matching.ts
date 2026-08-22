@@ -91,10 +91,27 @@ export type InterpreterMatch = {
   reasons: MatchReason[];
 };
 
+/**
+ * True only once an interpreter's self-claimed credentials have actually
+ * been reviewed by admin, and that review still covers the *current* claim
+ * - a later self-edit resets credentials_verified_at to NULL (see
+ * interpreter_update_credentials() and the sworn-language trigger in
+ * 20260820100000_interpreter_credential_verification.sql), so a stale
+ * verified_at older than the latest change no longer counts either.
+ */
+function hasVerifiedCredentials(interpreter: InterpreterForMatching) {
+  if (!interpreter.credentials_verified_at) return false;
+  if (!interpreter.credentials_changed_at) return true;
+  return new Date(interpreter.credentials_verified_at) >= new Date(interpreter.credentials_changed_at);
+}
+
 function isRbtvValid(interpreter: InterpreterForMatching) {
   if (!interpreter.sworn_interpreter) return false;
   if (!interpreter.rbtv_number) return false;
   if (!interpreter.rbtv_expiry_date) return false;
+  // Brief section 9: a self-claimed sworn/Rbtv status must not silently
+  // become trusted for matching until admin has verified it.
+  if (!hasVerifiedCredentials(interpreter)) return false;
   return new Date(interpreter.rbtv_expiry_date) >= new Date(new Date().toDateString());
 }
 

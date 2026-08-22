@@ -9,6 +9,7 @@ import {
   removeInterpreterLanguage,
   setInterpreterActive,
   updateInterpreter,
+  approveInterpreterCredentials,
 } from "@/app/admin/(dashboard)/interpreters/actions";
 import { InterpreterForm } from "@/app/admin/(dashboard)/interpreters/interpreter-form";
 import { AddLanguageForm } from "@/app/admin/(dashboard)/interpreters/[id]/add-language-form";
@@ -18,7 +19,10 @@ import {
 } from "@/app/admin/(dashboard)/interpreters/[id]/portal-forms";
 import { languageLabel } from "@/lib/bookings/constants";
 import { getInterpreterCapabilities, listCapabilityTags } from "@/lib/interpreters/matching";
-import { getInterpreterCompleteness } from "@/lib/interpreters/completeness";
+import {
+  getInterpreterCompleteness,
+  isSelfBillingCurrentlyAccepted,
+} from "@/lib/interpreters/completeness";
 import { listInterpreterInvoicesForInterpreter } from "@/lib/interpreter-invoices/queries";
 import {
   INTERPRETER_INVOICE_STATUS_LABELS,
@@ -105,7 +109,11 @@ export default async function InterpreterDetailPage({
     completeness.sections.tolkgegevens &&
     completeness.sections.zakelijk;
   const fiscalSettingsComplete = Boolean(interpreter.vat_treatment);
-  const selfBillingAccepted = Boolean(interpreter.self_billing_accepted_at);
+  const selfBillingAccepted = isSelfBillingCurrentlyAccepted(interpreter);
+  const credentialsReviewPending =
+    Boolean(interpreter.credentials_changed_at) &&
+    (!interpreter.credentials_verified_at ||
+      new Date(interpreter.credentials_changed_at!) > new Date(interpreter.credentials_verified_at));
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -157,7 +165,50 @@ export default async function InterpreterDetailPage({
         </form>
       </div>
 
-      <section className="panel px-6 py-6">
+      {credentialsReviewPending ? (
+        <section className="panel border-amber-300 bg-amber-50 px-6 py-6">
+          <h2 className="text-base font-semibold text-amber-900">Tolkgegevens gewijzigd</h2>
+          <p className="mt-1 text-sm font-semibold text-amber-900">Controle vereist</p>
+          <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-amber-800">Beëdigd tolk</dt>
+              <dd className="mt-1 text-sm text-amber-950">{interpreter.sworn_interpreter ? "Ja" : "Nee"}</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-amber-800">Rbtv-nummer</dt>
+              <dd className="mt-1 text-sm text-amber-950">{interpreter.rbtv_number || "—"}</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-amber-800">Geldig tot</dt>
+              <dd className="mt-1 text-sm text-amber-950">{interpreter.rbtv_expiry_date || "—"}</dd>
+            </div>
+          </dl>
+          <p className="mt-2 text-xs text-amber-800">
+            Gewijzigd door de tolk zelf op{" "}
+            {new Date(interpreter.credentials_changed_at!).toLocaleString("nl-NL", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+            . Deze wijziging telt nog niet mee voor opdrachten waarbij
+            beëdiging vereist is totdat u dit goedkeurt.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <form action={approveInterpreterCredentials.bind(null, id)}>
+              <button type="submit" className="button-primary px-5 py-2.5">
+                Goedkeuren
+              </button>
+            </form>
+            <a href="#gegevens" className="button-secondary px-5 py-2.5">
+              Afwijzen / corrigeren
+            </a>
+          </div>
+        </section>
+      ) : null}
+
+      <section id="gegevens" className="panel px-6 py-6">
         <h2 className="text-base font-semibold text-foreground">Gegevens</h2>
         <div className="mt-4">
           <InterpreterForm

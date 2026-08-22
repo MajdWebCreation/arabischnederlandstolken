@@ -45,6 +45,7 @@ async function sendBrandedInterpreterEmail({
   bodyParagraphsHtml,
   calloutHtml,
   actionLabel,
+  actionPath,
   attachments,
 }: {
   to: string;
@@ -53,6 +54,8 @@ async function sendBrandedInterpreterEmail({
   bodyParagraphsHtml: string[];
   calloutHtml?: string;
   actionLabel: string;
+  /** Defaults to the general facturen list; pass e.g. `/tolk/facturen/<id>` to deep-link a specific settlement (brief section 6). */
+  actionPath?: string;
   attachments?: { filename: string; content: Buffer }[];
 }): Promise<boolean> {
   const configuration = getResendConfiguration();
@@ -69,7 +72,7 @@ async function sendBrandedInterpreterEmail({
     return false;
   }
 
-  const portalUrl = absoluteUrl("/tolk/facturen");
+  const portalUrl = absoluteUrl(actionPath ?? "/tolk/facturen");
 
   const html = renderBrandedEmailHtml({
     subject,
@@ -117,8 +120,26 @@ async function sendBrandedInterpreterEmail({
   }
 }
 
-/** A. Settlement is ready for review. */
-export async function sendSettlementReadyForReviewEmail(interpreterEmail: string): Promise<boolean> {
+export type SettlementReviewEmailDetails = {
+  bookingNumber: string;
+  /** Already formatted for display (e.g. "10 augustus 2026") or null if not yet known. */
+  serviceDateLabel: string | null;
+  totalIncVatLabel: string;
+  invoiceId: string;
+};
+
+function settlementReviewDetailRows({ bookingNumber, serviceDateLabel, totalIncVatLabel }: SettlementReviewEmailDetails) {
+  const rows: Array<[string, string]> = [["Boeking", bookingNumber]];
+  if (serviceDateLabel) rows.push(["Datum", serviceDateLabel]);
+  rows.push(["Voorgesteld bedrag", totalIncVatLabel]);
+  return rows;
+}
+
+/** A. Settlement is ready for review. Never includes customer price/margin/customer invoice/internal notes - the view model this reads from (InterpreterInvoiceWithDetails) has no such field to begin with. */
+export async function sendSettlementReadyForReviewEmail(
+  interpreterEmail: string,
+  details: SettlementReviewEmailDetails,
+): Promise<boolean> {
   return sendBrandedInterpreterEmail({
     to: interpreterEmail,
     subject: "Afrekening klaar ter controle",
@@ -127,12 +148,17 @@ export async function sendSettlementReadyForReviewEmail(interpreterEmail: string
       "Er staat een afrekening voor een door u uitgevoerde opdracht voor u klaar ter controle.",
       "Controleer de gegevens en geef aan of u akkoord bent, of vraag een wijziging aan.",
     ],
+    calloutHtml: renderDetailRowsHtml(settlementReviewDetailRows(details)),
     actionLabel: "BEKIJK AFREKENING",
+    actionPath: `/tolk/facturen/${details.invoiceId}`,
   });
 }
 
 /** B. A requested correction has been processed and resubmitted. */
-export async function sendSettlementResubmittedEmail(interpreterEmail: string): Promise<boolean> {
+export async function sendSettlementResubmittedEmail(
+  interpreterEmail: string,
+  details: SettlementReviewEmailDetails,
+): Promise<boolean> {
   return sendBrandedInterpreterEmail({
     to: interpreterEmail,
     subject: "Aangepaste afrekening klaar ter controle",
@@ -140,18 +166,22 @@ export async function sendSettlementResubmittedEmail(interpreterEmail: string): 
     bodyParagraphsHtml: [
       "Naar aanleiding van uw opmerking is de afrekening aangepast en staat deze opnieuw voor u klaar ter controle.",
     ],
+    calloutHtml: renderDetailRowsHtml(settlementReviewDetailRows(details)),
     actionLabel: "BEKIJK AFREKENING",
+    actionPath: `/tolk/facturen/${details.invoiceId}`,
   });
 }
 
 /** C. Official self-billing invoice has been issued - the PDF is attached, per brief section 19. */
 export async function sendInterpreterInvoiceIssuedEmail({
   to,
+  invoiceId,
   invoiceNumber,
   totalIncVatLabel,
   pdfBuffer,
 }: {
   to: string;
+  invoiceId: string;
   invoiceNumber: string;
   totalIncVatLabel: string;
   pdfBuffer: Buffer;
@@ -168,6 +198,7 @@ export async function sendInterpreterInvoiceIssuedEmail({
       ["Bedrag", totalIncVatLabel],
     ]),
     actionLabel: "BEKIJK FACTUUR",
+    actionPath: `/tolk/facturen/${invoiceId}`,
     attachments: [{ filename: `${invoiceNumber}.pdf`, content: pdfBuffer }],
   });
 }
@@ -175,9 +206,11 @@ export async function sendInterpreterInvoiceIssuedEmail({
 /** D. Invoice is marked paid. */
 export async function sendInterpreterInvoicePaidEmail({
   to,
+  invoiceId,
   invoiceNumber,
 }: {
   to: string;
+  invoiceId: string;
   invoiceNumber: string;
 }): Promise<boolean> {
   return sendBrandedInterpreterEmail({
@@ -186,5 +219,6 @@ export async function sendInterpreterInvoicePaidEmail({
     heading: "Uw factuur is betaald",
     bodyParagraphsHtml: [`Factuur ${invoiceNumber} is gemarkeerd als betaald.`],
     actionLabel: "BEKIJK FACTUUR",
+    actionPath: `/tolk/facturen/${invoiceId}`,
   });
 }

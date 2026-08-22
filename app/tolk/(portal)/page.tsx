@@ -56,7 +56,11 @@ export default async function InterpreterDashboardPage() {
   const upcoming = assignedBookings.filter((b) =>
     ["interpreter_confirmed", "confirmed"].includes(b.status),
   );
-  const completed = assignedBookings.filter((b) => b.status === "completed").slice(0, 5);
+  // See app/tolk/(portal)/opdrachten/page.tsx for why customer_invoiced/paid
+  // are included alongside completed here too.
+  const completed = assignedBookings
+    .filter((b) => ["completed", "customer_invoiced", "paid"].includes(b.status))
+    .slice(0, 5);
 
   return (
     <div className="space-y-8">

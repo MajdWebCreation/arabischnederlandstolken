@@ -47,6 +47,7 @@ async function sendPortalNotification(
   to: string,
   subject: string,
   bodyLine: string,
+  portalPath = "/tolk",
 ): Promise<boolean> {
   const configuration = getEmailConfiguration();
 
@@ -54,7 +55,7 @@ async function sendPortalNotification(
     return false;
   }
 
-  const portalUrl = absoluteUrl("/tolk");
+  const portalUrl = absoluteUrl(portalPath);
   const text = [
     bodyLine,
     "",
@@ -82,6 +83,23 @@ export async function sendAssignmentInvitationEmail(interpreterEmail: string) {
     interpreterEmail,
     "Nieuwe opdracht beschikbaar",
     "Er is een nieuwe tolkopdracht voor u beschikbaar.",
+  );
+}
+
+/**
+ * "Vraag tolk profiel af te ronden" (brief section 3) - sent from the
+ * settlement-readiness blocker on the booking/interpreter-invoice admin
+ * pages when a completed booking's settlement cannot be submitted because
+ * the interpreter's business/payment/fiscal/self-billing setup is
+ * incomplete. Says nothing about the specific booking or amounts, matching
+ * every other portal notification here.
+ */
+export async function sendProfileCompletionReminderEmail(interpreterEmail: string) {
+  return sendPortalNotification(
+    interpreterEmail,
+    "Rond uw tolkprofiel af",
+    "Om afrekeningen en uitbetalingen te kunnen verwerken, vragen wij u uw zakelijke, fiscale en betaalgegevens aan te vullen.",
+    "/tolk/profiel",
   );
 }
 

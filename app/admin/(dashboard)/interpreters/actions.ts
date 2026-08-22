@@ -278,3 +278,29 @@ export async function toggleInterpreterCapability(
 
   revalidatePath(`/admin/interpreters/${interpreterId}`);
 }
+
+/**
+ * "Goedkeuren" - approves the interpreter's *currently* self-claimed sworn/
+ * Rbtv credentials as-is, without changing them. "Afwijzen/corrigeren" is
+ * deliberately not a separate action: admin corrects the values directly in
+ * the ordinary Gegevens form below (updateInterpreter), and
+ * enforce_interpreter_self_edit_columns() auto-stamps
+ * credentials_verified_at/by whenever an admin edit actually changes
+ * sworn_interpreter/rbtv_number/rbtv_expiry_date - see
+ * 20260820100000_interpreter_credential_verification.sql. Two review
+ * outcomes, one underlying mechanism, no duplicated state.
+ */
+export async function approveInterpreterCredentials(interpreterId: string) {
+  await requireAdminAction();
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("approve_interpreter_credentials", {
+    p_interpreter_id: interpreterId,
+  });
+
+  if (error) {
+    throw new Error("Goedkeuren is niet gelukt.");
+  }
+
+  revalidatePath(`/admin/interpreters/${interpreterId}`);
+}

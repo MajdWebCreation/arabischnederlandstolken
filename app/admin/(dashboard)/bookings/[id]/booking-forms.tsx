@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { AdminActionForm } from "@/components/admin/admin-action-form";
+import { useState, useActionState, useEffect } from "react";
+import { AdminActionForm, initialFormActionState } from "@/components/admin/admin-action-form";
 import {
   updateBookingDetails,
   updateBookingFinancials,
   updateBookingInternalNotes,
   updateBookingInterpreter,
   updateBookingStatus,
+  completeBookingWithSettlement,
 } from "@/app/admin/(dashboard)/bookings/[id]/actions";
 import {
   BOOKING_MODALITIES,
@@ -27,33 +28,211 @@ import type { CapabilityTagRow } from "@/lib/interpreters/matching";
 
 const fieldLabel = "text-xs font-semibold uppercase tracking-wide text-muted";
 
+/**
+ * Every ordinary status transition still submits this plain select+button
+ * form exactly as before. Picking "Afgerond" specifically is intercepted
+ * client-side (brief section 2: completing a booking must be a controlled
+ * workflow, not a bare dropdown save) - the select's own value snaps back
+ * to the current status and the completion wizard opens instead, which has
+ * its own independent submission path (completeBookingWithSettlement).
+ */
 export function BookingStatusForm({
   bookingId,
   currentStatus,
+  booking,
 }: {
   bookingId: string;
   currentStatus: string;
+  booking: BookingDetail;
 }) {
+  const [showWizard, setShowWizard] = useState(false);
   const action = updateBookingStatus.bind(null, bookingId);
 
   return (
-    <AdminActionForm action={action} submitLabel="Status opslaan">
-      <label htmlFor="status" className={fieldLabel}>
-        Status
-      </label>
-      <select
-        id="status"
-        name="status"
-        defaultValue={currentStatus}
-        className="form-control mt-1.5"
-      >
-        {BOOKING_STATUSES.map((value) => (
-          <option key={value} value={value}>
-            {BOOKING_STATUS_LABELS[value]}
-          </option>
-        ))}
-      </select>
-    </AdminActionForm>
+    <>
+      <AdminActionForm action={action} submitLabel="Status opslaan">
+        <label htmlFor="status" className={fieldLabel}>
+          Status
+        </label>
+        <select
+          id="status"
+          name="status"
+          defaultValue={currentStatus}
+          onChange={(event) => {
+            if (event.target.value === "completed" && currentStatus !== "completed") {
+              event.target.value = currentStatus;
+              setShowWizard(true);
+            }
+          }}
+          className="form-control mt-1.5"
+        >
+          {BOOKING_STATUSES.map((value) => (
+            <option key={value} value={value}>
+              {BOOKING_STATUS_LABELS[value]}
+            </option>
+          ))}
+        </select>
+      </AdminActionForm>
+
+      {showWizard ? (
+        <CompletionWizard booking={booking} onClose={() => setShowWizard(false)} />
+      ) : null}
+    </>
+  );
+}
+
+function formatWizardDate(value: string | null, time: string | null) {
+  if (!value) return "Onbekend";
+  const date = new Date(`${value}T00:00:00`).toLocaleDateString("nl-NL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return time ? `${date}, ${time.slice(0, 5)}` : date;
+}
+
+/**
+ * "Opdracht afronden" (brief section 2). Admin confirms the actual
+ * operational/financial details before the booking becomes completed -
+ * never assumes booked duration equals actual duration. "Overige
+ * vergoeding" is deliberately not a field here: once the settlement draft
+ * exists (created automatically on confirm, if a final interpreter is
+ * assigned), any additional agreed line item is added there directly - see
+ * the Tolkenafrekening section.
+ */
+function CompletionWizard({ booking, onClose }: { booking: BookingDetail; onClose: () => void }) {
+  const [state, formAction, pending] = useActionState(
+    completeBookingWithSettlement.bind(null, booking.id),
+    initialFormActionState,
+  );
+
+  useEffect(() => {
+    if (state.status === "success") {
+      onClose();
+    }
+  }, [state.status, onClose]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-8">
+      <div className="max-h-full w-full max-w-lg overflow-y-auto rounded-2xl bg-surface p-6 shadow-xl">
+        <h2 className="text-lg font-semibold text-foreground">Opdracht afronden</h2>
+        <p className="mt-1 text-sm text-muted">
+          Bevestig de werkelijke gegevens voordat deze boeking als afgerond
+          wordt gemarkeerd.
+        </p>
+
+        <dl className="mt-4 grid grid-cols-1 gap-3 rounded-xl border border-line bg-surface-alt/60 px-4 py-3 text-sm sm:grid-cols-2">
+          <div>
+            <dt className={fieldLabel}>Toegewezen tolk</dt>
+            <dd className="mt-1 text-foreground">
+              {booking.interpreter ? `${booking.interpreter.first_name} ${booking.interpreter.last_name}` : "Geen"}
+            </dd>
+          </div>
+          <div>
+            <dt className={fieldLabel}>Datum/tijd</dt>
+            <dd className="mt-1 text-foreground">
+              {formatWizardDate(booking.requested_date, booking.requested_start_time)}
+            </dd>
+          </div>
+          <div>
+            <dt className={fieldLabel}>Geboekte duur</dt>
+            <dd className="mt-1 text-foreground">
+              {booking.expected_duration_minutes ? `${booking.expected_duration_minutes} min.` : "Onbekend"}
+            </dd>
+          </div>
+        </dl>
+
+        <form action={formAction} className="mt-4 space-y-4">
+          <div>
+            {/* id is scoped "wizard*" (name stays plain for form submission) - the
+                pre-existing "Planningsgegevens bewerken" section below has its own
+                #actualDurationMinutes field; duplicate DOM ids broke
+                label-click-to-focus and made this field impossible to target
+                unambiguously (e.g. by an automated test) even though both forms
+                submit independently and never conflict functionally. */}
+            <label htmlFor="wizardActualDurationMinutes" className={fieldLabel}>
+              Werkelijke duur (minuten)
+            </label>
+            <input
+              id="wizardActualDurationMinutes"
+              name="actualDurationMinutes"
+              type="number"
+              min={1}
+              defaultValue={booking.actual_duration_minutes ?? booking.expected_duration_minutes ?? ""}
+              className="form-control mt-1.5"
+            />
+          </div>
+
+          {booking.interpreter_id ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                {/* id scoped "wizard*" - BookingFinancialsForm below has its own #interpreterCostExVat field; see the actual-duration field's comment above for why. */}
+                <label htmlFor="wizardInterpreterCostExVat" className={fieldLabel}>
+                  Tolkenvergoeding (excl. btw)
+                </label>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <span className="text-sm text-muted">€</span>
+                  <input
+                    id="wizardInterpreterCostExVat"
+                    name="interpreterCostExVat"
+                    type="text"
+                    inputMode="decimal"
+                    defaultValue={centsToInputValue(numberToCents(booking.interpreter_cost_ex_vat))}
+                    placeholder="0,00"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="wizardInterpreterTravelCostExVat" className={fieldLabel}>
+                  Reiskosten tolk (excl. btw)
+                </label>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <span className="text-sm text-muted">€</span>
+                  <input
+                    id="wizardInterpreterTravelCostExVat"
+                    name="interpreterTravelCostExVat"
+                    type="text"
+                    inputMode="decimal"
+                    defaultValue={centsToInputValue(numberToCents(booking.interpreter_travel_cost_ex_vat))}
+                    placeholder="0,00"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted sm:col-span-2">
+                Overige afgesproken vergoeding kan na het voorbereiden van de
+                afrekening als aparte regel worden toegevoegd.
+              </p>
+            </div>
+          ) : (
+            <p className="text-sm text-muted">
+              Deze boeking heeft geen definitief toegewezen tolk - er wordt
+              geen afrekening voorbereid.
+            </p>
+          )}
+
+          {state.status === "error" && state.message ? (
+            <p role="alert" className="text-sm leading-6 text-red-700">
+              {state.message}
+            </p>
+          ) : null}
+
+          <div className="flex flex-wrap justify-end gap-3 border-t border-line pt-4">
+            <button type="button" onClick={onClose} className="button-secondary px-5 py-2.5">
+              Annuleren
+            </button>
+            <button
+              type="submit"
+              disabled={pending}
+              className="button-primary px-5 py-2.5 disabled:cursor-wait disabled:opacity-65"
+            >
+              {pending ? "Bezig…" : "Opdracht afronden"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

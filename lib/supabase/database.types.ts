@@ -1140,6 +1140,10 @@ export type Database = {
           business_street: string | null
           city: string | null
           created_at: string
+          credentials_changed_at: string | null
+          credentials_changed_by: string | null
+          credentials_verified_at: string | null
+          credentials_verified_by: string | null
           email: string
           first_name: string
           iban: string | null
@@ -1171,6 +1175,10 @@ export type Database = {
           business_street?: string | null
           city?: string | null
           created_at?: string
+          credentials_changed_at?: string | null
+          credentials_changed_by?: string | null
+          credentials_verified_at?: string | null
+          credentials_verified_by?: string | null
           email: string
           first_name: string
           iban?: string | null
@@ -1202,6 +1210,10 @@ export type Database = {
           business_street?: string | null
           city?: string | null
           created_at?: string
+          credentials_changed_at?: string | null
+          credentials_changed_by?: string | null
+          credentials_verified_at?: string | null
+          credentials_verified_by?: string | null
           email?: string
           first_name?: string
           iban?: string | null
@@ -1903,6 +1915,10 @@ export type Database = {
         Args: { p_interpreter_id: string }
         Returns: undefined
       }
+      approve_interpreter_credentials: {
+        Args: { p_interpreter_id: string }
+        Returns: undefined
+      }
       current_customer_ids: { Args: never; Returns: string[] }
       current_interpreter_id: { Args: never; Returns: string }
       customer_accept_booking_offer: {
@@ -1984,6 +2000,14 @@ export type Database = {
         Args: { p_assignment_id: string; p_response: string }
         Returns: undefined
       }
+      interpreter_update_credentials: {
+        Args: {
+          p_rbtv_expiry_date: string
+          p_rbtv_number: string
+          p_sworn_interpreter: boolean
+        }
+        Returns: undefined
+      }
       is_admin: { Args: never; Returns: boolean }
       is_my_customer_booking: {
         Args: { p_booking_id: string }
@@ -1998,7 +2022,7 @@ export type Database = {
         Returns: boolean
       }
       issue_interpreter_invoice: {
-        Args: { p_invoice_id: string }
+        Args: { p_current_terms_version: string; p_invoice_id: string }
         Returns: {
           booking_id: string
           booking_snapshot: Json | null
@@ -2092,7 +2116,7 @@ export type Database = {
         Returns: undefined
       }
       submit_interpreter_settlement_for_review: {
-        Args: { p_invoice_id: string }
+        Args: { p_current_terms_version: string; p_invoice_id: string }
         Returns: {
           booking_id: string
           booking_snapshot: Json | null

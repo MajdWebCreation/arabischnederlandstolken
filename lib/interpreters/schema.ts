@@ -68,6 +68,27 @@ export const interpreterFiscalDetailsSchema = z.object({
 
 export type InterpreterFiscalDetailsInput = z.infer<typeof interpreterFiscalDetailsSchema>;
 
+/**
+ * Self-editable by the interpreter via interpreter_update_credentials()
+ * (section 9 of the assignment/settlement-tightening brief) - never a
+ * direct .update(), see enforce_interpreter_self_edit_columns(). Saving
+ * always succeeds (never blocks the interpreter's own claim); it always
+ * resets credentials_verified_at/by, so the claim becomes "Te controleren"
+ * until admin reviews it.
+ */
+export const interpreterCredentialsSchema = z.object({
+  rbtvNumber: z.string().trim().max(60, "Maximaal 60 tekens."),
+  rbtvExpiryDate: z
+    .string()
+    .trim()
+    .refine((value) => value === "" || /^\d{4}-\d{2}-\d{2}$/.test(value), {
+      message: "Vul een geldige datum in.",
+    }),
+  // swornInterpreter is a checkbox, read with formCheckbox().
+});
+
+export type InterpreterCredentialsInput = z.infer<typeof interpreterCredentialsSchema>;
+
 export const interpreterLanguageSchema = z.object({
   languageFrom: z
     .string()

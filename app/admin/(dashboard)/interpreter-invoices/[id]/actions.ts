@@ -10,6 +10,7 @@ import {
   updateInterpreterInvoiceVatSchema,
 } from "@/lib/interpreter-invoices/schema";
 import { getInterpreterInvoiceById } from "@/lib/interpreter-invoices/queries";
+import { createSettlementDraftForBooking } from "@/lib/interpreter-invoices/settlement-draft";
 import { getIssuedInterpreterInvoicePdfBuffer } from "@/lib/interpreter-invoices/pdf-storage";
 import {
   sendSettlementReadyForReviewEmail,
@@ -17,9 +18,20 @@ import {
   sendInterpreterInvoiceIssuedEmail,
   sendInterpreterInvoicePaidEmail,
 } from "@/lib/interpreter-invoices/notifications";
+import { sendProfileCompletionReminderEmail } from "@/lib/interpreters/notifications";
 import { requiredCentsToNumber, formatNumberAsCurrency } from "@/lib/money";
 import { interpreterInvoiceErrorMessage } from "@/lib/interpreter-invoices/constants";
+import { CURRENT_SELF_BILLING_TERMS_VERSION } from "@/lib/legal/terms";
 import type { FormActionState } from "@/components/admin/admin-action-form";
+
+function formatDateLabel(value: string | null) {
+  if (!value) return null;
+  return new Date(`${value}T00:00:00`).toLocaleDateString("nl-NL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
 
 function revalidateInterpreterInvoice(invoiceId: string, bookingId?: string) {
   revalidatePath(`/admin/interpreter-invoices/${invoiceId}`);
@@ -29,101 +41,19 @@ function revalidateInterpreterInvoice(invoiceId: string, bookingId?: string) {
   }
 }
 
-/**
- * Creates a new draft settlement for a completed booking's final, confirmed
- * interpreter - never any other candidate (brief section 25). Pre-fills
- * suggested tolkenvergoeding/reiskosten line items from
- * bookings.interpreter_cost_ex_vat / interpreter_travel_cost_ex_vat (the
- * amount already agreed at selection time - see select_interpreter_for_booking()),
- * which admin must still see and confirm/edit before sending to the
- * interpreter (brief section 6) - nothing here sends anything yet.
- */
+/** "Afrekening maken" on the booking page - see createSettlementDraftForBooking() for the actual logic, also used by the booking-completion wizard. */
 export async function createInterpreterSettlementDraft(bookingId: string) {
   await requireAdminAction();
 
   const supabase = await createClient();
-  const { data: booking, error: bookingError } = await supabase
-    .from("bookings")
-    .select(
-      "id, status, interpreter_id, interpreter_cost_ex_vat, interpreter_travel_cost_ex_vat",
-    )
-    .eq("id", bookingId)
-    .maybeSingle();
+  const result = await createSettlementDraftForBooking(supabase, bookingId);
 
-  if (bookingError || !booking) {
-    throw new Error("Boeking niet gevonden.");
+  if (result.status === "error") {
+    throw new Error(result.message);
   }
 
-  if (booking.status !== "completed") {
-    throw new Error("Alleen voor afgeronde boekingen kan een afrekening worden gemaakt.");
-  }
-
-  if (!booking.interpreter_id) {
-    throw new Error("Deze boeking heeft geen definitief toegewezen tolk.");
-  }
-
-  const { data: interpreter } = await supabase
-    .from("interpreters")
-    .select("vat_treatment")
-    .eq("id", booking.interpreter_id)
-    .maybeSingle();
-
-  const { data: invoice, error } = await supabase
-    .from("interpreter_invoices")
-    .insert({
-      interpreter_id: booking.interpreter_id,
-      booking_id: booking.id,
-      vat_treatment_snapshot: interpreter?.vat_treatment ?? null,
-      vat_rate: interpreter?.vat_treatment === "standard_vat" ? 21 : null,
-    })
-    .select("id")
-    .single();
-
-  if (error || !invoice) {
-    throw new Error(
-      error?.code === "23505"
-        ? "Er bestaat al een actieve afrekening voor deze boeking."
-        : "Afrekening aanmaken is niet gelukt.",
-    );
-  }
-
-  const suggestedItems: {
-    interpreter_invoice_id: string;
-    sort_order: number;
-    description: string;
-    quantity: number;
-    unit: string;
-    unit_price_ex_vat: number;
-  }[] = [];
-
-  if (booking.interpreter_cost_ex_vat !== null) {
-    suggestedItems.push({
-      interpreter_invoice_id: invoice.id,
-      sort_order: 0,
-      description: "Tolkenvergoeding",
-      quantity: 1,
-      unit: "vast",
-      unit_price_ex_vat: booking.interpreter_cost_ex_vat,
-    });
-  }
-
-  if (booking.interpreter_travel_cost_ex_vat) {
-    suggestedItems.push({
-      interpreter_invoice_id: invoice.id,
-      sort_order: 1,
-      description: "Reiskosten",
-      quantity: 1,
-      unit: "vast",
-      unit_price_ex_vat: booking.interpreter_travel_cost_ex_vat,
-    });
-  }
-
-  if (suggestedItems.length > 0) {
-    await supabase.from("interpreter_invoice_items").insert(suggestedItems);
-  }
-
-  revalidateInterpreterInvoice(invoice.id, bookingId);
-  redirect(`/admin/interpreter-invoices/${invoice.id}`);
+  revalidateInterpreterInvoice(result.invoiceId, bookingId);
+  redirect(`/admin/interpreter-invoices/${result.invoiceId}`);
 }
 
 export async function updateInterpreterInvoiceVat(
@@ -301,6 +231,7 @@ export async function submitInterpreterSettlementForReview(
 
   const { error } = await supabase.rpc("submit_interpreter_settlement_for_review", {
     p_invoice_id: invoiceId,
+    p_current_terms_version: CURRENT_SELF_BILLING_TERMS_VERSION,
   });
 
   if (error) {
@@ -308,11 +239,17 @@ export async function submitInterpreterSettlementForReview(
   }
 
   const interpreterEmail = before?.interpreter.email;
-  if (interpreterEmail) {
+  if (interpreterEmail && before) {
+    const emailDetails = {
+      bookingNumber: before.booking.booking_number,
+      serviceDateLabel: formatDateLabel(before.booking.requested_date),
+      totalIncVatLabel: formatNumberAsCurrency(before.total_inc_vat),
+      invoiceId: before.id,
+    };
     if (wasChangeRequested) {
-      await sendSettlementResubmittedEmail(interpreterEmail);
+      await sendSettlementResubmittedEmail(interpreterEmail, emailDetails);
     } else {
-      await sendSettlementReadyForReviewEmail(interpreterEmail);
+      await sendSettlementReadyForReviewEmail(interpreterEmail, emailDetails);
     }
   }
 
@@ -328,7 +265,10 @@ export async function issueInterpreterInvoiceAction(
   await requireAdminAction();
 
   const supabase = await createClient();
-  const { error } = await supabase.rpc("issue_interpreter_invoice", { p_invoice_id: invoiceId });
+  const { error } = await supabase.rpc("issue_interpreter_invoice", {
+    p_invoice_id: invoiceId,
+    p_current_terms_version: CURRENT_SELF_BILLING_TERMS_VERSION,
+  });
 
   if (error) {
     return { status: "error", message: interpreterInvoiceErrorMessage(error.message) };
@@ -342,6 +282,7 @@ export async function issueInterpreterInvoiceAction(
       if (invoice.interpreter.email && invoice.invoice_number) {
         await sendInterpreterInvoiceIssuedEmail({
           to: invoice.interpreter.email,
+          invoiceId: invoice.id,
           invoiceNumber: invoice.invoice_number,
           totalIncVatLabel: formatNumberAsCurrency(invoice.total_inc_vat),
           pdfBuffer,
@@ -377,6 +318,7 @@ export async function markInterpreterInvoicePaidAction(
   if (invoice?.interpreter.email && invoice.invoice_number) {
     await sendInterpreterInvoicePaidEmail({
       to: invoice.interpreter.email,
+      invoiceId: invoice.id,
       invoiceNumber: invoice.invoice_number,
     });
   }
@@ -427,4 +369,26 @@ export async function cancelInterpreterInvoiceAction(
 
   revalidateInterpreterInvoice(invoiceId, bookingId);
   return { status: "success", message: "Afrekening geannuleerd." };
+}
+
+/** "Vraag tolk profiel af te ronden" (brief section 3) - sends the existing branded portal reminder email; never fabricates readiness itself. */
+export async function requestInterpreterProfileCompletion(interpreterId: string) {
+  await requireAdminAction();
+
+  const supabase = await createClient();
+  const { data: interpreter } = await supabase
+    .from("interpreters")
+    .select("email")
+    .eq("id", interpreterId)
+    .maybeSingle();
+
+  if (!interpreter?.email) {
+    throw new Error("Tolk niet gevonden.");
+  }
+
+  const sent = await sendProfileCompletionReminderEmail(interpreter.email);
+
+  if (!sent) {
+    throw new Error("Versturen is niet gelukt. Controleer de e-mailconfiguratie.");
+  }
 }

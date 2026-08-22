@@ -19,6 +19,18 @@ import {
   INTERPRETER_INVOICE_STATUS_LABELS,
   isInterpreterInvoiceStatus,
 } from "@/lib/interpreter-invoices/constants";
+import { getInterpreterById } from "@/lib/interpreters/queries";
+import {
+  getInterpreterCompleteness,
+  getInterpreterMissingRequirements,
+} from "@/lib/interpreters/completeness";
+import {
+  createInterpreterSettlementDraft,
+  submitInterpreterSettlementForReview,
+  issueInterpreterInvoiceAction,
+  markInterpreterInvoicePaidAction,
+  requestInterpreterProfileCompletion,
+} from "@/app/admin/(dashboard)/interpreter-invoices/[id]/actions";
 import {
   listCancellationRequestsForBooking,
   listUnavailabilityReportsForBooking,
@@ -29,6 +41,7 @@ import {
 } from "@/app/admin/(dashboard)/bookings/[id]/cancellation-forms";
 import { InvoiceList } from "@/components/admin/invoice-list";
 import { StatusBadge } from "@/components/admin/status-badge";
+import { AdminActionForm } from "@/components/admin/admin-action-form";
 import {
   formatNumberAsCurrency,
   calculateMarginCents,
@@ -61,7 +74,6 @@ import {
   SuitableInterpretersSection,
 } from "@/app/admin/(dashboard)/bookings/[id]/assignment-forms";
 import { createDraftInvoiceFromBooking } from "@/app/admin/(dashboard)/bookings/[id]/actions";
-import { createInterpreterSettlementDraft } from "@/app/admin/(dashboard)/interpreter-invoices/[id]/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -180,6 +192,27 @@ export default async function AdminBookingDetailPage({
   if (!booking) {
     notFound();
   }
+
+  // Only fetched/used for the Tolkenafrekening readiness check below - the
+  // interpreter row already carries everything getInterpreterCompleteness
+  // needs, so no separate query for just those fields is worth adding.
+  const assignedInterpreter = booking.interpreter_id
+    ? await getInterpreterById(supabase, booking.interpreter_id)
+    : null;
+  const interpreterReadiness = assignedInterpreter
+    ? {
+        paymentReady: getInterpreterCompleteness(
+          assignedInterpreter,
+          assignedInterpreter.interpreter_languages.length,
+        ).paymentReady,
+        missing: getInterpreterMissingRequirements(
+          assignedInterpreter,
+          assignedInterpreter.interpreter_languages.length,
+        )
+          .filter((item) => ["zakelijk", "betaalgegevens", "facturatie"].includes(item.section))
+          .map((item) => item.label),
+      }
+    : null;
 
   const dialectTags = capabilityTags.filter((tag) => tag.category === "dialect" && tag.active);
   const requiredDialectTag =
@@ -682,46 +715,166 @@ export default async function AdminBookingDetailPage({
           </section>
 
           <section className="panel px-6 py-6">
-            <h2 className="text-base font-semibold text-foreground">
-              Tolkafrekening (self-billing)
-            </h2>
+            <h2 className="text-base font-semibold text-foreground">Tolkenafrekening</h2>
             <p className="mt-1 text-xs text-muted">
-              Aparte boekhoudstroom: de tolk factureert Arabisch Nederlands
-              Tolken (self-billing) voor de uitgevoerde dienst - dit is nooit
-              afgeleid van de klantprijs hierboven.
+              Aparte boekhoudstroom (self-billing): de tolk factureert
+              Arabisch Nederlands Tolken voor de uitgevoerde dienst - dit is
+              nooit afgeleid van de klantprijs hierboven. Deze boeking
+              afronden geeft nooit vanzelf een officiële ANT-SB-factuur uit -
+              dat blijft een aparte, bewust gecontroleerde stap verderop in
+              dit overzicht.
             </p>
 
-            {interpreterInvoice ? (
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4">
-                <div>
-                  <Link
-                    href={`/admin/interpreter-invoices/${interpreterInvoice.id}`}
-                    className="text-sm font-semibold text-brand-strong hover:underline"
-                  >
-                    {interpreterInvoice.invoice_number ?? "Conceptafrekening"}
-                  </Link>
-                  <p className="mt-0.5 text-xs text-muted">
-                    {formatNumberAsCurrency(interpreterInvoice.total_inc_vat)}
-                  </p>
-                </div>
-                <span className="chip">
-                  {isInterpreterInvoiceStatus(interpreterInvoice.status)
-                    ? INTERPRETER_INVOICE_STATUS_LABELS[interpreterInvoice.status]
-                    : interpreterInvoice.status}
-                </span>
-              </div>
-            ) : booking.status === "completed" && booking.interpreter_id ? (
-              <form action={createInterpreterSettlementDraft.bind(null, booking.id)} className="mt-4">
-                <button type="submit" className="button-primary px-5 py-2.5">
-                  Afrekening maken
-                </button>
-              </form>
-            ) : (
+            {!booking.interpreter_id ? (
               <p className="mt-3 text-sm text-muted">
-                {booking.interpreter_id
-                  ? "Rond eerst de boeking af (status 'Afgerond') om een afrekening te kunnen maken."
-                  : "Wijs eerst definitief een tolk toe om een afrekening te kunnen maken."}
+                Wijs eerst definitief een tolk toe om een afrekening te kunnen maken.
               </p>
+            ) : !interpreterInvoice ? (
+              booking.status === "completed" ? (
+                <div className="mt-3">
+                  <p className="text-sm font-semibold text-foreground">Nog niet voorbereid</p>
+                  <form action={createInterpreterSettlementDraft.bind(null, booking.id)} className="mt-2">
+                    <button type="submit" className="button-primary px-5 py-2.5">
+                      Maak afrekening
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <p className="mt-3 text-sm text-muted">
+                  Rond eerst de boeking af (status &apos;Afgerond&apos;) om een afrekening te kunnen maken.
+                </p>
+              )
+            ) : (
+              <div className="mt-4 space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface-alt/60 px-4 py-4">
+                  <div>
+                    <Link
+                      href={`/admin/interpreter-invoices/${interpreterInvoice.id}`}
+                      className="text-sm font-semibold text-brand-strong hover:underline"
+                    >
+                      {interpreterInvoice.invoice_number ?? "Conceptafrekening"}
+                    </Link>
+                    <p className="mt-0.5 text-xs text-muted">
+                      {formatNumberAsCurrency(interpreterInvoice.total_inc_vat)}
+                    </p>
+                  </div>
+                  <span className="chip">
+                    {isInterpreterInvoiceStatus(interpreterInvoice.status)
+                      ? INTERPRETER_INVOICE_STATUS_LABELS[interpreterInvoice.status]
+                      : interpreterInvoice.status}
+                  </span>
+                </div>
+
+                {interpreterInvoice.status === "draft" ? (
+                  interpreterReadiness && !interpreterReadiness.paymentReady ? (
+                    <div className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                      <p className="text-sm font-semibold text-amber-900">Profiel tolk incompleet</p>
+                      <p className="mt-1 text-xs leading-5 text-amber-900">
+                        Ontbrekend: {interpreterReadiness.missing.join(", ")}.
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <Link
+                          href={`/admin/interpreters/${booking.interpreter_id}`}
+                          className="button-secondary px-4 py-2 text-sm"
+                        >
+                          Bekijk ontbrekende gegevens
+                        </Link>
+                        <form action={requestInterpreterProfileCompletion.bind(null, booking.interpreter_id)}>
+                          <button type="submit" className="button-secondary px-4 py-2 text-sm">
+                            Vraag tolk profiel af te ronden
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Klaar om te versturen</p>
+                      <AdminActionForm
+                        action={submitInterpreterSettlementForReview.bind(
+                          null,
+                          interpreterInvoice.id,
+                          booking.id,
+                        )}
+                        submitLabel="Naar tolk sturen"
+                        className="mt-2"
+                      >
+                        <></>
+                      </AdminActionForm>
+                    </div>
+                  )
+                ) : null}
+
+                {interpreterInvoice.status === "pending_review" ? (
+                  <p className="text-sm text-muted">Wacht op controle tolk.</p>
+                ) : null}
+
+                {interpreterInvoice.status === "change_requested" ? (
+                  <div>
+                    <p className="text-sm font-semibold text-amber-900">Wijziging aangevraagd</p>
+                    <Link
+                      href={`/admin/interpreter-invoices/${interpreterInvoice.id}`}
+                      className="button-secondary mt-2 inline-flex px-4 py-2 text-sm"
+                    >
+                      Bekijk verzoek
+                    </Link>
+                  </div>
+                ) : null}
+
+                {interpreterInvoice.status === "approved" ? (
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Akkoord</p>
+                    <AdminActionForm
+                      action={issueInterpreterInvoiceAction.bind(null, interpreterInvoice.id, booking.id)}
+                      submitLabel="Factuur uitgeven"
+                      className="mt-2"
+                    >
+                      <></>
+                    </AdminActionForm>
+                  </div>
+                ) : null}
+
+                {interpreterInvoice.status === "issued" ? (
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Definitief</p>
+                    <p className="mt-1 text-sm text-muted">{interpreterInvoice.invoice_number}</p>
+                    <div className="mt-2 flex flex-wrap items-center gap-3">
+                      <a
+                        href={`/admin/interpreter-invoices/${interpreterInvoice.id}/pdf`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button-secondary px-4 py-2 text-sm"
+                      >
+                        Bekijk PDF
+                      </a>
+                      <AdminActionForm
+                        action={markInterpreterInvoicePaidAction.bind(null, interpreterInvoice.id, booking.id)}
+                        submitLabel="Markeer als betaald"
+                      >
+                        <></>
+                      </AdminActionForm>
+                    </div>
+                  </div>
+                ) : null}
+
+                {interpreterInvoice.status === "paid" ? (
+                  <div>
+                    <p className="text-sm font-semibold text-emerald-900">Betaald</p>
+                    {interpreterInvoice.paid_at ? (
+                      <p className="mt-1 text-sm text-muted">
+                        Betaald op {new Date(interpreterInvoice.paid_at).toLocaleDateString("nl-NL")}
+                      </p>
+                    ) : null}
+                    <a
+                      href={`/admin/interpreter-invoices/${interpreterInvoice.id}/pdf`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="button-secondary mt-2 inline-flex px-4 py-2 text-sm"
+                    >
+                      Bekijk PDF
+                    </a>
+                  </div>
+                ) : null}
+              </div>
             )}
           </section>
         </div>
@@ -730,7 +883,7 @@ export default async function AdminBookingDetailPage({
           <section className="panel px-6 py-6">
             <h2 className="text-base font-semibold text-foreground">Status</h2>
             <div className="mt-4">
-              <BookingStatusForm bookingId={booking.id} currentStatus={booking.status} />
+              <BookingStatusForm bookingId={booking.id} currentStatus={booking.status} booking={booking} />
             </div>
           </section>
 

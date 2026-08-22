@@ -15,7 +15,15 @@ export default async function InterpreterAssignmentsPage() {
   const upcoming = assignedBookings.filter((b) =>
     ["interpreter_confirmed", "confirmed"].includes(b.status),
   );
-  const completed = assignedBookings.filter((b) => b.status === "completed");
+  // 'customer_invoiced'/'paid' are post-completion booking statuses (see
+  // lib/customers/portal-status.ts) reached once the *customer's* invoice
+  // progresses - bug fix: these used to fall through every bucket here,
+  // silently disappearing from the interpreter's own portal even though
+  // bookings.interpreter_id (and their settlement) was still correctly
+  // theirs.
+  const completed = assignedBookings.filter((b) =>
+    ["completed", "customer_invoiced", "paid"].includes(b.status),
+  );
   const cancelled = assignedBookings.filter((b) => b.status === "cancelled");
   const notSelected = offers.filter((o) =>
     ["declined", "rejected", "withdrawn", "expired"].includes(o.status),
