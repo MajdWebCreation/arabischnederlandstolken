@@ -159,6 +159,16 @@ export function PageShell({ children, locale }: PageShellProps) {
             <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
               {content.footer.description}
             </p>
+            <p className="mt-6 text-sm leading-6 text-muted">
+              {locale === "nl" ? "Website door " : "تطوير الموقع: "}
+              <a
+                className="footer-link font-medium focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                href="https://ymcreations.com/"
+                rel="nofollow"
+              >
+                YM Creations
+              </a>
+            </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
